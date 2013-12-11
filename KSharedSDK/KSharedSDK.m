@@ -26,7 +26,6 @@
     void(^didFinishedSharedMessage)(NSDictionary *, NSError *);
     
     //sinaWeibo
-    KSinaWeiboOauthView *loginView;
     NSString *sinaWeibo_accessToken;
     NSString *sinaWeibo_uid;
 }
@@ -123,9 +122,9 @@
     
     //未安装客户端，发请求验证
     if (!ssoLoggingIn) {
-        loginView = [[KSinaWeiboOauthView alloc] init];
-        loginView.delegate = self;
-        [loginView show];
+        KSinaWeiboOauthView *oathView = [[KSinaWeiboOauthView alloc] init];
+        oathView.delegate = self;
+        [oathView show];
     }
 }
 

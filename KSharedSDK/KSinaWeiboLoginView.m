@@ -92,6 +92,12 @@
     [indicatorView removeFromSuperview];
     [dismissButton removeFromSuperview];
     [webView removeFromSuperview];
+
+    bgView = nil;
+    webView = nil;
+    dismissButton = nil;
+    loading = nil;
+    indicatorView = nil;
 }
 
 #pragma mark --- UIWebViewDelegate -----------
@@ -110,7 +116,7 @@
     return YES;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView2
+- (void)webViewDidStartLoad:(UIWebView *)webView
 {
     
 }

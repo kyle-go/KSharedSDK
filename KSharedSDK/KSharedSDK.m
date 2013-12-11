@@ -8,6 +8,7 @@
 
 #import "KSharedSDK.h"
 #import "KUnits.h"
+#import "KHttpManager.h"
 #import "KSinaWeiboLoginView.h"
 
 #define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
@@ -18,6 +19,10 @@
 @end
 
 @implementation KSharedSDK {
+    //发送队列
+    NSMutableArray *shareMessages;
+    
+    //分享消息成功回调
     void(^didFinishedSharedMessage)(NSDictionary *, NSError *);
     
     //sinaWeibo
@@ -29,7 +34,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        //TODO...
+        shareMessages = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -54,9 +59,26 @@
 
 - (BOOL)sharedMessage:(NSString *)text type:(SharedType)type userInfo:(NSDictionary *)userInfo
 {
+    if (text.length == 0 || type >= SharedType_Unknown) {
+        return NO;
+    }
+    
     switch (type) {
         case SharedType_SinaWeibo:
         {
+            if (text.length > 140) {
+                return NO;
+            }
+            
+            //添加到队列
+            [shareMessages addObject:text];
+            [shareMessages addObject:[[NSNumber alloc] initWithLong:type]];
+            if (userInfo.count) {
+                [shareMessages addObject:userInfo];
+            } else {
+                [shareMessages addObject:@{}];
+            }
+            
             NSDictionary *param = @{@"redirect_uri": kSinaWeiboRedirectURI,
                                     @"callback_uri": kAppURLScheme,
                                     @"client_id":kSinaWeiboAppKey};
@@ -69,8 +91,9 @@
                 loginView = [[KSinaWeiboLoginView alloc] init];
                 loginView.delegate = self;
                 [loginView show];
-                return YES;
             }
+            
+            return YES;
         }
             break;
         case SharedType_TencentWeibo:
@@ -104,6 +127,56 @@
     sinaWeibo_uid = [userInfo objectForKey:@"uid"];
     [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_accessToken forKey:KSharedSDK_sinaWeibo_accessToken];
     [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_uid forKey:KSharedSDK_sinaWeibo_uid];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self checkSharedMessages];
+}
+
+- (void)checkSharedMessages
+{
+    //判断队列中是否有SinaWeibo待分享数据
+    for (NSInteger i=0; i<shareMessages.count; i+=3) {
+        SharedType sharedType = [[shareMessages objectAtIndex:i+1] longValue];
+        switch (sharedType) {
+            case SharedType_SinaWeibo:
+                [self sinaWeiboSend:[shareMessages objectAtIndex:i] userInfo:[shareMessages objectAtIndex:i+2]];
+                [shareMessages removeObjectsInRange:NSMakeRange(i, 3)];
+                return;
+                break;
+                
+            default:
+                break;\
+        }
+    }
+}
+
+- (void)sinaWeiboSend:(NSString *)text userInfo:(NSDictionary *)userInfo
+{
+    assert(sinaWeibo_accessToken.length);
+    assert(sinaWeibo_uid.length);
+    
+    void (^success_callback) (id responseObject) =
+    ^(id responseObject) {
+        
+        NSError *error;
+        NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        NSLog(@"send one  sina weibo=%@", json);
+
+         didFinishedSharedMessage(userInfo, nil);
+        [self checkSharedMessages];
+    };
+    
+    void (^failure_callback)(NSError *error) =
+    ^(NSError *error){
+        didFinishedSharedMessage(userInfo, error);
+        [self checkSharedMessages];
+    };
+    
+    //判断token是否过期POST请求
+    KHttpManager *manager = [KHttpManager manager];
+    NSDictionary *params = @{@"status":text, @"access_token":sinaWeibo_accessToken};
+    [manager POST:@"https://api.weibo.com/2/statuses/update.json" parameters:params success:success_callback failure:failure_callback];
 }
 
 @end

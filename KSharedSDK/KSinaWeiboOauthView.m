@@ -72,7 +72,7 @@
     
     //退出按钮，暂时这样处理吧，以后这里用动画效果来处理一下
     dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 385, 200, 50)];
-    [dismissButton setTitle:@"取消登陆" forState:UIControlStateNormal];
+    [dismissButton setTitle:@"取消登录" forState:UIControlStateNormal];
     [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.6]];
     [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     

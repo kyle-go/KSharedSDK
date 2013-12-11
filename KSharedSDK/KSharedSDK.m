@@ -145,7 +145,7 @@
                 break;
                 
             default:
-                break;\
+                break;
         }
     }
 }
@@ -163,13 +163,17 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSLog(@"send one  sina weibo=%@", json);
 
-         didFinishedSharedMessage(userInfo, nil);
+        if (didFinishedSharedMessage) {
+            didFinishedSharedMessage(userInfo, nil);
+        }
         [self checkSharedMessages];
     };
     
     void (^failure_callback)(NSError *error) =
     ^(NSError *error){
-        didFinishedSharedMessage(userInfo, error);
+        if (didFinishedSharedMessage) {
+            didFinishedSharedMessage(userInfo, error);
+        }
         [self checkSharedMessages];
     };
     

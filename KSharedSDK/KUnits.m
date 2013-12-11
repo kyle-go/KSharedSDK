@@ -22,7 +22,6 @@
 		for (NSString* key in params.keyEnumerator) {
 			NSString* value = [params objectForKey:key];
             //NSString* escapedValue = [value stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            
 			NSString* escapedValue = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
 																						  NULL, /* allocator */
 																						  (CFStringRef)value,

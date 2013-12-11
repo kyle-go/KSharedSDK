@@ -19,6 +19,8 @@
     UIView      *bgView;
     UIWebView   *webView;
     UIButton    *dismissButton;
+    
+    UIActivityIndicatorView *indicatorView;
 }
 
 + (instancetype)kSinaWeiboLoginViewInstance
@@ -43,13 +45,18 @@
         bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenBounds.size.width, screenBounds.size.height)];
         bgView.backgroundColor = [UIColor blackColor];
         bgView.opaque = YES;
-        bgView.alpha = 0.4f;
+        bgView.alpha = 0.8f;
+        
+        //指示器
+        indicatorView = [[UIActivityIndicatorView alloc] initWithFrame : CGRectMake(0.0f, 0.0f, 88.0f, 88.0f)] ;
+        [indicatorView setCenter: CGPointMake(bgView.center.x, bgView.center.y - 50)];
+        [indicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleWhiteLarge];
         
         //网页视图
         webView = [[UIWebView alloc] initWithFrame:screenBounds];
         webView.delegate = self;
         webView.scalesPageToFit = NO;
-        //webView.userInteractionEnabled = NO;
+        webView.scrollView.scrollEnabled = NO;
         
         NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 kSinaWeiboAppKey,                @"client_id",       //申请的appkey
@@ -63,18 +70,21 @@
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         [webView loadRequest:request];
         
-        //退出按钮
-        dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-        [dismissButton setBackgroundImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
+        //退出按钮，暂时这样处理吧，以后这里用动画效果来处理一下
+        dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(70, 280, 180, 58)];
+        [dismissButton setTitle:@"取消登陆" forState:UIControlStateNormal];
+        [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.8]];
+        [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
 
 - (void)setupViews
 {
+    [indicatorView startAnimating];
     [keyWindow addSubview:bgView];
-    [keyWindow addSubview:webView];
-    //[keyWindow addSubview:dismissButton];
+    [keyWindow addSubview:indicatorView];
+    [keyWindow addSubview:dismissButton];
 }
 
 + (void)show
@@ -85,7 +95,10 @@
 
 - (void)dismiss
 {
-    
+    [bgView removeFromSuperview];
+    [indicatorView removeFromSuperview];
+    [dismissButton removeFromSuperview];
+    [webView removeFromSuperview];
 }
 
 #pragma mark --- UIWebViewDelegate -----------
@@ -96,34 +109,24 @@
     return YES;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webViewDidStartLoad:(UIWebView *)webView2
 {
     
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView2
 {
-    NSString *jsCode = @"var newDiv=document.createElement(\"div\");"
-    "newDiv.id=\"newDiv\";"
-    "newDiv.style.position=\"absolute\";"
-    "newDiv.style.width=\"320px\";"
-    "newDiv.style.height=\"568px\";"
-    "var e = document.createElement(\"input\");"
-    "e.type = \"button\";"
-    "e.value = \"取消登录\";"
-    "e.style.width=\"260px\";"
-    "e.style.height=\"40px\";"
-    "e.style.marginLeft=\"30px\";"
-    "e.onClick = function(){alert('ddd');};" //window.open('http://kylescript.cancel');
-    "var object = newDiv.appendChild(e);"
-    "document.body.appendChild(object);";
-
-    [webView2 stringByEvaluatingJavaScriptFromString:jsCode];
+    [indicatorView removeFromSuperview];
+    [keyWindow insertSubview:webView aboveSubview:bgView];
+    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:1.0]];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    
+    [indicatorView removeFromSuperview];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请检查网络" message:@"打开网页失败,请检查网络!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alert show];
+    [self dismiss];
 }
 
 @end

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2701810A1857734400511C8B /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 270181081857734400511C8B /* close.png */; };
-		2701810B1857734400511C8B /* 原图.png in Resources */ = {isa = PBXBuildFile; fileRef = 270181091857734400511C8B /* 原图.png */; };
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		FB28255818574F9B002DF332 /* KHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB28255718574F9B002DF332 /* KHttpManager.m */; };
 		FB2EF18E1857630B00C65EAD /* KSinaWeiboLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KSinaWeiboLoginView.m */; };
@@ -38,8 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		270181081857734400511C8B /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
-		270181091857734400511C8B /* 原图.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "原图.png"; sourceTree = "<group>"; };
 		2701810C185774D300511C8B /* KSharedSDKDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSharedSDKDefine.h; sourceTree = "<group>"; };
 		273BBED018562611001592FE /* KSharedSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSharedSDK.h; sourceTree = "<group>"; };
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
@@ -103,8 +99,6 @@
 				FB2EF18D1857630B00C65EAD /* KSinaWeiboLoginView.m */,
 				FB28255618574F9B002DF332 /* KHttpManager.h */,
 				FB28255718574F9B002DF332 /* KHttpManager.m */,
-				270181081857734400511C8B /* close.png */,
-				270181091857734400511C8B /* 原图.png */,
 			);
 			path = KSharedSDK;
 			sourceTree = SOURCE_ROOT;
@@ -240,10 +234,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2701810B1857734400511C8B /* 原图.png in Resources */,
 				FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */,
 				FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */,
-				2701810A1857734400511C8B /* close.png in Resources */,
 				FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

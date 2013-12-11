@@ -161,10 +161,16 @@
         NSError *error;
         NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSLog(@"send one  sina weibo=%@", json);
+        
+        error = nil;
+        NSString *errorString = [json objectForKey:@"error_code"];
+        NSNumber *errorCode = [json objectForKey:@"error"];
+        if (errorString && errorCode) {
+            error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
+        }
 
         if (didFinishedSharedMessage) {
-            didFinishedSharedMessage(userInfo, nil);
+            didFinishedSharedMessage(userInfo, error);
         }
         [self checkSharedMessages];
     };

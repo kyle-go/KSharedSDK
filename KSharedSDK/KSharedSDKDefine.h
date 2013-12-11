@@ -14,6 +14,7 @@
 
 //新浪微博
 #define kSinaWeiboAppKey            @"1018973898"
+#define kSinaWeiboAppSecret         @"76bb83a4e8005db406e575415cfe2e99"
 #define kSinaWeiboRedirectURI       @"https://github.com/kylescript"
 
 #endif

@@ -16,4 +16,8 @@
     success:(void (^)(id responseData))success
     failure:(void (^)(NSError *))failure;
 
+- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
+    success:(void (^)(id responseData))success
+    failure:(void (^)(NSError *))failure;
+
 @end

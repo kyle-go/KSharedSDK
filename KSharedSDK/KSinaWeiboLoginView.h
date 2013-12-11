@@ -8,8 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol KSinaWeiboLoginDelegate <NSObject>
+
+- (void)sinaWeiboLoginCallback:(NSDictionary *)userInfo;
+
+@end
+
 @interface KSinaWeiboLoginView : NSObject
 
-+ (void)show;
+@property (weak, nonatomic) id<KSinaWeiboLoginDelegate> delegate;
+
+- (void)show;
 
 @end

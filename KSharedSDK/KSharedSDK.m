@@ -10,12 +10,20 @@
 #import "KUnits.h"
 #import "KSinaWeiboLoginView.h"
 
-@interface KSharedSDK ()
+#define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
+#define KSharedSDK_sinaWeibo_uid            @"KSharedSDK_sinaWeibo_uid"
+
+@interface KSharedSDK () <KSinaWeiboLoginDelegate>
 
 @end
 
 @implementation KSharedSDK {
     void(^didFinishedSharedMessage)(NSDictionary *, NSError *);
+    
+    //sinaWeibo
+    KSinaWeiboLoginView *loginView;
+    NSString *sinaWeibo_accessToken;
+    NSString *sinaWeibo_uid;
 }
 
 - (id)init
@@ -56,9 +64,11 @@
             
             BOOL ssoLoggingIn = [[UIApplication sharedApplication] openURL:appAuthURL];
             
-            //未安装客户端，自己发请求验证
+            //未安装客户端，发请求验证
             if (!ssoLoggingIn) {
-                [KSinaWeiboLoginView show];
+                loginView = [[KSinaWeiboLoginView alloc] init];
+                loginView.delegate = self;
+                [loginView show];
                 return YES;
             }
         }
@@ -79,6 +89,21 @@
 {
     NSLog(@"sharedHandleURL:url=%@", [url absoluteString]);
     return YES;
+}
+
+#pragma  ---- KSinaWeiboLoginDelegate----
+- (void)sinaWeiboLoginCallback:(NSDictionary *)userInfo
+{
+    NSString *error = [userInfo objectForKey:@"error"];
+    if (error.length) {
+        //sth wrong
+        return;
+    }
+    
+    sinaWeibo_accessToken = [userInfo objectForKey:@"access_token"];
+    sinaWeibo_uid = [userInfo objectForKey:@"uid"];
+    [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_accessToken forKey:KSharedSDK_sinaWeibo_accessToken];
+    [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_uid forKey:KSharedSDK_sinaWeibo_uid];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "KHttpManager.h"
+#import "KUnits.h"
 
 @interface KHttpManager() <NSURLConnectionDataDelegate, NSURLConnectionDelegate>
 
@@ -39,8 +40,20 @@
 {
     _success = success;
     _failure = failure;
-    NSURL *url = [NSURL URLWithString:URLString];
+    NSURL *url = [KUnits generateURL:URLString params:parameters];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    _urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+}
+
+- (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
+    success:(void (^)(id))success
+    failure:(void (^)(NSError *))failure
+{
+    _success = success;
+    _failure = failure;
+    NSURL *url = [KUnits generateURL:URLString params:parameters];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    [request setHTTPMethod:@"POST"];
     _urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 

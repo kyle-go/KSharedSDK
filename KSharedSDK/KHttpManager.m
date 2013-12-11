@@ -37,23 +37,49 @@
 - (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters
     success:(void (^)(id))success
     failure:(void (^)(NSError *))failure
+    content_type:(NSString *)content_type
 {
     _success = success;
     _failure = failure;
     NSURL *url = [KUnits generateURL:URLString params:parameters];
-    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    //content-type
+    if (content_type) {
+        [request setValue:content_type forHTTPHeaderField:@"content-type"];
+    }
+    
+    //content-length
+    NSRange range = [[url absoluteString] rangeOfString:@"?"];
+    if (range.location != NSNotFound) {
+        NSString *length = [NSString stringWithFormat:@"%ld", (long)([url absoluteString].length - range.location - 1)];
+        [request setValue:length forHTTPHeaderField:@"content-length"];
+    }
     _urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 
 - (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
     success:(void (^)(id))success
     failure:(void (^)(NSError *))failure
+    content_type:(NSString *)content_type
 {
     _success = success;
     _failure = failure;
     NSURL *url = [KUnits generateURL:URLString params:parameters];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     [request setHTTPMethod:@"POST"];
+    
+    //content-type
+    if (content_type) {
+        [request setValue:content_type forHTTPHeaderField:@"content-type"];
+    }
+
+    //content-length
+    NSRange range = [[url absoluteString] rangeOfString:@"?"];
+    if (range.location != NSNotFound) {
+        NSString *length = [NSString stringWithFormat:@"%ld", (long)([url absoluteString].length - range.location - 1)];
+        [request setValue:length forHTTPHeaderField:@"content-length"];
+    }
+    
     _urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
 }
 

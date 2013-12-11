@@ -180,7 +180,7 @@
     //判断token是否过期POST请求
     KHttpManager *manager = [KHttpManager manager];
     NSDictionary *params = @{@"status":text, @"access_token":sinaWeibo_accessToken};
-    [manager POST:@"https://api.weibo.com/2/statuses/update.json" parameters:params success:success_callback failure:failure_callback];
+    [manager POST:@"https://api.weibo.com/2/statuses/update.json" parameters:params success:success_callback failure:failure_callback content_type:@"application/x-www-form-urlencoded"];
 }
 
 @end

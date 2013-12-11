@@ -180,7 +180,7 @@
     //判断token是否过期POST请求
     KHttpManager *manager = [KHttpManager manager];
     NSDictionary *params = @{@"client_id":kSinaWeiboAppKey, @"client_secret":kSinaWeiboAppSecret, @"grant_type":@"authorization_code", @"code":code, @"redirect_uri":kSinaWeiboRedirectURI};
-    [manager POST:@"https://api.weibo.com/oauth2/access_token" parameters:params success:success_callback failure:failure_callback];
+    [manager POST:@"https://api.weibo.com/oauth2/access_token" parameters:params success:success_callback failure:failure_callback content_type:nil];
 }
 
 @end

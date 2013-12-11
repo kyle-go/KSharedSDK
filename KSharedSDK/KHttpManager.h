@@ -14,10 +14,12 @@
 
 - (void)GET:(NSString *)URLString parameters:(NSDictionary *)parameters
     success:(void (^)(id responseData))success
-    failure:(void (^)(NSError *))failure;
+    failure:(void (^)(NSError *))failure
+    content_type:(NSString *)content_type;
 
 - (void)POST:(NSString *)URLString parameters:(NSDictionary *)parameters
     success:(void (^)(id responseData))success
-    failure:(void (^)(NSError *))failure;
+    failure:(void (^)(NSError *))failure
+    content_type:(NSString *)content_type;
 
 @end

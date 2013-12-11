@@ -16,11 +16,11 @@
 
 @implementation KSinaWeiboLoginView {
     UIWindow    *keyWindow;
+    
     UIView      *bgView;
     UIWebView   *webView;
     UIButton    *dismissButton;
-    
-    NSURL       *url;
+    UILabel     *loading;
     UIActivityIndicatorView *indicatorView;
 }
 
@@ -47,10 +47,19 @@
     bgView.opaque = YES;
     bgView.alpha = 0.8f;
     
+    //加载中...
+    loading = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, screenBounds.size.width, 60)];
+    loading.backgroundColor = [UIColor clearColor];
+    loading.textColor = [UIColor lightGrayColor];
+    loading.text = @"玩命加载中...";
+    loading.font = [UIFont systemFontOfSize:28];
+    loading.textAlignment = NSTextAlignmentCenter;
+    
     //指示器
     indicatorView = [[UIActivityIndicatorView alloc] initWithFrame : CGRectMake(0.0f, 0.0f, 88.0f, 88.0f)] ;
-    [indicatorView setCenter: CGPointMake(bgView.center.x, bgView.center.y - 50)];
+    [indicatorView setCenter: CGPointMake(bgView.center.x, bgView.center.y - 70)];
     [indicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleWhiteLarge];
+    [indicatorView startAnimating];
     
     //网页视图
     webView = [[UIWebView alloc] initWithFrame:screenBounds];
@@ -66,34 +75,32 @@
                             @"true",                         @"forcelogin",
                             nil];
     
-    url = [KUnits generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
+    NSURL *url = [KUnits generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
     
     //退出按钮，暂时这样处理吧，以后这里用动画效果来处理一下
-    dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(70, 280, 180, 58)];
+    dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(70, 380, 200, 50)];
     [dismissButton setTitle:@"取消登陆" forState:UIControlStateNormal];
-    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.8]];
+    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.6]];
     [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [webView loadRequest:request];
     
-    [indicatorView startAnimating];
-    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.6]];
-    
     [keyWindow addSubview:bgView];
+    [keyWindow addSubview:loading];
     [keyWindow addSubview:indicatorView];
     [keyWindow addSubview:dismissButton];
 }
 
 + (void)show
 {
-    KSinaWeiboLoginView *view = [KSinaWeiboLoginView kSinaWeiboLoginViewInstance];
-    [view setupViews];
+    [[KSinaWeiboLoginView kSinaWeiboLoginViewInstance] setupViews];
 }
 
 - (void)dismiss
 {
     [bgView removeFromSuperview];
+    [loading removeFromSuperview];
     [indicatorView removeFromSuperview];
     [dismissButton removeFromSuperview];
     [webView removeFromSuperview];
@@ -114,9 +121,15 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView2
 {
+    [loading removeFromSuperview];
     [indicatorView removeFromSuperview];
     [keyWindow insertSubview:webView aboveSubview:bgView];
     [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:1.0]];
+    
+    //disable selection
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
+    // Disable callout
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

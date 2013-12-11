@@ -9,24 +9,24 @@
 #import "KSharedSDK.h"
 #import "KUnits.h"
 #import "KHttpManager.h"
-#import "KSinaWeiboLoginView.h"
+#import "KSinaWeiboOauthView.h"
 
 #define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
 #define KSharedSDK_sinaWeibo_uid            @"KSharedSDK_sinaWeibo_uid"
 
-@interface KSharedSDK () <KSinaWeiboLoginDelegate>
+@interface KSharedSDK () <KSinaWeiboOauthDelegate>
 
 @end
 
 @implementation KSharedSDK {
-    //发送队列
+    //发送队列，都是主线程不需要锁
     NSMutableArray *shareMessages;
     
     //分享消息成功回调
     void(^didFinishedSharedMessage)(NSDictionary *, NSError *);
     
     //sinaWeibo
-    KSinaWeiboLoginView *loginView;
+    KSinaWeiboOauthView *loginView;
     NSString *sinaWeibo_accessToken;
     NSString *sinaWeibo_uid;
 }
@@ -72,26 +72,24 @@
             
             //添加到队列
             [shareMessages addObject:text];
-            [shareMessages addObject:[[NSNumber alloc] initWithLong:type]];
+            [shareMessages addObject:[[NSNumber alloc] initWithLong:SharedType_SinaWeibo]];
             if (userInfo.count) {
                 [shareMessages addObject:userInfo];
             } else {
                 [shareMessages addObject:@{}];
             }
             
-            NSDictionary *param = @{@"redirect_uri": kSinaWeiboRedirectURI,
-                                    @"callback_uri": kAppURLScheme,
-                                    @"client_id":kSinaWeiboAppKey};
-            NSURL *appAuthURL = [KUnits generateURL:@"sinaweibosso://login" params:param];
-            
-            BOOL ssoLoggingIn = [[UIApplication sharedApplication] openURL:appAuthURL];
-            
-            //未安装客户端，发请求验证
-            if (!ssoLoggingIn) {
-                loginView = [[KSinaWeiboLoginView alloc] init];
-                loginView.delegate = self;
-                [loginView show];
+            if (!sinaWeibo_accessToken || !sinaWeibo_uid) {
+                sinaWeibo_accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
+                sinaWeibo_uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
             }
+            
+            if (sinaWeibo_accessToken && sinaWeibo_uid) {
+                [self checkSharedMessages];
+                return YES;
+            }
+            
+            [self getNewSinaWeiboToken];
             
             return YES;
         }
@@ -114,8 +112,25 @@
     return YES;
 }
 
-#pragma  ---- KSinaWeiboLoginDelegate----
-- (void)sinaWeiboLoginCallback:(NSDictionary *)userInfo
+- (void)getNewSinaWeiboToken
+{
+    NSDictionary *param = @{@"redirect_uri": kSinaWeiboRedirectURI,
+                            @"callback_uri": kAppURLScheme,
+                            @"client_id":kSinaWeiboAppKey};
+    NSURL *appAuthURL = [KUnits generateURL:@"sinaweibosso://login" params:param];
+    
+    BOOL ssoLoggingIn = [[UIApplication sharedApplication] openURL:appAuthURL];
+    
+    //未安装客户端，发请求验证
+    if (!ssoLoggingIn) {
+        loginView = [[KSinaWeiboOauthView alloc] init];
+        loginView.delegate = self;
+        [loginView show];
+    }
+}
+
+#pragma  ---- KSinaWeiboOauthDelegate----
+- (void)sinaWeiboOauthCallback:(NSDictionary *)userInfo
 {
     NSString *error = [userInfo objectForKey:@"error"];
     if (error.length) {
@@ -167,6 +182,21 @@
         NSNumber *errorCode = [json objectForKey:@"error"];
         if (errorString && errorCode) {
             error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //token已过期
+        if ([errorCode intValue] == 21315) {
+            
+            //重新加入到队列中
+            [shareMessages addObject:text];
+            [shareMessages addObject:[[NSNumber alloc] initWithLong:SharedType_SinaWeibo]];
+            if (userInfo.count) {
+                [shareMessages addObject:userInfo];
+            } else {
+                [shareMessages addObject:@{}];
+            }
+            [self getNewSinaWeiboToken];
+            return ;
         }
 
         if (didFinishedSharedMessage) {

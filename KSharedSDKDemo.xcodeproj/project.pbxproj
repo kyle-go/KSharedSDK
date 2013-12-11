@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		FB28255818574F9B002DF332 /* KHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB28255718574F9B002DF332 /* KHttpManager.m */; };
-		FB2EF18E1857630B00C65EAD /* KSinaWeiboLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KSinaWeiboLoginView.m */; };
+		FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */; };
 		FB61C5C318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
 		FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */; };
 		FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C618560D8B0041FF5A /* UIKit.framework */; };
@@ -41,8 +41,8 @@
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
 		FB28255618574F9B002DF332 /* KHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHttpManager.h; sourceTree = "<group>"; };
 		FB28255718574F9B002DF332 /* KHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHttpManager.m; sourceTree = "<group>"; };
-		FB2EF18C1857630B00C65EAD /* KSinaWeiboLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSinaWeiboLoginView.h; sourceTree = "<group>"; };
-		FB2EF18D1857630B00C65EAD /* KSinaWeiboLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSinaWeiboLoginView.m; sourceTree = "<group>"; };
+		FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSinaWeiboOauthView.h; sourceTree = "<group>"; };
+		FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSinaWeiboOauthView.m; sourceTree = "<group>"; };
 		FB61C5BF18560D8B0041FF5A /* KSharedSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KSharedSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB61C5C218560D8B0041FF5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,8 +93,8 @@
 				2701810C185774D300511C8B /* KSharedSDKDefine.h */,
 				273BBED018562611001592FE /* KSharedSDK.h */,
 				273BBED118562611001592FE /* KSharedSDK.m */,
-				FB2EF18C1857630B00C65EAD /* KSinaWeiboLoginView.h */,
-				FB2EF18D1857630B00C65EAD /* KSinaWeiboLoginView.m */,
+				FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */,
+				FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */,
 				FBCFD94C1856C89E009919E8 /* KUnits.h */,
 				FBCFD94D1856C89E009919E8 /* KUnits.m */,
 				FB28255618574F9B002DF332 /* KHttpManager.h */,
@@ -259,7 +259,7 @@
 				FBCFD94E1856C89E009919E8 /* KUnits.m in Sources */,
 				FB28255818574F9B002DF332 /* KHttpManager.m in Sources */,
 				FB61C5CF18560D8B0041FF5A /* main.m in Sources */,
-				FB2EF18E1857630B00C65EAD /* KSinaWeiboLoginView.m in Sources */,
+				FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */,
 				273BBED218562611001592FE /* KSharedSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

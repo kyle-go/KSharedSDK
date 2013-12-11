@@ -28,7 +28,7 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK kSharedSDKInstance] sharedMessage:@"发布一条新微博！by KSharedSDK." type:SharedType_SinaWeibo userInfo:nil];
+    [[KSharedSDK kSharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo userInfo:nil];
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {

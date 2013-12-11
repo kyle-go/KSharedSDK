@@ -6,16 +6,16 @@
 //  Copyright (c) 2013年 kyle. All rights reserved.
 //
 
-#import "KSinaWeiboLoginView.h"
+#import "KSinaWeiboOauthView.h"
 #import "KSharedSDKDefine.h"
 #import "KUnits.h"
 #import "KHttpManager.h"
 
-@interface KSinaWeiboLoginView() <UIWebViewDelegate>
+@interface KSinaWeiboOauthView() <UIWebViewDelegate>
 
 @end
 
-@implementation KSinaWeiboLoginView {
+@implementation KSinaWeiboOauthView {
     UIWindow    *keyWindow;
     
     UIView      *bgView;
@@ -156,7 +156,7 @@
         //已经过期则重新认证
         if ([expire intValue] <= 0) {
             if (self.delegate) {
-                [self.delegate sinaWeiboLoginCallback:@{@"error": @"token已过期!"}];
+                [self.delegate sinaWeiboOauthCallback:@{@"error": @"token已过期!"}];
             }
             return;
         }
@@ -165,7 +165,7 @@
         NSString *uid = [json objectForKey:@"uid"];
         NSDictionary *params = @{@"access_token":accessToken, @"uid":uid};
         if (self.delegate) {
-            [self.delegate sinaWeiboLoginCallback:params];
+            [self.delegate sinaWeiboOauthCallback:params];
         }
     };
     
@@ -173,7 +173,7 @@
     ^(NSError *error){
         NSString *errorString = [NSString stringWithFormat:@"%@", error];
         if (self.delegate) {
-            [self.delegate sinaWeiboLoginCallback:@{@"error": errorString}];
+            [self.delegate sinaWeiboOauthCallback:@{@"error": errorString}];
         }
     };
     

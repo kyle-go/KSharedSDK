@@ -139,7 +139,6 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请检查网络" message:@"打开网页失败,请检查网络!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alert show];
-    [self dismiss];
 }
 
 #pragma --- network ------------------------

@@ -201,8 +201,19 @@
             } else {
                 [shareMessages addObject:@{}];
             }
+            
+            //重新请求token
             [self getNewSinaWeiboToken];
             return ;
+        }
+        
+        //未通过审核的应用且未加入到测试帐号中
+        if ([errorCode intValue] == 21321) {
+            error = [[NSError alloc] initWithDomain:@"此帐号未加入到应用测试帐号列表." code:[errorCode intValue] userInfo:nil];
+        }
+        //不能连续发送相同内容的微博
+        if([errorCode intValue] == 20019) {
+            error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
         }
 
         if (completion) {

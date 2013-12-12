@@ -28,7 +28,13 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK kSharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:nil];
+    [[KSharedSDK kSharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage succeed.");
+        }
+    }];
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {

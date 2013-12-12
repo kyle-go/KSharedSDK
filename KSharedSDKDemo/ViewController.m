@@ -41,7 +41,7 @@
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
-    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeixinFriend completion:^(NSError *e){
+    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weixin failed. Error = %@", e);
         } else {
@@ -51,7 +51,7 @@
 }
 
 - (IBAction)sendWeixinCircel:(id)sender {
-    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeixinCircel completion:^(NSError *e){
+    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weixin failed. Error = %@", e);
         } else {

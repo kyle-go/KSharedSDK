@@ -45,10 +45,10 @@
         case SharedType_TencentWeibo:
             
             break;
-        case SharedType_WeixinFriend:
+        case SharedType_WeChatFriend:
             [[KWeChatShared sharedSDKInstance] sharedMessageToFriend:text completion:completion];
             break;
-        case SharedType_WeixinCircel:
+        case SharedType_WeChatCircel:
             [[KWeChatShared sharedSDKInstance] sharedMessageToCircel:text completion:completion];
             break;
         default:

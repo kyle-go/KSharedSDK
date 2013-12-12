@@ -14,8 +14,8 @@ enum
 {
     SharedType_SinaWeibo = 0,
     SharedType_TencentWeibo,
-    SharedType_WeixinFriend,
-    SharedType_WeixinCircel,
+    SharedType_WeChatFriend,
+    SharedType_WeChatCircel,
     SharedType_QQFriend,
     SharedType_QQZone,
     SharedType_Unknown,

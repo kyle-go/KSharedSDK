@@ -102,7 +102,56 @@
 
 - (BOOL)sharedHandleURL:(NSURL *)url
 {
-    NSLog(@"sharedHandleURL:url=%@", [url absoluteString]);
+    NSString *paramString = [url absoluteString];
+    NSLog(@"sharedHandleURL:url=%@", paramString);
+    
+    //sinaWeibo
+    NSRange range = [paramString rangeOfString:kAppURLScheme];
+    if (range.location != NSNotFound) {
+        
+        NSString *uid;
+        NSString *access_token;
+        NSArray *array = [paramString componentsSeparatedByString:@"&"];
+        for (NSString *item in array) {
+            range = [item rangeOfString:@"uid="];
+            if (range.location != NSNotFound) {
+                uid = [item substringFromIndex:range.location + range.length];
+                continue;
+            }
+            range = [item rangeOfString:@"access_token="];
+            if (range.location != NSNotFound) {
+                access_token = [item substringFromIndex:range.location + range.length];
+            }
+        }
+        
+        //成功获取token
+        if (uid && access_token) {
+            sinaWeibo_uid = uid;
+            sinaWeibo_accessToken = access_token;
+            [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_accessToken forKey:KSharedSDK_sinaWeibo_accessToken];
+            [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_uid forKey:KSharedSDK_sinaWeibo_uid];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [self checkSharedMessages];
+            
+        //用户取消了
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:-1 userInfo:nil];
+            //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
+            for (NSInteger i=0; i<shareMessages.count; i+=3) {
+                SharedType sharedType = [[shareMessages objectAtIndex:i+1] longValue];
+                if (sharedType == SharedType_SinaWeibo) {
+                    ((void(^)(NSError *))[shareMessages objectAtIndex:i+2])(error);
+                    
+                    [shareMessages removeObjectsInRange:NSMakeRange(i, 3)];
+                    i-=3;
+                }
+            }
+        }
+
+        return YES;
+    }
+    
     return YES;
 }
 
@@ -182,8 +231,8 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         
         error = nil;
-        NSString *errorString = [json objectForKey:@"error_code"];
-        NSNumber *errorCode = [json objectForKey:@"error"];
+        NSString *errorString = [json objectForKey:@"error"];
+        NSNumber *errorCode = [json objectForKey:@"error_code"];
         if (errorString && errorCode) {
             error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
         }

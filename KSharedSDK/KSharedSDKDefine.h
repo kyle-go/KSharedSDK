@@ -23,6 +23,6 @@
 #define kTencentWeiboRedirectURI    @"https://github.com/kylescript"
 
 //微信
-#define kWeChatAppKey               @"wx38219725edb54faa"
+#define kWeChatAppKey               @"wx493ea8c8fd6a1d5d"
 
 #endif

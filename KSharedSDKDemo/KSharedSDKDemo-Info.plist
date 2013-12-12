@@ -26,7 +26,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>sinaWb</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>KSharedSDKDemo</string>
@@ -36,10 +36,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>wx</string>
+			<string>weChat</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx38219725edb54faa</string>
+				<string>wx493ea8c8fd6a1d5d</string>
 			</array>
 		</dict>
 	</array>

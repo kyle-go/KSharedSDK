@@ -22,13 +22,8 @@ enum
 };
 typedef NSUInteger SharedType;
 
-@protocol KSharedSDKDelegate <NSObject>
-- (void)DidFinishedShareMessage:(NSDictionary *)userInfo error:(NSError *)error;
-@end
 
 @interface KSharedSDK : NSObject
-
-@property (weak, nonatomic) id <KSharedSDKDelegate> delegate;
 
 /**
  *@description 获取单实例
@@ -41,14 +36,9 @@ typedef NSUInteger SharedType;
 - (void)sharedClearTokens;
 
 /**
- *@description 设置分享消息完成回调，当然也可以使用KSharedSDKDelegate实现
- */
-- (void)setDidFinishedShareMessageCompletion:(void(^)(NSDictionary *, NSError *)) completion;
-
-/**
  *@description 分享消息
  */
-- (BOOL)sharedMessage:(NSString *)text type:(SharedType)type userInfo:(NSDictionary *)userInfo;
+- (BOOL)sharedMessage:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion;
 
 /**
  *@description 处理系统回调,在AppDelegate实现方法：-(BOOL)application: openURL: sourceApplication: annotation:方法并调用此函数

@@ -22,9 +22,6 @@
     //发送队列，都是主线程不需要锁
     NSMutableArray *shareMessages;
     
-    //分享消息成功回调
-    void(^didFinishedSharedMessage)(NSDictionary *, NSError *);
-    
     //sinaWeibo
     NSString *sinaWeibo_accessToken;
     NSString *sinaWeibo_uid;
@@ -51,12 +48,10 @@
     //TODO...
 }
 
-- (void)setDidFinishedShareMessageCompletion:(void(^)(NSDictionary *, NSError *)) completion
-{
-    didFinishedSharedMessage = completion;
-}
-
-- (BOOL)sharedMessage:(NSString *)text type:(SharedType)type userInfo:(NSDictionary *)userInfo
+/**
+ *@description 分享消息
+ */
+- (BOOL)sharedMessage:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion
 {
     if (text.length == 0 || type >= SharedType_Unknown) {
         return NO;
@@ -72,8 +67,8 @@
             //添加到队列
             [shareMessages addObject:text];
             [shareMessages addObject:[[NSNumber alloc] initWithLong:SharedType_SinaWeibo]];
-            if (userInfo.count) {
-                [shareMessages addObject:userInfo];
+            if (completion) {
+                [shareMessages addObject:completion];
             } else {
                 [shareMessages addObject:@{}];
             }
@@ -131,9 +126,21 @@
 #pragma  ---- KSinaWeiboOauthDelegate----
 - (void)sinaWeiboOauthCallback:(NSDictionary *)userInfo
 {
-    NSString *error = [userInfo objectForKey:@"error"];
-    if (error.length) {
-        //sth wrong
+    NSString *errorString = [userInfo objectForKey:@"error"];
+    if (errorString.length) {
+        NSError *error = [[NSError alloc] initWithDomain:errorString code:-1 userInfo:nil];
+        //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
+        for (NSInteger i=0; i<shareMessages.count; i+=3) {
+            SharedType sharedType = [[shareMessages objectAtIndex:i+1] longValue];
+            if (sharedType == SharedType_SinaWeibo) {
+                void(^completion)(NSError *) = [shareMessages objectAtIndex:i+2];
+                if (completion) {
+                    completion(error);
+                }
+                [shareMessages removeObjectsInRange:NSMakeRange(i, 3)];
+                i-=3;
+            }
+        }
         return;
     }
     
@@ -153,7 +160,7 @@
         SharedType sharedType = [[shareMessages objectAtIndex:i+1] longValue];
         switch (sharedType) {
             case SharedType_SinaWeibo:
-                [self sinaWeiboSend:[shareMessages objectAtIndex:i] userInfo:[shareMessages objectAtIndex:i+2]];
+                [self sinaWeiboSend:[shareMessages objectAtIndex:i] completion:[shareMessages objectAtIndex:i+2]];
                 [shareMessages removeObjectsInRange:NSMakeRange(i, 3)];
                 return;
                 break;
@@ -164,7 +171,7 @@
     }
 }
 
-- (void)sinaWeiboSend:(NSString *)text userInfo:(NSDictionary *)userInfo
+- (void)sinaWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(sinaWeibo_accessToken.length);
     assert(sinaWeibo_uid.length);
@@ -189,8 +196,8 @@
             //重新加入到队列中
             [shareMessages addObject:text];
             [shareMessages addObject:[[NSNumber alloc] initWithLong:SharedType_SinaWeibo]];
-            if (userInfo.count) {
-                [shareMessages addObject:userInfo];
+            if (completion) {
+                [shareMessages addObject:completion];
             } else {
                 [shareMessages addObject:@{}];
             }
@@ -198,16 +205,16 @@
             return ;
         }
 
-        if (didFinishedSharedMessage) {
-            didFinishedSharedMessage(userInfo, error);
+        if (completion) {
+            completion(error);
         }
         [self checkSharedMessages];
     };
     
     void (^failure_callback)(NSError *error) =
     ^(NSError *error){
-        if (didFinishedSharedMessage) {
-            didFinishedSharedMessage(userInfo, error);
+        if (completion) {
+            completion(error);
         }
         [self checkSharedMessages];
     };

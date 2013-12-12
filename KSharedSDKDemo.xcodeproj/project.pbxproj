@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		272C61961859FD50003C1BCA /* KTencentWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C61951859FD50003C1BCA /* KTencentWeiboShared.m */; };
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F38871859A58D00E01186 /* KWeChatShared.m */; };
 		DC5F388B1859A6A100E01186 /* KSinaWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */; };
 		DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388D1859B5EE00E01186 /* KSharedMessage.m */; };
 		FB28255818574F9B002DF332 /* KHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB28255718574F9B002DF332 /* KHttpManager.m */; };
-		FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */; };
+		FB2EF18E1857630B00C65EAD /* KWeiboOauthView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KWeiboOauthView.m */; };
 		FB61C5C318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
 		FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */; };
 		FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C618560D8B0041FF5A /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		2701810C185774D300511C8B /* KSharedSDKDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSharedSDKDefine.h; sourceTree = "<group>"; };
+		272C61941859FD50003C1BCA /* KTencentWeiboShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTencentWeiboShared.h; sourceTree = "<group>"; };
+		272C61951859FD50003C1BCA /* KTencentWeiboShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTencentWeiboShared.m; sourceTree = "<group>"; };
 		273BBED018562611001592FE /* KSharedSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSharedSDK.h; sourceTree = "<group>"; };
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
 		DC5F38831859A50900E01186 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -52,8 +55,8 @@
 		DC5F388D1859B5EE00E01186 /* KSharedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSharedMessage.m; path = KSharedSDK/KSharedMessage.m; sourceTree = SOURCE_ROOT; };
 		FB28255618574F9B002DF332 /* KHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHttpManager.h; sourceTree = "<group>"; };
 		FB28255718574F9B002DF332 /* KHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHttpManager.m; sourceTree = "<group>"; };
-		FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSinaWeiboOauthView.h; sourceTree = "<group>"; };
-		FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSinaWeiboOauthView.m; sourceTree = "<group>"; };
+		FB2EF18C1857630B00C65EAD /* KWeiboOauthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWeiboOauthView.h; sourceTree = "<group>"; };
+		FB2EF18D1857630B00C65EAD /* KWeiboOauthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWeiboOauthView.m; sourceTree = "<group>"; };
 		FB61C5BF18560D8B0041FF5A /* KSharedSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KSharedSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB61C5C218560D8B0041FF5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -107,10 +110,12 @@
 				273BBED118562611001592FE /* KSharedSDK.m */,
 				DC5F388C1859B5EE00E01186 /* KSharedMessage.h */,
 				DC5F388D1859B5EE00E01186 /* KSharedMessage.m */,
+				FB2EF18C1857630B00C65EAD /* KWeiboOauthView.h */,
+				FB2EF18D1857630B00C65EAD /* KWeiboOauthView.m */,
 				DC5F38891859A6A100E01186 /* KSinaWeiboShared.h */,
 				DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */,
-				FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */,
-				FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */,
+				272C61941859FD50003C1BCA /* KTencentWeiboShared.h */,
+				272C61951859FD50003C1BCA /* KTencentWeiboShared.m */,
 				DC5F38861859A58D00E01186 /* KWeChatShared.h */,
 				DC5F38871859A58D00E01186 /* KWeChatShared.m */,
 				FBCFD94C1856C89E009919E8 /* KUnits.h */,
@@ -282,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC5F388B1859A6A100E01186 /* KSinaWeiboShared.m in Sources */,
+				272C61961859FD50003C1BCA /* KTencentWeiboShared.m in Sources */,
 				DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */,
 				FB61C5D918560D8B0041FF5A /* ViewController.m in Sources */,
 				FB61C5D318560D8B0041FF5A /* AppDelegate.m in Sources */,
@@ -289,7 +295,7 @@
 				FB28255818574F9B002DF332 /* KHttpManager.m in Sources */,
 				FB61C5CF18560D8B0041FF5A /* main.m in Sources */,
 				DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */,
-				FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */,
+				FB2EF18E1857630B00C65EAD /* KWeiboOauthView.m in Sources */,
 				273BBED218562611001592FE /* KSharedSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

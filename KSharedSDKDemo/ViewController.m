@@ -28,34 +28,41 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
         if (e) {
-            NSLog(@"sharedMessage failed. Error = %@", e);
+            NSLog(@"sharedMessage sinaWeibo failed. Error = %@", e);
         } else {
-            NSLog(@"sharedMessage succeed.");
+            NSLog(@"sharedMessage sinaWeibo succeed.");
         }
     }];
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_TencentWeibo completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage tencentWeibo failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage tecentWeibo succeed.");
+        }
+    }];
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
-    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
         if (e) {
-            NSLog(@"sharedMessage weixin failed. Error = %@", e);
+            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
         } else {
-            NSLog(@"sharedMessage weixin succeed.");
+            NSLog(@"sharedMessage weChatFriend succeed.");
         }
     }];
 }
 
 - (IBAction)sendWeixinCircel:(id)sender {
-    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
         if (e) {
-            NSLog(@"sharedMessage weixin failed. Error = %@", e);
+            NSLog(@"sharedMessage weChatCircel failed. Error = %@", e);
         } else {
-            NSLog(@"sharedMessage weixin succeed.");
+            NSLog(@"sharedMessage weChatCircel succeed.");
         }
     }];
 }

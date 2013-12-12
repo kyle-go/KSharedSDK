@@ -7,7 +7,9 @@
 //
 
 #import "KSharedSDK.h"
+#import "KSharedSDKDefine.h"
 #import "KSinaWeiboShared.h"
+#import "KTencentWeiboShared.h"
 #import "KWeChatShared.h"
 
 @interface KSharedSDK ()
@@ -16,7 +18,7 @@
 
 @implementation KSharedSDK
 
-+ (instancetype)sharedSDKInstance
++ (instancetype)Instance
 {
     static dispatch_once_t once;
     static id instance;
@@ -26,7 +28,7 @@
 
 - (void)sharedClearTokens
 {
-    [[KSinaWeiboShared sharedSDKInstance] clearToken];
+    [[KSinaWeiboShared Instance] clearToken];
 }
 
 /**
@@ -40,10 +42,10 @@
 
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared sharedSDKInstance] sharedMessage:text completion:completion];
+            [[KSinaWeiboShared Instance] sharedMessage:text completion:completion];
             break;
         case SharedType_TencentWeibo:
-            
+            [[KTencentWeiboShared Instance] sharedMessage:text completion:completion];
             break;
         case SharedType_WeChatFriend:
             [[KWeChatShared sharedSDKInstance] sharedMessageToFriend:text completion:completion];
@@ -73,7 +75,7 @@
     //sinaWeibo
     range = [paramString rangeOfString:kAppURLScheme];
     if (range.location != NSNotFound) {
-        [[KSinaWeiboShared sharedSDKInstance] sharedHandleURL:paramString];
+        [[KSinaWeiboShared Instance] sharedHandleURL:paramString];
         return YES;
     }
     

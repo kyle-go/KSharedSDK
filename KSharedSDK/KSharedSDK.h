@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KSharedSDKDefine.h"
 
 //定义分享类型
 enum
@@ -28,7 +27,7 @@ typedef NSUInteger SharedType;
 /**
  *@description 获取单实例
  */
-+ (instancetype)sharedSDKInstance;
++ (instancetype)Instance;
 
 /**
  *@description 清除内存中保存的token等信息

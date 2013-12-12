@@ -17,7 +17,7 @@
 
 + (NSURL*)generateURL:(NSString*)baseURL params:(NSDictionary*)params
 {
-	if (params) {
+	if ([params count]) {
 		NSMutableArray* pairs = [[NSMutableArray alloc] init];
 		for (NSString* key in params.keyEnumerator) {
 			NSString* value = [params objectForKey:key];

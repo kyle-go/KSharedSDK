@@ -11,7 +11,7 @@
 
 @interface KSinaWeiboShared : NSObject
 
-+ (instancetype)sharedSDKInstance;
++ (instancetype)Instance;
 
 - (void)clearToken;
 

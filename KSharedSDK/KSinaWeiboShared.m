@@ -9,29 +9,28 @@
 #import "KSinaWeiboShared.h"
 #import "KUnits.h"
 #import "KHttpManager.h"
-#import "KSinaWeiboOauthView.h"
+#import "KWeiboOauthView.h"
 #import "KSharedSDKDefine.h"
 #import "KSharedMessage.h"
 
 #define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
 #define KSharedSDK_sinaWeibo_uid            @"KSharedSDK_sinaWeibo_uid"
 
-@interface KSinaWeiboShared() <KSinaWeiboOauthDelegate>
+@interface KSinaWeiboShared() <KWeiboOauthDelegate>
 {
 
 }
 @end
 
-@implementation KSinaWeiboShared
-{
+@implementation KSinaWeiboShared {
     //发送队列，都是主线程不需要锁
     NSMutableArray *shareMessages;
     //sinaWeibo
-    NSString *sinaWeibo_accessToken;
-    NSString *sinaWeibo_uid;
+    NSString *access_token;
+    NSString *uid;
 }
 
-+ (instancetype)sharedSDKInstance
++ (instancetype)Instance
 {
     static dispatch_once_t once;
     static id instance;
@@ -43,8 +42,8 @@
 - (void)clearToken
 {
     [shareMessages removeAllObjects];
-    sinaWeibo_accessToken = nil;
-    sinaWeibo_uid = nil;
+    access_token = nil;
+    uid = nil;
 }
 
 - (id)init
@@ -76,17 +75,17 @@
     }
     [shareMessages addObject:messageInfo];
     
-    if (!sinaWeibo_accessToken || !sinaWeibo_uid) {
-        sinaWeibo_accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
-        sinaWeibo_uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
+    if (!access_token || !uid) {
+        access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
+        uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
     }
     
-    if (sinaWeibo_accessToken && sinaWeibo_uid) {
+    if (access_token && uid) {
         [self checkSharedMessages];
         return YES;
     }
     
-    [self getNewSinaWeiboToken];
+    [self getNewToken];
     
     return YES;
 }
@@ -94,28 +93,28 @@
 
 - (void)sharedHandleURL:(NSString *)paramString
 {
-    NSString *uid;
-    NSString *access_token;
+    NSString *temp_uid;
+    NSString *temp_access_token;
     NSArray *array = [paramString componentsSeparatedByString:@"&"];
     NSRange range;
     for (NSString *item in array) {
-        range = [item rangeOfString:@"uid="];
+        range = [item rangeOfString:@"uid=" options:NSCaseInsensitiveSearch];
         if (range.location != NSNotFound) {
-            uid = [item substringFromIndex:range.location + range.length];
+            temp_uid = [item substringFromIndex:range.location + range.length];
             continue;
         }
-        range = [item rangeOfString:@"access_token="];
+        range = [item rangeOfString:@"access_token=" options:NSCaseInsensitiveSearch];
         if (range.location != NSNotFound) {
-            access_token = [item substringFromIndex:range.location + range.length];
+            temp_access_token = [item substringFromIndex:range.location + range.length];
         }
     }
     
     //成功获取token
-    if (uid && access_token) {
-        sinaWeibo_uid = uid;
-        sinaWeibo_accessToken = access_token;
-        [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_accessToken forKey:KSharedSDK_sinaWeibo_accessToken];
-        [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_uid forKey:KSharedSDK_sinaWeibo_uid];
+    if (temp_uid && access_token) {
+        uid = temp_uid;
+        access_token = temp_access_token;
+        [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:KSharedSDK_sinaWeibo_accessToken];
+        [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self checkSharedMessages];
@@ -135,7 +134,7 @@
 
 }
 
-- (void)getNewSinaWeiboToken
+- (void)getNewToken
 {
     NSDictionary *param = @{@"redirect_uri": kSinaWeiboRedirectURI,
                             @"callback_uri": kAppURLScheme,
@@ -146,15 +145,15 @@
     
     //未安装客户端，发请求验证
     if (!ssoLoggingIn) {
-        KSinaWeiboOauthView *oathView = [KSinaWeiboOauthView KSinaWeiboOauthViewInstance];
+        KWeiboOauthView *oathView = [KWeiboOauthView Instance];
         oathView.delegate = self;
-        [oathView show];
+        [oathView show:SharedType_SinaWeibo];
     }
 }
 
 
 #pragma  ---- KSinaWeiboOauthDelegate----
-- (void)sinaWeiboOauthCallback:(NSDictionary *)userInfo
+- (void)weiboOauthCallback:(NSDictionary *)userInfo
 {
     NSString *errorString = [userInfo objectForKey:@"error"];
     if (errorString.length) {
@@ -169,10 +168,10 @@
         return;
     }
     
-    sinaWeibo_accessToken = [userInfo objectForKey:@"access_token"];
-    sinaWeibo_uid = [userInfo objectForKey:@"uid"];
-    [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_accessToken forKey:KSharedSDK_sinaWeibo_accessToken];
-    [[NSUserDefaults standardUserDefaults] setObject:sinaWeibo_uid forKey:KSharedSDK_sinaWeibo_uid];
+    access_token = [userInfo objectForKey:@"access_token"];
+    uid = [userInfo objectForKey:@"uid"];
+    [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:KSharedSDK_sinaWeibo_accessToken];
+    [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self checkSharedMessages];
@@ -193,8 +192,8 @@
 
 - (void)sinaWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
 {
-    assert(sinaWeibo_accessToken.length);
-    assert(sinaWeibo_uid.length);
+    assert(access_token.length);
+    assert(uid.length);
     
     void (^success_callback) (id responseObject) =
     ^(id responseObject) {
@@ -225,7 +224,7 @@
             
             
             //重新请求token
-            [self getNewSinaWeiboToken];
+            [self getNewToken];
             return ;
         }
         
@@ -248,10 +247,13 @@
         [self checkSharedMessages];
     };
     
-    //判断token是否过期POST请求
+    //发一条新微博
     KHttpManager *manager = [KHttpManager manager];
-    NSDictionary *params = @{@"status":text, @"access_token":sinaWeibo_accessToken};
-    [manager POST:@"https://api.weibo.com/2/statuses/update.json" parameters:params success:success_callback failure:failure_callback content_type:@"application/x-www-form-urlencoded"];
+    NSDictionary *params = @{@"status":text, @"access_token":access_token};
+    NSMutableURLRequest *request = [manager getRequest:@"https://api.weibo.com/2/statuses/update.json" parameters:params success:success_callback failure:failure_callback];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    [manager start];
 }
 
 @end

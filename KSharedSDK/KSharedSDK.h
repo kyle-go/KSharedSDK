@@ -28,7 +28,7 @@ typedef NSUInteger SharedType;
 /**
  *@description 获取单实例
  */
-+ (instancetype)kSharedSDKInstance;
++ (instancetype)sharedSDKInstance;
 
 /**
  *@description 清除内存中保存的token等信息

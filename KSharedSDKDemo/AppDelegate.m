@@ -46,7 +46,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [[KSharedSDK kSharedSDKInstance] sharedHandleURL:url];
+    return [[KSharedSDK sharedSDKInstance] sharedHandleURL:url];
 }
 
 @end

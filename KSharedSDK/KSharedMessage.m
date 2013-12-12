@@ -6,8 +6,8 @@
 //  Copyright (c) 2013年 kyle. All rights reserved.
 //
 
-#import "shareMessageInfo.h"
+#import "KSharedMessage.h"
 
-@implementation shareMessageInfo
+@implementation KSharedMessage
 
 @end

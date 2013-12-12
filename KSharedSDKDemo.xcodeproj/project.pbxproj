@@ -10,7 +10,7 @@
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F38871859A58D00E01186 /* KWeChatShared.m */; };
 		DC5F388B1859A6A100E01186 /* KSinaWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */; };
-		DC5F388E1859B5EE00E01186 /* shareMessageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */; };
+		DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388D1859B5EE00E01186 /* KSharedMessage.m */; };
 		FB28255818574F9B002DF332 /* KHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB28255718574F9B002DF332 /* KHttpManager.m */; };
 		FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EF18D1857630B00C65EAD /* KSinaWeiboOauthView.m */; };
 		FB61C5C318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
@@ -22,7 +22,6 @@
 		FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5D418560D8B0041FF5A /* Main.storyboard */; };
 		FB61C5D918560D8B0041FF5A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB61C5D818560D8B0041FF5A /* ViewController.m */; };
 		FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5DA18560D8B0041FF5A /* Images.xcassets */; };
-		FB61C5E218560D8B0041FF5A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5E118560D8B0041FF5A /* XCTest.framework */; };
 		FB61C5E318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
 		FB61C5E418560D8B0041FF5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C618560D8B0041FF5A /* UIKit.framework */; };
 		FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */; };
@@ -49,8 +48,8 @@
 		DC5F38871859A58D00E01186 /* KWeChatShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWeChatShared.m; sourceTree = "<group>"; };
 		DC5F38891859A6A100E01186 /* KSinaWeiboShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSinaWeiboShared.h; sourceTree = "<group>"; };
 		DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSinaWeiboShared.m; sourceTree = "<group>"; };
-		DC5F388C1859B5EE00E01186 /* shareMessageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shareMessageInfo.h; path = KSharedSDK/shareMessageInfo.h; sourceTree = SOURCE_ROOT; };
-		DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = shareMessageInfo.m; path = KSharedSDK/shareMessageInfo.m; sourceTree = SOURCE_ROOT; };
+		DC5F388C1859B5EE00E01186 /* KSharedMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSharedMessage.h; path = KSharedSDK/KSharedMessage.h; sourceTree = SOURCE_ROOT; };
+		DC5F388D1859B5EE00E01186 /* KSharedMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSharedMessage.m; path = KSharedSDK/KSharedMessage.m; sourceTree = SOURCE_ROOT; };
 		FB28255618574F9B002DF332 /* KHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHttpManager.h; sourceTree = "<group>"; };
 		FB28255718574F9B002DF332 /* KHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHttpManager.m; sourceTree = "<group>"; };
 		FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSinaWeiboOauthView.h; sourceTree = "<group>"; };
@@ -70,7 +69,6 @@
 		FB61C5D818560D8B0041FF5A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FB61C5DA18560D8B0041FF5A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FB61C5E018560D8B0041FF5A /* KSharedSDKDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSharedSDKDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB61C5E118560D8B0041FF5A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		FBCFD94C1856C89E009919E8 /* KUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KUnits.h; sourceTree = "<group>"; };
 		FBCFD94D1856C89E009919E8 /* KUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KUnits.m; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB61C5E218560D8B0041FF5A /* XCTest.framework in Frameworks */,
 				FB61C5E418560D8B0041FF5A /* UIKit.framework in Frameworks */,
 				FB61C5E318560D8B0041FF5A /* Foundation.framework in Frameworks */,
 			);
@@ -108,8 +105,8 @@
 				2701810C185774D300511C8B /* KSharedSDKDefine.h */,
 				273BBED018562611001592FE /* KSharedSDK.h */,
 				273BBED118562611001592FE /* KSharedSDK.m */,
-				DC5F388C1859B5EE00E01186 /* shareMessageInfo.h */,
-				DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */,
+				DC5F388C1859B5EE00E01186 /* KSharedMessage.h */,
+				DC5F388D1859B5EE00E01186 /* KSharedMessage.m */,
 				DC5F38891859A6A100E01186 /* KSinaWeiboShared.h */,
 				DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */,
 				FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */,
@@ -158,7 +155,6 @@
 				FB61C5C218560D8B0041FF5A /* Foundation.framework */,
 				FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */,
 				FB61C5C618560D8B0041FF5A /* UIKit.framework */,
-				FB61C5E118560D8B0041FF5A /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,7 +288,7 @@
 				FBCFD94E1856C89E009919E8 /* KUnits.m in Sources */,
 				FB28255818574F9B002DF332 /* KHttpManager.m in Sources */,
 				FB61C5CF18560D8B0041FF5A /* main.m in Sources */,
-				DC5F388E1859B5EE00E01186 /* shareMessageInfo.m in Sources */,
+				DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */,
 				FB2EF18E1857630B00C65EAD /* KSinaWeiboOauthView.m in Sources */,
 				273BBED218562611001592FE /* KSharedSDK.m in Sources */,
 			);

@@ -11,7 +11,7 @@
 #import "KHttpManager.h"
 #import "KSinaWeiboOauthView.h"
 #import "KSharedSDKDefine.h"
-#import "shareMessageInfo.h"
+#import "KSharedMessage.h"
 
 #define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
 #define KSharedSDK_sinaWeibo_uid            @"KSharedSDK_sinaWeibo_uid"
@@ -39,6 +39,14 @@
     return instance;
 }
 
+
+- (void)clearToken
+{
+    [shareMessages removeAllObjects];
+    sinaWeibo_accessToken = nil;
+    sinaWeibo_uid = nil;
+}
+
 - (id)init
 {
     if (self = [super init]) {
@@ -59,7 +67,7 @@
     
     
     //添加到队列
-    shareMessageInfo *messageInfo = [[shareMessageInfo alloc] init];
+    KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
     messageInfo.contentText = text;
     if (completion) {
         messageInfo.completionBlock = completion;
@@ -117,7 +125,7 @@
         NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:-1 userInfo:nil];
         
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (shareMessageInfo *msgInfo in shareMessages) {
+        for (KSharedMessage *msgInfo in shareMessages) {
             
                 ((void(^)(NSError *))msgInfo.completionBlock)(error);
                 
@@ -152,7 +160,7 @@
     if (errorString.length) {
         NSError *error = [[NSError alloc] initWithDomain:errorString code:-1 userInfo:nil];
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (shareMessageInfo *msgInfo in shareMessages) {
+        for (KSharedMessage *msgInfo in shareMessages) {
             
             ((void(^)(NSError *))msgInfo.completionBlock)(error);
             
@@ -173,7 +181,7 @@
 - (void)checkSharedMessages
 {
     //判断队列中是否有SinaWeibo待分享数据
-    for (shareMessageInfo *msgInfo in shareMessages) {
+    for (KSharedMessage *msgInfo in shareMessages) {
 
         [self sinaWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
 
@@ -206,7 +214,7 @@
         if ([errorCode intValue] == 21315) {
             
             //添加到队列
-            shareMessageInfo *messageInfo = [[shareMessageInfo alloc] init];
+            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
             messageInfo.contentText = text;
             if (completion) {
                 messageInfo.completionBlock = completion;

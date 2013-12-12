@@ -22,7 +22,6 @@
 - (id)init
 {
     if (self = [super init]) {
-        //注册微信
         [WXApi registerApp:kWeChatAppKey];
     }
     return self;
@@ -42,30 +41,25 @@
 
 /*
  enum WXScene {
-    WXSceneSession  = 0,        // 聊天界面
-    WXSceneTimeline = 1,         // 朋友圈
-    WXSceneFavorite = 2,        // 收藏
+    WXSceneSession  = 0,        //聊天界面
+    WXSceneTimeline = 1,        //朋友圈
+    WXSceneFavorite = 2,        //收藏
  };
 */
 - (void) sendTextToWX:(NSString*)content scene:(int)scene
 {
-    if([WXApi isWXAppInstalled])
-    {
+    if([WXApi isWXAppInstalled]) {
         SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
         req.text = content;
         req.bText = YES;
         req.scene = scene;
-        
         [WXApi sendReq:req];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"本机未安装微信客户端"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil];
-        [alert show];
+        
+    } else {
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        if (_completionBlock) {
+            ((void(^)(NSError *))_completionBlock)(e);
+        }
     }
 }
 
@@ -80,25 +74,20 @@
         
         WXWebpageObject *ext = [WXWebpageObject object];
         ext.webpageUrl = url;
-        
         message.mediaObject = ext;
         
         SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
         req.bText = NO;
         req.message = message;
-        req.scene = scene;  //选择发送到朋友圈，默认值为WXSceneSession，发送到会话
+        req.scene = scene;
         
         [WXApi sendReq:req];
-    }
-    //如果没有安装微信，提示
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"本机未安装微信客户端"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil];
-        [alert show];
+        
+    } else {
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        if (_completionBlock) {
+            ((void(^)(NSError *))_completionBlock)(e);
+        }
     }
 }
 
@@ -107,24 +96,16 @@
     [WXApi handleOpenURL:url delegate:self];
 }
 
-#pragma mark - wx delegate
+#pragma mark ----- WXApiDelegate ----
 -(void) onReq:(BaseReq *)req
 {
-    //
+    
 }
 
 -(void) onResp:(BaseResp *)resp
 {
-    //微信
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {
-        /*NSString *strTitle = [NSString stringWithFormat:@"发送结果"];
-         NSString *strMsg = [NSString stringWithFormat:@"发送消息结果:%d", resp.errCode];
-         NSLog(@"%@",strMsg);
-         
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-         
-         [alert show];*/
         SendMessageToWXResp* r = (SendMessageToWXResp*)resp;
         NSError *e;
         if (r.errStr) {

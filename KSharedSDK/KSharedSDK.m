@@ -14,16 +14,7 @@
 
 @end
 
-@implementation KSharedSDK {
-}
-
-- (id)init
-{
-    if (self = [super init]) {
-
-    }
-    return self;
-}
+@implementation KSharedSDK
 
 + (instancetype)sharedSDKInstance
 {
@@ -35,7 +26,7 @@
 
 - (void)sharedClearTokens
 {
-    //TODO...
+    [[KSinaWeiboShared sharedSDKInstance] clearToken];
 }
 
 /**
@@ -46,7 +37,6 @@
     if (text.length == 0 || type >= SharedType_Unknown) {
         return NO;
     }
-    
 
     switch (type) {
         case SharedType_SinaWeibo:

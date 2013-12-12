@@ -13,6 +13,8 @@
 
 + (instancetype)sharedSDKInstance;
 
+- (void)clearToken;
+
 - (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion;
 
 - (void)sharedHandleURL:(NSString *)paramString;

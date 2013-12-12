@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface shareMessageInfo : NSObject
+@interface KSharedMessage : NSObject
 
 @property (strong, nonatomic) NSString *contentText;
 @property (strong, nonatomic) id completionBlock;

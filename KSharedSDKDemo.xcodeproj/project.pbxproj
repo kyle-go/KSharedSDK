@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
-		DC5F38851859A50900E01186 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5F38821859A50900E01186 /* libWeChatSDK.a */; };
 		DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F38871859A58D00E01186 /* KWeChatShared.m */; };
 		DC5F388B1859A6A100E01186 /* KSinaWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */; };
 		DC5F388E1859B5EE00E01186 /* shareMessageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */; };
@@ -26,6 +25,7 @@
 		FB61C5E218560D8B0041FF5A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5E118560D8B0041FF5A /* XCTest.framework */; };
 		FB61C5E318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
 		FB61C5E418560D8B0041FF5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C618560D8B0041FF5A /* UIKit.framework */; };
+		FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */; };
 		FBCFD94E1856C89E009919E8 /* KUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = FBCFD94D1856C89E009919E8 /* KUnits.m */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,6 @@
 		2701810C185774D300511C8B /* KSharedSDKDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSharedSDKDefine.h; sourceTree = "<group>"; };
 		273BBED018562611001592FE /* KSharedSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSharedSDK.h; sourceTree = "<group>"; };
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
-		DC5F38821859A50900E01186 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		DC5F38831859A50900E01186 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		DC5F38841859A50900E01186 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		DC5F38861859A58D00E01186 /* KWeChatShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWeChatShared.h; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		FB61C5DA18560D8B0041FF5A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FB61C5E018560D8B0041FF5A /* KSharedSDKDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSharedSDKDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB61C5E118560D8B0041FF5A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		FBCFD94C1856C89E009919E8 /* KUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KUnits.h; sourceTree = "<group>"; };
 		FBCFD94D1856C89E009919E8 /* KUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KUnits.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,7 +83,7 @@
 			files = (
 				FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */,
 				FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */,
-				DC5F38851859A50900E01186 /* libWeChatSDK.a in Frameworks */,
+				FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */,
 				FB61C5C318560D8B0041FF5A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,7 +127,7 @@
 		DC5F38811859A50900E01186 /* WeChatSDK_1.4.2.1 */ = {
 			isa = PBXGroup;
 			children = (
-				DC5F38821859A50900E01186 /* libWeChatSDK.a */,
+				FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */,
 				DC5F38831859A50900E01186 /* WXApi.h */,
 				DC5F38841859A50900E01186 /* WXApiObject.h */,
 			);
@@ -418,7 +418,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jonear/Documents/workspace/KSharedSDK/KSharedSDK/WeChatSDK_1.4.2.1,
+					"$(SRCROOT)/KSharedSDK/WeChatSDK_1.4.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -436,7 +436,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/jonear/Documents/workspace/KSharedSDK/KSharedSDK/WeChatSDK_1.4.2.1,
+					"$(SRCROOT)/KSharedSDK/WeChatSDK_1.4.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

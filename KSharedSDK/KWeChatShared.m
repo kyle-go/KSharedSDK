@@ -108,12 +108,12 @@
 }
 
 #pragma mark - wx delegate
--(void) onReq:(BaseReq*)req
+-(void) onReq:(BaseReq *)req
 {
     //
 }
 
--(void) onResp:(id)resp
+-(void) onResp:(BaseResp *)resp
 {
     //微信
     if([resp isKindOfClass:[SendMessageToWXResp class]])

@@ -70,7 +70,7 @@
             if (completion) {
                 [shareMessages addObject:completion];
             } else {
-                [shareMessages addObject:@{}];
+                [shareMessages addObject:^{}];
             }
             
             if (!sinaWeibo_accessToken || !sinaWeibo_uid) {
@@ -133,10 +133,8 @@
         for (NSInteger i=0; i<shareMessages.count; i+=3) {
             SharedType sharedType = [[shareMessages objectAtIndex:i+1] longValue];
             if (sharedType == SharedType_SinaWeibo) {
-                void(^completion)(NSError *) = [shareMessages objectAtIndex:i+2];
-                if (completion) {
-                    completion(error);
-                }
+                ((void(^)(NSError *))[shareMessages objectAtIndex:i+2])(error);
+                
                 [shareMessages removeObjectsInRange:NSMakeRange(i, 3)];
                 i-=3;
             }
@@ -196,11 +194,8 @@
             //重新加入到队列中
             [shareMessages addObject:text];
             [shareMessages addObject:[[NSNumber alloc] initWithLong:SharedType_SinaWeibo]];
-            if (completion) {
-                [shareMessages addObject:completion];
-            } else {
-                [shareMessages addObject:@{}];
-            }
+            [shareMessages addObject:completion];
+ 
             
             //重新请求token
             [self getNewSinaWeiboToken];
@@ -216,17 +211,13 @@
             error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
         }
 
-        if (completion) {
-            completion(error);
-        }
+        completion(error);
         [self checkSharedMessages];
     };
     
     void (^failure_callback)(NSError *error) =
     ^(NSError *error){
-        if (completion) {
-            completion(error);
-        }
+        completion(error);
         [self checkSharedMessages];
     };
     

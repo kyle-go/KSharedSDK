@@ -41,9 +41,23 @@
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
+    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeixinFriend completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage weixin failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage weixin succeed.");
+        }
+    }];
 }
 
 - (IBAction)sendWeixinCircel:(id)sender {
+    [[KSharedSDK sharedSDKInstance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeixinCircel completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage weixin failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage weixin succeed.");
+        }
+    }];
 }
 
 - (IBAction)sendQQFriend:(id)sender {

@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WXApi.h"
 
-@interface KWeChatShared : NSObject
+@interface KWeChatShared : NSObject <WXApiDelegate>
+
+@property (strong, nonatomic) NSObject* completionBlock;
+
++ (instancetype)sharedSDKInstance;
+
+- (void)sharedMessageToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
+
+- (void)sharedMessageToCircel:(NSString *)text completion:(void(^)(NSError *))completion;
+
+- (void)sharedHandleURL:(NSURL *)url;
 
 @end

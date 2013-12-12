@@ -106,10 +106,10 @@
 			children = (
 				DC5F38811859A50900E01186 /* WeChatSDK_1.4.2.1 */,
 				2701810C185774D300511C8B /* KSharedSDKDefine.h */,
-				DC5F388C1859B5EE00E01186 /* shareMessageInfo.h */,
-				DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */,
 				273BBED018562611001592FE /* KSharedSDK.h */,
 				273BBED118562611001592FE /* KSharedSDK.m */,
+				DC5F388C1859B5EE00E01186 /* shareMessageInfo.h */,
+				DC5F388D1859B5EE00E01186 /* shareMessageInfo.m */,
 				DC5F38891859A6A100E01186 /* KSinaWeiboShared.h */,
 				DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */,
 				FB2EF18C1857630B00C65EAD /* KSinaWeiboOauthView.h */,
@@ -415,6 +415,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "KSharedSDKDemo/KSharedSDKDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonear/Documents/workspace/KSharedSDK/KSharedSDK/WeChatSDK_1.4.2.1,
@@ -432,6 +433,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "KSharedSDKDemo/KSharedSDKDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/jonear/Documents/workspace/KSharedSDK/KSharedSDK/WeChatSDK_1.4.2.1,

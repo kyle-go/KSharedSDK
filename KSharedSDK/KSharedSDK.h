@@ -36,7 +36,7 @@ typedef NSUInteger SharedType;
 - (void)sharedClearTokens;
 
 /**
- *@description 分享消息
+ *@description 分享文本消息
  */
 - (BOOL)sharedMessage:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion;
 

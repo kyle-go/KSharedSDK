@@ -48,7 +48,6 @@
     webView.tag = webViewTag;
     webView.delegate = self;
     webView.scalesPageToFit = NO;
-    webView.hidden = YES;
     [view addSubview:webView];
     
     //指示器
@@ -90,6 +89,10 @@
     NSURL *url = [KUnits generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     UIWebView * webView= (UIWebView *)[view viewWithTag:webViewTag];
+    [view viewWithTag:activityIndicatorViewTag].hidden = NO;
+    [view viewWithTag:activityIndicatorViewTag].alpha = 1.0;
+    webView.hidden = YES;
+    webView.alpha = 0.0;
     [webView loadRequest:request];
 }
 
@@ -116,8 +119,15 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [view viewWithTag:activityIndicatorViewTag].hidden = YES;
-    webView.hidden = NO;
+    [UIView animateWithDuration:0.8
+                     animations:^{
+                         [view viewWithTag:activityIndicatorViewTag].hidden = YES;
+                         [view viewWithTag:activityIndicatorViewTag].alpha = 0.0;
+                         
+                         webView.hidden = NO;
+                         webView.alpha = 1.0;
+                     }
+                     completion:nil];
     
     //disable selection
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];

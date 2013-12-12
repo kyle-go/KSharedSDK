@@ -122,7 +122,7 @@
     
     //未安装客户端，发请求验证
     if (!ssoLoggingIn) {
-        KSinaWeiboOauthView *oathView = [[KSinaWeiboOauthView alloc] init];
+        KSinaWeiboOauthView *oathView = [KSinaWeiboOauthView KSinaWeiboOauthViewInstance];
         oathView.delegate = self;
         [oathView show];
     }

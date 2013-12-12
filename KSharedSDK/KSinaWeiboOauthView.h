@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) id<KSinaWeiboOauthDelegate> delegate;
 
++ (instancetype)KSinaWeiboOauthViewInstance;
 - (void)show;
 
 @end

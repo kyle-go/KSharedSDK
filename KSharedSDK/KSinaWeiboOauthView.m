@@ -11,18 +11,24 @@
 #import "KUnits.h"
 #import "KHttpManager.h"
 
+#define webViewTag                  9527
+#define activityIndicatorViewTag    9528
+
 @interface KSinaWeiboOauthView() <UIWebViewDelegate>
 
 @end
 
 @implementation KSinaWeiboOauthView {
-    UIWindow    *keyWindow;
-    
-    UIView      *bgView;
-    UIWebView   *webView;
-    UIButton    *dismissButton;
-    UILabel     *loading;
-    UIActivityIndicatorView *indicatorView;
+    UIWindow *keyWindow;
+    UIView *view;
+}
+
++ (instancetype)KSinaWeiboOauthViewInstance
+{
+    static dispatch_once_t once;
+    static id instance;
+    dispatch_once(&once, ^{instance = self.new;});
+    return instance;
 }
 
 - (void)show
@@ -33,33 +39,47 @@
         keyWindow = [windows lastObject];
     }
     
-    //背景图片
     CGRect screenBounds = [KUnits XYScreenBounds];
-    bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenBounds.size.width, screenBounds.size.height)];
-    bgView.backgroundColor = [UIColor blackColor];
-    bgView.opaque = YES;
-    bgView.alpha = 0.8f;
-    
-    //加载中...
-    loading = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, screenBounds.size.width, 60)];
-    loading.backgroundColor = [UIColor clearColor];
-    loading.textColor = [UIColor lightGrayColor];
-    loading.text = @"玩命加载中...";
-    loading.font = [UIFont systemFontOfSize:28];
-    loading.textAlignment = NSTextAlignmentCenter;
-    
-    //指示器
-    indicatorView = [[UIActivityIndicatorView alloc] initWithFrame : CGRectMake(0.0f, 0.0f, 88.0f, 88.0f)] ;
-    [indicatorView setCenter: CGPointMake(bgView.center.x, bgView.center.y - 70)];
-    [indicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleWhiteLarge];
-    [indicatorView startAnimating];
+    view = [[UIView alloc] initWithFrame:screenBounds];
+    view.backgroundColor = [UIColor lightGrayColor];
     
     //网页视图
-    webView = [[UIWebView alloc] initWithFrame:screenBounds];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, screenBounds.size.width, screenBounds.size.height)];
+    webView.tag = webViewTag;
     webView.delegate = self;
     webView.scalesPageToFit = NO;
-    webView.scrollView.scrollEnabled = NO;
+    webView.hidden = YES;
+    [view addSubview:webView];
     
+    //指示器
+    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithFrame : CGRectMake(0.0f, 0.0f, 88.0f, 88.0f)];
+    indicatorView.tag = activityIndicatorViewTag;
+    [indicatorView setCenter: CGPointMake(view.center.x, view.center.y - 70)];
+    [indicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleWhiteLarge];
+    [indicatorView startAnimating];
+    [view addSubview:indicatorView];
+    
+    //加载视图
+    UIViewController *viewController = [[UIViewController alloc] init];
+    viewController.title = @"登录新浪微博";
+    viewController.view = view;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain target:self action:@selector(webViewLoadRequest)];
+    
+    //发起请求
+    [self webViewLoadRequest];
+    
+    [keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)dismiss
+{
+    [keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)webViewLoadRequest
+{
     NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
                             kSinaWeiboAppKey,                @"client_id",       //申请的appkey
                             kSinaWeiboRedirectURI,           @"redirect_uri",    //申请时的重定向地址
@@ -67,37 +87,10 @@
                             @"all",                          @"scope",
                             @"true",                         @"forcelogin",
                             nil];
-    
     NSURL *url = [KUnits generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
-    
-    //退出按钮，暂时这样处理吧，以后这里用动画效果来处理一下
-    dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 385, 200, 50)];
-    [dismissButton setTitle:@"取消登录" forState:UIControlStateNormal];
-    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:0.6]];
-    [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    UIWebView * webView= (UIWebView *)[view viewWithTag:webViewTag];
     [webView loadRequest:request];
-    
-    [keyWindow addSubview:bgView];
-    [keyWindow addSubview:loading];
-    [keyWindow addSubview:indicatorView];
-    [keyWindow addSubview:dismissButton];
-}
-
-- (void)dismiss
-{
-    [bgView removeFromSuperview];
-    [loading removeFromSuperview];
-    [indicatorView removeFromSuperview];
-    [dismissButton removeFromSuperview];
-    [webView removeFromSuperview];
-
-    bgView = nil;
-    webView = nil;
-    dismissButton = nil;
-    loading = nil;
-    indicatorView = nil;
 }
 
 #pragma mark --- UIWebViewDelegate -----------
@@ -121,12 +114,10 @@
     
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView2
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [loading removeFromSuperview];
-    [indicatorView removeFromSuperview];
-    [keyWindow insertSubview:webView aboveSubview:bgView];
-    [dismissButton setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:70.0/255.0 blue:70.0/255.0 alpha:1.0]];
+    [view viewWithTag:activityIndicatorViewTag].hidden = YES;
+    webView.hidden = NO;
     
     //disable selection
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
@@ -136,7 +127,6 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [indicatorView removeFromSuperview];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请检查网络" message:@"打开网页失败,请检查网络!" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alert show];
     [self dismiss];

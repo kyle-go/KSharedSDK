@@ -2,7 +2,28 @@
 轻松一键分享内容到 新浪微博，腾讯微博，QQ好友，微信朋友圈，微信好友。
 
 ##如何使用？
-balabalbalbal。。。
+①修改KSharedSDKDefine.h中相关宏定义。
+
+②在AppDelegate.h实现方法：
+
+    - (BOOL)application:(UIApplication *)application 
+              openURL:(NSURL *)url 
+              sourceApplication:(NSString *)sourceApplication
+              annotation:(id)annotation
+      {
+        return [[KSharedSDK kSharedSDKInstance] sharedHandleURL:url];
+      }
+
+② 发送一条消息
+
+    [[KSharedSDK kSharedSDKInstance] sharedMessage:@"发布一条新微博！by KSharedSDK." 
+                                      type:SharedType_SinaWeibo
+                                      completion:^(NSError *e){
+                                        if (e) {
+                                            NSLog(@"sharedMessage failed. Error = %@", e);
+                                        } else {
+                                            NSLog(@"sharedMessage succeed.");
+                                      }}];
 
 ##注意事项
 ####1.关于新浪微博

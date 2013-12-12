@@ -113,7 +113,7 @@
     //
 }
 
--(void) onResp:(NSObject*)resp
+-(void) onResp:(id)resp
 {
     //微信
     if([resp isKindOfClass:[SendMessageToWXResp class]])

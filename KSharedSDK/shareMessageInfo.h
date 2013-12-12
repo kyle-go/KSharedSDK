@@ -10,7 +10,7 @@
 
 @interface shareMessageInfo : NSObject
 
-@property (strong, nonatomic) NSString* contentText;
-@property (strong, nonatomic) NSObject* completionBlock;
+@property (strong, nonatomic) NSString *contentText;
+@property (strong, nonatomic) id completionBlock;
 
 @end

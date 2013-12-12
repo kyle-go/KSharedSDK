@@ -11,7 +11,7 @@
 
 @interface KWeChatShared : NSObject <WXApiDelegate>
 
-@property (strong, nonatomic) NSObject* completionBlock;
+@property (strong, nonatomic) id completionBlock;
 
 + (instancetype)sharedSDKInstance;
 

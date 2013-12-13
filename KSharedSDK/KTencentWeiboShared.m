@@ -174,12 +174,12 @@
         error = nil;
         NSString *errorString = [json objectForKey:@"msg"];
         NSNumber *errorCode = [json objectForKey:@"errcode"];
-        if (errorString && errorCode) {
+        if (![errorString isEqualToString:@"ok"] && [errorCode intValue] != 0) {
             error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
         }
         
         //token已过期
-        if ([errorCode intValue] == 21315) {
+        if ([errorCode intValue] == 37) {
             
             //添加到队列
             KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
@@ -197,14 +197,18 @@
             return ;
         }
         
-        //未通过审核的应用且未加入到测试帐号中
-        //if ([errorCode intValue] == 21321) {
-        //    error = [[NSError alloc] initWithDomain:@"此帐号未加入到应用测试帐号列表." code:[errorCode intValue] userInfo:nil];
-        //}
+        //表示有过多脏话，请认真检查content内容
+        if ([errorCode intValue] == 4) {
+            error = [[NSError alloc] initWithDomain:@"表示有过多脏话，请认真检查content内容." code:[errorCode intValue] userInfo:nil];
+        }
         //不能连续发送相同内容的微博
-        //if([errorCode intValue] == 20019) {
-        //    error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
-        //}
+        if([errorCode intValue] == 13) {
+            error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //更多错误码信息请参考：
+        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
+        //http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%BE%AE%E5%8D%9A%E6%8E%A5%E5%8F%A3/%E5%8F%91%E8%A1%A8%E4%B8%80%E6%9D%A1%E5%BE%AE%E5%8D%9A%E4%BF%A1%E6%81%AF#.E8.AF.B7.E6.B1.82.E7.A4.BA.E4.BE.8B
         
         completion(error);
         [self checkSharedMessages];

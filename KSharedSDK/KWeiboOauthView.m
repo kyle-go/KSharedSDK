@@ -51,6 +51,7 @@
     webView.tag = webViewTag;
     webView.delegate = self;
     webView.scalesPageToFit = NO;
+    webView.backgroundColor = [UIColor darkGrayColor];
     [view addSubview:webView];
     
     //指示器
@@ -64,14 +65,14 @@
     //加载视图
     UIViewController *viewController = [[UIViewController alloc] init];
     if (weiboType == SharedType_SinaWeibo) {
-        viewController.title = @"登录新浪微博";
+        viewController.title = @"新浪微博登录";
     } else if (weiboType == SharedType_TencentWeibo) {
-        viewController.title = @"登录腾讯微博";
+        viewController.title = @"腾讯微博登录";
     }
     viewController.view = view;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
-    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
-    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain target:self action:@selector(webViewLoadRequest)];
+    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(webViewLoadRequest)];
     
     //发起请求
     [self webViewLoadRequest];

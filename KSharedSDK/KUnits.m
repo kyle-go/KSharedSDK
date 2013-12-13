@@ -31,8 +31,14 @@
             [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escapedValue]];
 		}
 		
+        NSString* url;
 		NSString* query = [pairs componentsJoinedByString:@"&"];
-		NSString* url = [NSString stringWithFormat:@"%@?%@", baseURL, query];
+        if (baseURL.length) {
+            url = [NSString stringWithFormat:@"%@?%@", baseURL, query];
+        } else {
+            url = query;
+        }
+		
 		return [NSURL URLWithString:url];
 	} else {
 		return [NSURL URLWithString:baseURL];

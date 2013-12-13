@@ -48,7 +48,7 @@
     NSRange range = [[url absoluteString] rangeOfString:@"?"];
     if (range.location != NSNotFound) {
         NSString *length = [NSString stringWithFormat:@"%ld", (long)([url absoluteString].length - range.location - 1)];
-        [_request setValue:length forHTTPHeaderField:@"content-length"];
+        [_request setValue:length forHTTPHeaderField:@"Content-Length"];
     }
     
     return _request;

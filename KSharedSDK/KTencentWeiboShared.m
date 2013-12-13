@@ -143,7 +143,7 @@
     //判断队列中是否有SinaWeibo待分享数据
     for (KSharedMessage *msgInfo in shareMessages) {
         
-        [self sinaWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
+        [self tencentWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
         
         [shareMessages removeObject:msgInfo];
         
@@ -151,7 +151,7 @@
     }
 }
 
-- (void)sinaWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)tencentWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(access_token.length);
     assert(openkey.length);
@@ -164,7 +164,12 @@
         NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         
-        NSLog(@"%@", json);
+        //解析数据失败了
+        if (error) {
+            completion(error);
+            [self checkSharedMessages];
+            return ;
+        }
         
         error = nil;
         NSString *errorString = [json objectForKey:@"msg"];
@@ -211,33 +216,25 @@
         [self checkSharedMessages];
     };
     
-    NSString* lencodeText = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                                   NULL, /* allocator */
-                                                                                                   (CFStringRef)text,
-                                                                                                   NULL, /* charactersToLeaveUnescaped */
-                                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                   kCFStringEncodingUTF8));
-    
     //发一条新微博
     KHttpManager *manager = [KHttpManager manager];
-    NSDictionary *params = @{@"access_token":access_token,
-                             @"appkey":kTencentWeiboAppKey,
-                             @"appsecret":kTencentWeiboAppSecret,
-                             @"openid":openid,
-                             @"openkey":openkey,
-                             @"format":@"json",
-                             @"content":lencodeText};
-
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    assert(jsonData.length == jsonString.length);
+    NSDictionary *bodyParam = @{@"oauth_consumer_key":kTencentWeiboAppKey,
+                                @"access_token":access_token,
+                                @"openid":openid,
+                                @"clientip":@"10.10.1.31",
+                                @"oauth_version":@"2.a",
+                                @"scope":@"all",
+                                @"clientip":@"10.10.1.31",
+                                @"format":@"json",
+                                @"content":text};
+    
+    NSString *body = [[KUnits generateURL:nil params:bodyParam] absoluteString];
     
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    [request setValue:[NSString stringWithFormat:@"%ld", (long)jsonData.length] forHTTPHeaderField:@"content-length"];
-    [request setHTTPBody:jsonData];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
     
     [manager start];
 }

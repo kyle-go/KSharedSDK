@@ -48,10 +48,10 @@
             [[KTencentWeiboShared Instance] sharedMessage:text completion:completion];
             break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared sharedSDKInstance] sharedMessageToFriend:text completion:completion];
+            [[KWeChatShared Instance] sharedMessageToFriend:text completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared sharedSDKInstance] sharedMessageToCircel:text completion:completion];
+            [[KWeChatShared Instance] sharedMessageToCircel:text completion:completion];
             break;
         default:
             break;
@@ -68,7 +68,7 @@
     //weChat
     NSRange range = [paramString rangeOfString:@"wechat"];
     if (range.location != NSNotFound) {
-        [[KWeChatShared sharedSDKInstance] sharedHandleURL:url];
+        [[KWeChatShared Instance] sharedHandleURL:url];
         return YES;
     }
     

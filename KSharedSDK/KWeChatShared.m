@@ -8,10 +8,17 @@
 
 #import "KWeChatShared.h"
 #import "KSharedSDKDefine.h"
+#import "WXApi.h"
 
-@implementation KWeChatShared
+@interface KWeChatShared() <WXApiDelegate>
 
-+ (instancetype)sharedSDKInstance
+@end
+
+@implementation KWeChatShared {
+    void(^_completionBlock)(NSError *);
+}
+
++ (instancetype)Instance
 {
     static dispatch_once_t once;
     static id instance;
@@ -23,6 +30,7 @@
 {
     if (self = [super init]) {
         [WXApi registerApp:kWeChatAppKey];
+        _completionBlock = ^(NSError* e){};
     }
     return self;
 }
@@ -57,9 +65,7 @@
         
     } else {
         NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
-        if (_completionBlock) {
-            ((void(^)(NSError *))_completionBlock)(e);
-        }
+        _completionBlock(e);
     }
 }
 
@@ -85,9 +91,7 @@
         
     } else {
         NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
-        if (_completionBlock) {
-            ((void(^)(NSError *))_completionBlock)(e);
-        }
+        _completionBlock(e);
     }
 }
 
@@ -111,11 +115,8 @@
         if (r.errStr) {
             e = [NSError errorWithDomain:r.errStr code:r.errCode userInfo:nil];
         }
-        if (_completionBlock) {
-            ((void(^)(NSError *))_completionBlock)(e);
-        }
+        _completionBlock(e);
     }
 }
-
 
 @end

@@ -59,6 +59,9 @@
     state = @"";
     name = @"";
     nick = @"";
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_tencentWeibo_accessToken];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_tencentWeibo_openid];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_tencentWeibo_openkey];
 }
 
 - (id)init
@@ -88,13 +91,13 @@
     }
     [shareMessages addObject:messageInfo];
     
-    if (!access_token || !openkey || !openid) {
+    if (access_token.length == 0 || openkey.length == 0 || openid.length == 0) {
         access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_tencentWeibo_accessToken];
         openkey = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_tencentWeibo_openkey];
         openid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_tencentWeibo_openid];
     }
     
-    if (access_token && openid && openkey) {
+    if (access_token.length && openid.length && openkey.length) {
         [self checkSharedMessages];
         return YES;
     }

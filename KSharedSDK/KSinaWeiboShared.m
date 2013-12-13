@@ -44,6 +44,9 @@
     [shareMessages removeAllObjects];
     access_token = nil;
     uid = nil;
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_sinaWeibo_accessToken];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_sinaWeibo_uid];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (id)init
@@ -75,12 +78,12 @@
     }
     [shareMessages addObject:messageInfo];
     
-    if (!access_token || !uid) {
+    if (access_token.length == 0 || uid.length == 0) {
         access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
         uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
     }
     
-    if (access_token && uid) {
+    if (access_token.length && uid.length) {
         [self checkSharedMessages];
         return YES;
     }
@@ -110,7 +113,7 @@
     }
     
     //成功获取token
-    if (temp_uid && access_token) {
+    if (temp_uid && temp_access_token) {
         uid = temp_uid;
         access_token = temp_access_token;
         [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:KSharedSDK_sinaWeibo_accessToken];

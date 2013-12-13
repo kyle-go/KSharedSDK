@@ -20,7 +20,7 @@
 //腾讯微博
 #define kTencentWeiboAppKey         @"801455797"
 #define kTencentWeiboAppSecret      @"c2be259e4dcbf29f55b0e1856c639674"
-#define kTencentWeiboRedirectURI    @"http://KSharedSDK.farbox.com/"    //注意这里最好末尾加上一个 "/"
+#define kTencentWeiboRedirectURI    @"http://KSharedSDK.farbox.com"
 
 //微信
 #define kWeChatAppKey               @"wx493ea8c8fd6a1d5d"

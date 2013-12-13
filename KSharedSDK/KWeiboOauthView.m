@@ -133,7 +133,7 @@
         return YES;
         
     } else if (weiboType == SharedType_TencentWeibo) {
-        NSString *searchString = [[NSString alloc] initWithFormat:@"%@#", kTencentWeiboRedirectURI];
+        NSString *searchString = [[NSString alloc] initWithFormat:@"%@", kTencentWeiboRedirectURI];
         NSRange range = [url rangeOfString:searchString options:NSCaseInsensitiveSearch];
         if (range.location == NSNotFound) {
             return YES;

@@ -457,7 +457,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/KSharedSDK/QQSDK_2.0.1",
-					/Users/kyle/Desktop/KSharedSDK2/KSharedSDK/QQSDK_2.0.1,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
@@ -484,7 +483,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/KSharedSDK/QQSDK_2.0.1",
-					/Users/kyle/Desktop/KSharedSDK2/KSharedSDK/QQSDK_2.0.1,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";

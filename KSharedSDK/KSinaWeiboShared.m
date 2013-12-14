@@ -94,7 +94,7 @@
 }
 
 
-- (void)sharedHandleURL:(NSString *)paramString
+- (BOOL)sharedHandleURL:(NSString *)paramString
 {
     NSString *temp_uid;
     NSString *temp_access_token;
@@ -121,8 +121,9 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self checkSharedMessages];
-        
-        //用户取消了
+        return YES;
+    
+    //用户取消了
     } else {
         NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:-1 userInfo:nil];
         
@@ -133,8 +134,10 @@
                 
                 [shareMessages removeObject:msgInfo];
         }
+        return YES;
     }
-
+    
+    return FALSE;
 }
 
 - (void)getNewToken

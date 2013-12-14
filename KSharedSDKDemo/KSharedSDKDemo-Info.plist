@@ -42,6 +42,16 @@
 				<string>wx493ea8c8fd6a1d5d</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>qqChat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>QQ100576806</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>

@@ -56,7 +56,7 @@
 */
 - (void) sendTextToWX:(NSString*)content scene:(int)scene
 {
-    if([WXApi isWXAppInstalled]) {
+    if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
         SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
         req.text = content;
         req.bText = YES;
@@ -71,7 +71,7 @@
 
 - (void) sendMsgToWX:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
 {
-    if([WXApi isWXAppInstalled])
+    if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
     {
         WXMediaMessage *message = [WXMediaMessage message];
         message.title = title;
@@ -95,18 +95,18 @@
     }
 }
 
-- (void)sharedHandleURL:(NSURL *)url
+- (BOOL)sharedHandleURL:(NSURL *)url
 {
-    [WXApi handleOpenURL:url delegate:self];
+    return [WXApi handleOpenURL:url delegate:self];
 }
 
 #pragma mark ----- WXApiDelegate ----
--(void) onReq:(BaseReq *)req
+- (void)onReq:(BaseReq *)req
 {
     
 }
 
--(void) onResp:(BaseResp *)resp
+- (void)onResp:(BaseResp *)resp
 {
     if([resp isKindOfClass:[SendMessageToWXResp class]])
     {

@@ -10,6 +10,10 @@
 		272C61961859FD50003C1BCA /* KTencentWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C61951859FD50003C1BCA /* KTencentWeiboShared.m */; };
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		27BF52BC185B557500BA16F7 /* KHookObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */; };
+		27F5CE82185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */; };
+		27F5CE83185CA693004DA59B /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */; };
+		27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */; };
+		27F5CE89185CA804004DA59B /* KQQChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5CE88185CA804004DA59B /* KQQChatShared.m */; };
 		DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F38871859A58D00E01186 /* KWeChatShared.m */; };
 		DC5F388B1859A6A100E01186 /* KSinaWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388A1859A6A100E01186 /* KSinaWeiboShared.m */; };
 		DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F388D1859B5EE00E01186 /* KSharedMessage.m */; };
@@ -48,6 +52,12 @@
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
 		27BF52BA185B557500BA16F7 /* KHookObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHookObjectWrapper.h; sourceTree = "<group>"; };
 		27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHookObjectWrapper.m; sourceTree = "<group>"; };
+		27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = KSharedSDK/QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = KSharedSDK/QQSDK_2.0.1/TencentOpenAPI.framework; sourceTree = "<group>"; };
+		27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		27F5CE86185CA76E004DA59B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = KSharedSDK/QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		27F5CE87185CA804004DA59B /* KQQChatShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KQQChatShared.h; sourceTree = "<group>"; };
+		27F5CE88185CA804004DA59B /* KQQChatShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KQQChatShared.m; sourceTree = "<group>"; };
 		DC5F38831859A50900E01186 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		DC5F38841859A50900E01186 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		DC5F38861859A58D00E01186 /* KWeChatShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWeChatShared.h; sourceTree = "<group>"; };
@@ -85,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */,
+				27F5CE83185CA693004DA59B /* TencentOpenAPI.framework in Frameworks */,
 				FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */,
 				FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */,
 				FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */,
@@ -121,6 +133,8 @@
 				272C61951859FD50003C1BCA /* KTencentWeiboShared.m */,
 				DC5F38861859A58D00E01186 /* KWeChatShared.h */,
 				DC5F38871859A58D00E01186 /* KWeChatShared.m */,
+				27F5CE87185CA804004DA59B /* KQQChatShared.h */,
+				27F5CE88185CA804004DA59B /* KQQChatShared.m */,
 				FBCFD94C1856C89E009919E8 /* KUnits.h */,
 				FBCFD94D1856C89E009919E8 /* KUnits.m */,
 				FB28255618574F9B002DF332 /* KHttpManager.h */,
@@ -142,6 +156,7 @@
 		FB61C5B618560D8B0041FF5A = {
 			isa = PBXGroup;
 			children = (
+				27F5CE86185CA76E004DA59B /* TencentOpenApi_IOS_Bundle.bundle */,
 				FB61C5C818560D8B0041FF5A /* KSharedSDKDemo */,
 				FB61C5C118560D8B0041FF5A /* Frameworks */,
 				FB61C5C018560D8B0041FF5A /* Products */,
@@ -160,6 +175,9 @@
 		FB61C5C118560D8B0041FF5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */,
+				27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */,
+				27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */,
 				FB61C5C218560D8B0041FF5A /* Foundation.framework */,
 				FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */,
 				FB61C5C618560D8B0041FF5A /* UIKit.framework */,
@@ -242,6 +260,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = kyle;
 				TargetAttributes = {
+					FB61C5BE18560D8B0041FF5A = {
+						DevelopmentTeam = E4U9526FAP;
+					};
 					FB61C5DF18560D8B0041FF5A = {
 						TestTargetID = FB61C5BE18560D8B0041FF5A;
 					};
@@ -271,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F5CE82185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */,
 				FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */,
 				FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */,
@@ -301,6 +323,7 @@
 				FB61C5CF18560D8B0041FF5A /* main.m in Sources */,
 				DC5F388E1859B5EE00E01186 /* KSharedMessage.m in Sources */,
 				FB2EF18E1857630B00C65EAD /* KWeiboOauthView.m in Sources */,
+				27F5CE89185CA804004DA59B /* KQQChatShared.m in Sources */,
 				273BBED218562611001592FE /* KSharedSDK.m in Sources */,
 				27BF52BC185B557500BA16F7 /* KHookObjectWrapper.m in Sources */,
 			);
@@ -421,6 +444,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/kyle/Desktop/KSharedSDK/KSharedSDK/QQSDK_2.0.1,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "KSharedSDKDemo/KSharedSDKDemo-Info.plist";
@@ -430,6 +459,7 @@
 					"$(SRCROOT)/KSharedSDK/WeChatSDK_1.4.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -440,6 +470,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/kyle/Desktop/KSharedSDK/KSharedSDK/QQSDK_2.0.1,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
 				INFOPLIST_FILE = "KSharedSDKDemo/KSharedSDKDemo-Info.plist";
@@ -449,6 +485,7 @@
 					"$(SRCROOT)/KSharedSDK/WeChatSDK_1.4.2.1",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

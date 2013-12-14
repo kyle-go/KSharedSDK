@@ -11,6 +11,7 @@
 #import "KSinaWeiboShared.h"
 #import "KTencentWeiboShared.h"
 #import "KWeChatShared.h"
+#import "KQQChatShared.h"
 
 @interface KSharedSDK ()
 
@@ -53,6 +54,12 @@
         case SharedType_WeChatCircel:
             [[KWeChatShared Instance] sharedMessageToCircel:text completion:completion];
             break;
+        case SharedType_QQFriend:
+            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
+            break;
+        case SharedType_QQZone:
+            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
+            break;
         default:
             break;
     }
@@ -68,15 +75,13 @@
     //weChat
     NSRange range = [paramString rangeOfString:@"wechat"];
     if (range.location != NSNotFound) {
-        [[KWeChatShared Instance] sharedHandleURL:url];
-        return YES;
+        return [[KWeChatShared Instance] sharedHandleURL:url];
     }
     
     //sinaWeibo
     range = [paramString rangeOfString:kAppURLScheme];
     if (range.location != NSNotFound) {
-        [[KSinaWeiboShared Instance] sharedHandleURL:paramString];
-        return YES;
+        return [[KSinaWeiboShared Instance] sharedHandleURL:paramString];
     }
     
     return NO;

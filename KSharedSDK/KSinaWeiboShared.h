@@ -17,6 +17,6 @@
 
 - (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedHandleURL:(NSString *)paramString;
+- (BOOL)sharedHandleURL:(NSString *)paramString;
 
 @end

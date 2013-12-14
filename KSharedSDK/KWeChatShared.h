@@ -16,6 +16,6 @@
 
 - (void)sharedMessageToCircel:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedHandleURL:(NSURL *)url;
+- (BOOL)sharedHandleURL:(NSURL *)url;
 
 @end

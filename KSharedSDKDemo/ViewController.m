@@ -68,8 +68,22 @@
 }
 
 - (IBAction)sendQQFriend:(id)sender {
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQFriend completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage QQFriend failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage QQFriend succeed.");
+        }
+    }];
 }
 
 - (IBAction)sendQQZone:(id)sender {
+    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQZone completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage QQZone failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage QQZone succeed.");
+        }
+    }];
 }
 @end

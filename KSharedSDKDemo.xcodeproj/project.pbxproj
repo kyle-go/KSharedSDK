@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		272C61961859FD50003C1BCA /* KTencentWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C61951859FD50003C1BCA /* KTencentWeiboShared.m */; };
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
+		27A85B97185CC56100B2257E /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A85B95185CC56100B2257E /* TencentOpenAPI.framework */; };
+		27A85B99185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27A85B98185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle */; };
 		27BF52BC185B557500BA16F7 /* KHookObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */; };
-		27F5CE82185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */; };
-		27F5CE83185CA693004DA59B /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */; };
 		27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */; };
 		27F5CE89185CA804004DA59B /* KQQChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5CE88185CA804004DA59B /* KQQChatShared.m */; };
 		DC5F38881859A58D00E01186 /* KWeChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F38871859A58D00E01186 /* KWeChatShared.m */; };
@@ -50,10 +50,10 @@
 		272C61951859FD50003C1BCA /* KTencentWeiboShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTencentWeiboShared.m; sourceTree = "<group>"; };
 		273BBED018562611001592FE /* KSharedSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSharedSDK.h; sourceTree = "<group>"; };
 		273BBED118562611001592FE /* KSharedSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSharedSDK.m; sourceTree = "<group>"; };
+		27A85B95185CC56100B2257E /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = QQSDK_2.0.1/TencentOpenAPI.framework; sourceTree = "<group>"; };
+		27A85B98185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		27BF52BA185B557500BA16F7 /* KHookObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHookObjectWrapper.h; sourceTree = "<group>"; };
 		27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHookObjectWrapper.m; sourceTree = "<group>"; };
-		27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = KSharedSDK/QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = KSharedSDK/QQSDK_2.0.1/TencentOpenAPI.framework; sourceTree = "<group>"; };
 		27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		27F5CE86185CA76E004DA59B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = KSharedSDK/QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		27F5CE87185CA804004DA59B /* KQQChatShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KQQChatShared.h; sourceTree = "<group>"; };
@@ -96,10 +96,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */,
-				27F5CE83185CA693004DA59B /* TencentOpenAPI.framework in Frameworks */,
 				FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */,
 				FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */,
 				FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */,
+				27A85B97185CC56100B2257E /* TencentOpenAPI.framework in Frameworks */,
 				FB61C5C318560D8B0041FF5A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				DC5F38811859A50900E01186 /* WeChatSDK_1.4.2.1 */,
+				27A85B93185CC52300B2257E /* QQSDK_2.0.1 */,
 				2701810C185774D300511C8B /* KSharedSDKDefine.h */,
 				273BBED018562611001592FE /* KSharedSDK.h */,
 				273BBED118562611001592FE /* KSharedSDK.m */,
@@ -142,6 +143,15 @@
 			);
 			path = KSharedSDK;
 			sourceTree = SOURCE_ROOT;
+		};
+		27A85B93185CC52300B2257E /* QQSDK_2.0.1 */ = {
+			isa = PBXGroup;
+			children = (
+				27A85B98185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle */,
+				27A85B95185CC56100B2257E /* TencentOpenAPI.framework */,
+			);
+			name = QQSDK_2.0.1;
+			sourceTree = "<group>";
 		};
 		DC5F38811859A50900E01186 /* WeChatSDK_1.4.2.1 */ = {
 			isa = PBXGroup;
@@ -176,8 +186,6 @@
 			isa = PBXGroup;
 			children = (
 				27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */,
-				27F5CE80185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle */,
-				27F5CE81185CA693004DA59B /* TencentOpenAPI.framework */,
 				FB61C5C218560D8B0041FF5A /* Foundation.framework */,
 				FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */,
 				FB61C5C618560D8B0041FF5A /* UIKit.framework */,
@@ -292,9 +300,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27F5CE82185CA693004DA59B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */,
 				FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */,
+				27A85B99185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,7 +456,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/kyle/Desktop/KSharedSDK/KSharedSDK/QQSDK_2.0.1,
+					"$(SRCROOT)/KSharedSDK/QQSDK_2.0.1",
+					/Users/kyle/Desktop/KSharedSDK2/KSharedSDK/QQSDK_2.0.1,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";
@@ -474,7 +483,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/kyle/Desktop/KSharedSDK/KSharedSDK/QQSDK_2.0.1,
+					"$(SRCROOT)/KSharedSDK/QQSDK_2.0.1",
+					/Users/kyle/Desktop/KSharedSDK2/KSharedSDK/QQSDK_2.0.1,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KSharedSDKDemo/KSharedSDKDemo-Prefix.pch";

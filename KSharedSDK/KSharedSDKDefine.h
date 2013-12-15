@@ -9,7 +9,8 @@
 #ifndef KSharedSDKDemo_KSharedSDKDefine_h
 #define KSharedSDKDemo_KSharedSDKDefine_h
 
-//定义各种参数
+//-------------定义各种参数-------------------
+//当前应用URLScheme
 #define kAppURLScheme               @"KSharedSDKDemo"
 
 //新浪微博
@@ -24,5 +25,10 @@
 
 //微信
 #define kWeChatAppKey               @"wx493ea8c8fd6a1d5d"
+#define KWeChatAppSecret            @"dde861f35a7ba9b8197fe4038b03e6ee"
+
+//QQ
+#define kQQChatAppKey               @"100576806"
+#define kQQChatAppSecret            @"6f58be04898d40bddb56f85495fc2bdf"
 
 #endif

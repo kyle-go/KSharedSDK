@@ -9,11 +9,13 @@
 #import "ViewController.h"
 #import "KSharedSDK.h"
 
-@interface ViewController ()
+@interface ViewController () <UIActionSheetDelegate>
 
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    SharedType _sharedType;
+}
 
 - (void)viewDidLoad
 {
@@ -28,82 +30,85 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage sinaWeibo failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage sinaWeibo succeed.");
-        }
-    }];
+    _sharedType = SharedType_SinaWeibo;
+    [self showActionSheet];
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_TencentWeibo completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage tencentWeibo failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage tecentWeibo succeed.");
-        }
-    }];
+    _sharedType = SharedType_TencentWeibo;
+    [self showActionSheet];
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage weChatFriend succeed.");
-        }
-    }];
+    _sharedType = SharedType_WeChatFriend;
+    [self showActionSheet];
 }
 
 - (IBAction)sendWeixinCircel:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage weChatCircel failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage weChatCircel succeed.");
-        }
-    }];
+    _sharedType = SharedType_WeChatCircel;
+    [self showActionSheet];
 }
 
 - (IBAction)sendQQFriend:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQFriend completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage QQFriend failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage QQFriend succeed.");
-        }
-    }];
+    _sharedType = SharedType_QQFriend;
+    [self showActionSheet];
 }
 
 - (IBAction)sendQQZone:(id)sender {
-    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQZone completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage QQZone failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage QQZone succeed.");
-        }
-    }];
+    _sharedType = SharedType_QQZone;
+    [self showActionSheet];
 }
 
-- (IBAction)sendImageToWeixinFriend:(id)sender {
-    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_WeChatFriend completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage weChatFriend succeed.");
-        }
-    }];
+- (void)showActionSheet {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                              initWithTitle:nil
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              destructiveButtonTitle:nil
+                              otherButtonTitles:@"文本", @"图片", @"新闻", nil];
+
+    [actionSheet showInView:self.view];
 }
 
-- (IBAction)sendImageToSinaWeibo:(id)sender {
-    [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
-        if (e) {
-            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
-        } else {
-            NSLog(@"sharedMessage weChatFriend succeed.");
-        }
-    }];
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        //文本
+        case 0:
+            [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:_sharedType completion:^(NSError *e){
+                if (e) {
+                    NSLog(@"shareText failed. Error = %@", e);
+                } else {
+                    NSLog(@"shareText sinaWeibo succeed.");
+                }
+            }];
+            break;
+        //图片
+        case 1:
+            [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:_sharedType completion:^(NSError *e){
+                if (e) {
+                    NSLog(@"shareImage failed. Error = %@", e);
+                } else {
+                    NSLog(@"shareImage succeed.");
+                }
+            }];
+            break;
+        //新闻
+        case 2:
+            [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
+                if (e) {
+                    NSLog(@"shareNews failed. Error = %@", e);
+                } else {
+                    NSLog(@"shareNews succeed.");
+                }
+            }];
+            break;
+        //取消
+        case 3:
+            break;
+        default:
+            break;
+    }
 }
+
 @end

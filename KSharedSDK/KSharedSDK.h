@@ -35,12 +35,12 @@ typedef NSUInteger SharedType;
 - (void)clearTokens;
 
 /**
- *@description 分享文本消息
+ *@description 分享文本
  */
 - (BOOL)shareText:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion;
 
 /**
- *@description 分享图片消息
+ *@description 分享图片
  */
 - (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion;
 

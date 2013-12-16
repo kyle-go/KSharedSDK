@@ -16,6 +16,6 @@
 
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
 
-- (void)handleURL:(NSURL *)url;
+- (BOOL)handleURL:(NSURL *)url;
 
 @end

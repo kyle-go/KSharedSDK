@@ -20,6 +20,15 @@ enum
 };
 typedef NSUInteger SharedType;
 
+//定义错误类型
+enum
+{
+    ErrorType_Succeed = 0,  //成功
+    ErrorType_UserCancel,   //用户已取消操作
+    ErrorType_NoAppClient,  //未安装客户端，或者客户端版本太旧
+    ErrorType_Unknown,
+};
+typedef NSUInteger ErrorType;
 
 @interface KSharedSDK : NSObject
 

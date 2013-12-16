@@ -133,6 +133,12 @@
         return [[KWeChatShared Instance] handleURL:url];
     }
     
+    //qqChat
+    range = [paramString rangeOfString:kQQChatURLScheme];
+    if (range.location != NSNotFound) {
+        return [[KQQChatShared Instance] handleURL:url];
+    }
+    
     //sinaWeibo
     range = [paramString rangeOfString:kAppURLScheme];
     if (range.location != NSNotFound) {

@@ -62,11 +62,9 @@
  */
 - (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
 {
-    
     if (text.length > 140 || text.length == 0) {
         return NO;
     }
-    
     
     //添加到队列
     KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
@@ -152,13 +150,11 @@
     
     //用户取消了
     } else {
-        NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:-1 userInfo:nil];
+        NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:ErrorType_UserCancel userInfo:nil];
         
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
         for (KSharedMessage *msgInfo in shareMessages) {
-            
                 ((void(^)(NSError *))msgInfo.completionBlock)(error);
-                
                 [shareMessages removeObject:msgInfo];
         }
         return YES;
@@ -173,7 +169,6 @@
                             @"callback_uri": kAppURLScheme,
                             @"client_id":kSinaWeiboAppKey};
     NSURL *appAuthURL = [KUnits generateURL:@"sinaweibosso://login" params:param];
-    
     BOOL ssoLoggingIn = [[UIApplication sharedApplication] openURL:appAuthURL];
     
     //未安装客户端，发请求验证
@@ -189,13 +184,13 @@
 - (void)weiboOauthCallback:(NSDictionary *)userInfo
 {
     NSString *errorString = [userInfo objectForKey:@"error"];
+    
     if (errorString.length) {
-        NSError *error = [[NSError alloc] initWithDomain:errorString code:-1 userInfo:nil];
+        NSError *error = [[NSError alloc] initWithDomain:errorString code:ErrorType_Unknown userInfo:nil];
+        
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
         for (KSharedMessage *msgInfo in shareMessages) {
-            
             ((void(^)(NSError *))msgInfo.completionBlock)(error);
-            
             [shareMessages removeObject:msgInfo];
         }
         return;
@@ -214,11 +209,8 @@
 {
     //判断队列中是否有SinaWeibo待分享数据
     for (KSharedMessage *msgInfo in shareMessages) {
-
         [self sinaWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
-
         [shareMessages removeObject:msgInfo];
-
         break;
     }
 }

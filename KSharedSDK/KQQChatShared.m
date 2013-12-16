@@ -107,8 +107,9 @@
 //    }
 }
 
-- (void)handleURL:(NSURL *)url
+- (BOOL)handleURL:(NSURL *)url
 {
+    return YES;
      //[QQApiInterface handleOpenURL:url delegate:self];
 }
 

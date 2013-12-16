@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 kyle. All rights reserved.
 //
 
+#import "KSharedSDK.h"
 #import "KWeChatShared.h"
 #import "KSharedSDKDefine.h"
 #import "WXApi.h"
@@ -87,7 +88,7 @@
         [WXApi sendReq:req];
         
     } else {
-        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
 }
@@ -110,7 +111,7 @@
         [WXApi sendReq:req];
         
     } else {
-        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
 }
@@ -136,7 +137,7 @@
         [WXApi sendReq:req];
         
     } else {
-        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
 }
@@ -158,8 +159,9 @@
     {
         SendMessageToWXResp* r = (SendMessageToWXResp*)resp;
         NSError *e;
-        if (r.errStr) {
-            e = [NSError errorWithDomain:r.errStr code:r.errCode userInfo:nil];
+        if (r.errCode != 0) {
+            NSString *errStr = r.errStr.length? r.errStr : @"Unknow error!";
+            e = [NSError errorWithDomain:errStr code:r.errCode userInfo:nil];
         }
         _completionBlock(e);
     }

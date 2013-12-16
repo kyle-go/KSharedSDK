@@ -37,12 +37,40 @@
         IMP selfmImp = method_getImplementation(mMy);
         class_replaceMethod([UIApplication class], @selector(canOpenURL:), selfmImp, method_getTypeEncoding(m));
     }
+    
+    //NSKeyedArchiver
+    {
+        Method m = class_getInstanceMethod([NSKeyedArchiver class], @selector(encodeObject:forKey:));
+        Method mMy = class_getInstanceMethod([self class], @selector(hook_encodeObject:forKey:));
+        
+        IMP mImp = method_getImplementation(m);
+        class_addMethod([NSKeyedArchiver class], @selector(fake_encodeObject:forKey:), mImp, method_getTypeEncoding(m));
+        
+        IMP selfmImp = method_getImplementation(mMy);
+        class_replaceMethod([NSKeyedArchiver class], @selector(encodeObject:forKey:), selfmImp, method_getTypeEncoding(m));
+    }
 }
 
 - (BOOL)hook_openURL:(NSURL *)url
 {
     NSLog(@"hook_openURL:%@", [url absoluteString]);
-    return [self fake_openURL:url];
+    
+    //4815
+    UIPasteboard *paste = [UIPasteboard generalPasteboard];
+    NSArray *array = [paste pasteboardTypes];
+    for (NSString *item in array) {
+        NSData *d = [paste dataForPasteboardType:item];
+        if (d) {
+            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:d];
+            id userData = [unarchiver decodeObjectForKey:@"root"];
+            [unarchiver finishDecoding];
+            //QQApiNewsObject *
+            NSLog(@"dddsfdsdf");
+        }
+    }
+    
+    BOOL b = [self fake_openURL:url];
+    return b;
 }
 
 //fake method, never run.
@@ -64,6 +92,16 @@
 {
     abort();
     return YES;
+}
+
+- (void)fake_encodeObject:(id)objv forKey:(NSString *)key
+{
+    
+}
+
+- (void)hook_encodeObject:(id)objv forKey:(NSString *)key
+{
+    [self fake_encodeObject:objv forKey:key];
 }
 
 @end

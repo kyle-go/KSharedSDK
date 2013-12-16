@@ -107,6 +107,11 @@
     return YES;
 }
 
+- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    return YES;
+}
+
 - (void)getNewToken
 {
     KWeiboOauthView *oathView = [KWeiboOauthView Instance];

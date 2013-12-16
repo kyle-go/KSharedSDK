@@ -86,4 +86,24 @@
         }
     }];
 }
+
+- (IBAction)sendImageToWeixinFriend:(id)sender {
+    [[KSharedSDK Instance] sharedImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_WeChatFriend completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage weChatFriend succeed.");
+        }
+    }];
+}
+
+- (IBAction)sendImageToSinaWeibo:(id)sender {
+    [[KSharedSDK Instance] sharedNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
+        if (e) {
+            NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
+        } else {
+            NSLog(@"sharedMessage weChatFriend succeed.");
+        }
+    }];
+}
 @end

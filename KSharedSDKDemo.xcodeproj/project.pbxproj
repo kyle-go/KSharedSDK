@@ -10,7 +10,6 @@
 		272C61961859FD50003C1BCA /* KTencentWeiboShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C61951859FD50003C1BCA /* KTencentWeiboShared.m */; };
 		273BBED218562611001592FE /* KSharedSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BBED118562611001592FE /* KSharedSDK.m */; };
 		27A85B97185CC56100B2257E /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A85B95185CC56100B2257E /* TencentOpenAPI.framework */; };
-		27A85B99185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27A85B98185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle */; };
 		27BF52BC185B557500BA16F7 /* KHookObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */; };
 		27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */; };
 		27F5CE89185CA804004DA59B /* KQQChatShared.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5CE88185CA804004DA59B /* KQQChatShared.m */; };
@@ -25,11 +24,15 @@
 		FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5CB18560D8B0041FF5A /* InfoPlist.strings */; };
 		FB61C5CF18560D8B0041FF5A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB61C5CE18560D8B0041FF5A /* main.m */; };
 		FB61C5D318560D8B0041FF5A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB61C5D218560D8B0041FF5A /* AppDelegate.m */; };
-		FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5D418560D8B0041FF5A /* Main.storyboard */; };
 		FB61C5D918560D8B0041FF5A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB61C5D818560D8B0041FF5A /* ViewController.m */; };
 		FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5DA18560D8B0041FF5A /* Images.xcassets */; };
 		FB61C5E318560D8B0041FF5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C218560D8B0041FF5A /* Foundation.framework */; };
 		FB61C5E418560D8B0041FF5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB61C5C618560D8B0041FF5A /* UIKit.framework */; };
+		FBC9DE91185EE37E004B0382 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9DE90185EE37E004B0382 /* CoreTelephony.framework */; };
+		FBC9DE93185EE3BE004B0382 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9DE92185EE3BE004B0382 /* libc++.dylib */; };
+		FBC9DE95185EE3CD004B0382 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9DE94185EE3CD004B0382 /* libz.1.2.5.dylib */; };
+		FBC9DE97185EE3DF004B0382 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9DE96185EE3DF004B0382 /* libsqlite3.dylib */; };
+		FBC9DE99185EE6AA004B0382 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC9DE98185EE6AA004B0382 /* share.png */; };
 		FBCD343E1859D3CA00A7BC82 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */; };
 		FBCFD94E1856C89E009919E8 /* KUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = FBCFD94D1856C89E009919E8 /* KUnits.m */; };
 /* End PBXBuildFile section */
@@ -55,7 +58,6 @@
 		27BF52BA185B557500BA16F7 /* KHookObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHookObjectWrapper.h; sourceTree = "<group>"; };
 		27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHookObjectWrapper.m; sourceTree = "<group>"; };
 		27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		27F5CE86185CA76E004DA59B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = KSharedSDK/QQSDK_2.0.1/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		27F5CE87185CA804004DA59B /* KQQChatShared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KQQChatShared.h; sourceTree = "<group>"; };
 		27F5CE88185CA804004DA59B /* KQQChatShared.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KQQChatShared.m; sourceTree = "<group>"; };
 		DC5F38831859A50900E01186 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -85,6 +87,11 @@
 		FB61C5D818560D8B0041FF5A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		FB61C5DA18560D8B0041FF5A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FB61C5E018560D8B0041FF5A /* KSharedSDKDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSharedSDKDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBC9DE90185EE37E004B0382 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		FBC9DE92185EE3BE004B0382 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		FBC9DE94185EE3CD004B0382 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		FBC9DE96185EE3DF004B0382 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		FBC9DE98185EE6AA004B0382 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		FBCD343D1859D3CA00A7BC82 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		FBCFD94C1856C89E009919E8 /* KUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KUnits.h; sourceTree = "<group>"; };
 		FBCFD94D1856C89E009919E8 /* KUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KUnits.m; sourceTree = "<group>"; };
@@ -95,6 +102,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC9DE97185EE3DF004B0382 /* libsqlite3.dylib in Frameworks */,
+				FBC9DE95185EE3CD004B0382 /* libz.1.2.5.dylib in Frameworks */,
+				FBC9DE93185EE3BE004B0382 /* libc++.dylib in Frameworks */,
+				FBC9DE91185EE37E004B0382 /* CoreTelephony.framework in Frameworks */,
 				27F5CE85185CA71E004DA59B /* SystemConfiguration.framework in Frameworks */,
 				FB61C5C518560D8B0041FF5A /* CoreGraphics.framework in Frameworks */,
 				FB61C5C718560D8B0041FF5A /* UIKit.framework in Frameworks */,
@@ -166,7 +177,6 @@
 		FB61C5B618560D8B0041FF5A = {
 			isa = PBXGroup;
 			children = (
-				27F5CE86185CA76E004DA59B /* TencentOpenApi_IOS_Bundle.bundle */,
 				FB61C5C818560D8B0041FF5A /* KSharedSDKDemo */,
 				FB61C5C118560D8B0041FF5A /* Frameworks */,
 				FB61C5C018560D8B0041FF5A /* Products */,
@@ -185,6 +195,10 @@
 		FB61C5C118560D8B0041FF5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBC9DE96185EE3DF004B0382 /* libsqlite3.dylib */,
+				FBC9DE94185EE3CD004B0382 /* libz.1.2.5.dylib */,
+				FBC9DE92185EE3BE004B0382 /* libc++.dylib */,
+				FBC9DE90185EE37E004B0382 /* CoreTelephony.framework */,
 				27F5CE84185CA71E004DA59B /* SystemConfiguration.framework */,
 				FB61C5C218560D8B0041FF5A /* Foundation.framework */,
 				FB61C5C418560D8B0041FF5A /* CoreGraphics.framework */,
@@ -213,6 +227,7 @@
 		FB61C5C918560D8B0041FF5A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FBC9DE98185EE6AA004B0382 /* share.png */,
 				FB61C5CA18560D8B0041FF5A /* KSharedSDKDemo-Info.plist */,
 				FB61C5CB18560D8B0041FF5A /* InfoPlist.strings */,
 				FB61C5CE18560D8B0041FF5A /* main.m */,
@@ -302,8 +317,7 @@
 			files = (
 				FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */,
 				FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */,
-				27A85B99185CC5F100B2257E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				FB61C5D618560D8B0041FF5A /* Main.storyboard in Resources */,
+				FBC9DE99185EE6AA004B0382 /* share.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

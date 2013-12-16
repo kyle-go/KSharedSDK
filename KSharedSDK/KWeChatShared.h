@@ -12,18 +12,18 @@
 
 + (instancetype)Instance;
 
-- (void)sharedMessageToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedMessageToCircel:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareTextToCircel:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion;
+- (void)shareImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion;
 
-- (void)sharedImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion;
+- (void)shareImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion;
 
-- (void)sharedNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
+- (void)shareNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
 
-- (void)sharedNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
+- (void)shareNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
 
-- (BOOL)sharedHandleURL:(NSURL *)url;
+- (BOOL)handleURL:(NSURL *)url;
 
 @end

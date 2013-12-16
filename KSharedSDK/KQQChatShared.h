@@ -12,10 +12,10 @@
 
 + (instancetype)Instance;
 
-- (void)sharedMessageToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedMessageToZone:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareTextToZone:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)sharedHandleURL:(NSURL *)url;
+- (void)handleURL:(NSURL *)url;
 
 @end

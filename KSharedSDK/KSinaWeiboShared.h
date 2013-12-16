@@ -15,10 +15,10 @@
 
 - (void)clearToken;
 
-- (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion;
+- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion;
+- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion;
 
-- (BOOL)sharedHandleURL:(NSString *)paramString;
+- (BOOL)handleURL:(NSString *)paramString;
 
 @end

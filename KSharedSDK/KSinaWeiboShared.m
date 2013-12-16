@@ -60,7 +60,7 @@
 /**
  *@description 分享消息
  */
-- (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion
+- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     
     if (text.length > 140 || text.length == 0) {
@@ -93,7 +93,7 @@
     return YES;
 }
 
-- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion
+- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
 {
 //    //添加到队列
 //    KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
@@ -121,7 +121,7 @@
     return YES;
 }
 
-- (BOOL)sharedHandleURL:(NSString *)paramString
+- (BOOL)handleURL:(NSString *)paramString
 {
     NSString *temp_uid;
     NSString *temp_access_token;

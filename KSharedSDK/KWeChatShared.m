@@ -35,37 +35,37 @@
     return self;
 }
 
-- (void)sharedMessageToFriend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendTextToWX:text scene:WXSceneSession];
 }
 
-- (void)sharedMessageToCircel:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)shareTextToCircel:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendTextToWX:text scene:WXSceneTimeline];
 }
 
-- (void)sharedImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion
+- (void)shareImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendImageToWX:image scene:WXSceneSession];
 }
 
-- (void)sharedImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion
+- (void)shareImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendImageToWX:image scene:WXSceneTimeline];
 }
 
-- (void)sharedNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+- (void)shareNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneSession];
 }
 
-- (void)sharedNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+- (void)shareNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneTimeline];
@@ -141,7 +141,7 @@
     }
 }
 
-- (BOOL)sharedHandleURL:(NSURL *)url
+- (BOOL)handleURL:(NSURL *)url
 {
     return [WXApi handleOpenURL:url delegate:self];
 }

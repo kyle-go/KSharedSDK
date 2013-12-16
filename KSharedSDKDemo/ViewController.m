@@ -28,7 +28,7 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_SinaWeibo completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage sinaWeibo failed. Error = %@", e);
         } else {
@@ -38,7 +38,7 @@
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_TencentWeibo completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_TencentWeibo completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage tencentWeibo failed. Error = %@", e);
         } else {
@@ -48,7 +48,7 @@
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatFriend completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
         } else {
@@ -58,7 +58,7 @@
 }
 
 - (IBAction)sendWeixinCircel:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_WeChatCircel completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weChatCircel failed. Error = %@", e);
         } else {
@@ -68,7 +68,7 @@
 }
 
 - (IBAction)sendQQFriend:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQFriend completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQFriend completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage QQFriend failed. Error = %@", e);
         } else {
@@ -78,7 +78,7 @@
 }
 
 - (IBAction)sendQQZone:(id)sender {
-    [[KSharedSDK Instance] sharedMessage:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQZone completion:^(NSError *e){
+    [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:SharedType_QQZone completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage QQZone failed. Error = %@", e);
         } else {
@@ -88,7 +88,7 @@
 }
 
 - (IBAction)sendImageToWeixinFriend:(id)sender {
-    [[KSharedSDK Instance] sharedImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_WeChatFriend completion:^(NSError *e){
+    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_WeChatFriend completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
         } else {
@@ -98,7 +98,7 @@
 }
 
 - (IBAction)sendImageToSinaWeibo:(id)sender {
-    [[KSharedSDK Instance] sharedNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
+    [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
         if (e) {
             NSLog(@"sharedMessage weChatFriend failed. Error = %@", e);
         } else {

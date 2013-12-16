@@ -27,7 +27,7 @@
     return instance;
 }
 
-- (void)sharedClearTokens
+- (void)clearTokens
 {
     [[KSinaWeiboShared Instance] clearToken];
 }
@@ -35,7 +35,7 @@
 /**
  *@description 分享消息
  */
-- (BOOL)sharedMessage:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion
+- (BOOL)shareText:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion
 {
     if (text.length == 0 || type >= SharedType_Unknown) {
         return NO;
@@ -43,22 +43,22 @@
 
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] sharedMessage:text completion:completion];
+            [[KSinaWeiboShared Instance] shareText:text completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] sharedMessage:text completion:completion];
+            [[KTencentWeiboShared Instance] shareText:text completion:completion];
             break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] sharedMessageToFriend:text completion:completion];
+            [[KWeChatShared Instance] shareTextToFriend:text completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] sharedMessageToCircel:text completion:completion];
+            [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
             break;
         case SharedType_QQFriend:
-            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
+            [[KQQChatShared Instance] shareTextToFriend:text completion:completion];
             break;
         case SharedType_QQZone:
-            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
+            [[KQQChatShared Instance] shareTextToZone:text completion:completion];
             break;
         default:
             break;
@@ -67,7 +67,7 @@
     return NO;
 }
 
-- (BOOL)sharedImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion
+- (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion
 {
     if (!image) {
         return NO;
@@ -75,16 +75,16 @@
     
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] sharedImage:image completion:completion];
+            [[KSinaWeiboShared Instance] shareImage:image completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] sharedImage:image completion:completion];
+            [[KTencentWeiboShared Instance] shareImage:image completion:completion];
             break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] sharedImageToFriend:image completion:completion];
+            [[KWeChatShared Instance] shareImageToFriend:image completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] sharedImageToCircel:image completion:completion];
+            [[KWeChatShared Instance] shareImageToCircel:image completion:completion];
             break;
 //        case SharedType_QQFriend:
 //            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
@@ -99,7 +99,7 @@
     return NO;
 }
 
-- (BOOL)sharedNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion
+- (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion
 {
     if (content.length == 0 || type >= SharedType_Unknown) {
         return NO;
@@ -113,10 +113,10 @@
 //            [[KTencentWeiboShared Instance] sharedImage:image completion:completion];
 //            break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] sharedNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];
+            [[KWeChatShared Instance] shareNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] sharedNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
+            [[KWeChatShared Instance] shareNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
             break;
             //        case SharedType_QQFriend:
             //            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
@@ -131,7 +131,7 @@
     return NO;
 }
 
-- (BOOL)sharedHandleURL:(NSURL *)url
+- (BOOL)handleURL:(NSURL *)url
 {
     NSString *paramString = [url absoluteString];
     NSLog(@"sharedHandleURL:url=%@", paramString);
@@ -139,13 +139,13 @@
     //weChat
     NSRange range = [paramString rangeOfString:@"wechat"];
     if (range.location != NSNotFound) {
-        return [[KWeChatShared Instance] sharedHandleURL:url];
+        return [[KWeChatShared Instance] handleURL:url];
     }
     
     //sinaWeibo
     range = [paramString rangeOfString:kAppURLScheme];
     if (range.location != NSNotFound) {
-        return [[KSinaWeiboShared Instance] sharedHandleURL:paramString];
+        return [[KSinaWeiboShared Instance] handleURL:paramString];
     }
     
     return NO;

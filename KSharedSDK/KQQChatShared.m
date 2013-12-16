@@ -33,13 +33,13 @@
     return self;
 }
 
-- (void)sharedMessageToFriend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendTextToQQ:text];
 }
 
-- (void)sharedMessageToZone:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)shareTextToZone:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendTextToQQ:text];
@@ -72,7 +72,7 @@
 //    }
 }
 
-- (void)sharedHandleURL:(NSURL *)url
+- (void)handleURL:(NSURL *)url
 {
      //[QQApiInterface handleOpenURL:url delegate:self];
 }

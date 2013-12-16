@@ -75,7 +75,7 @@
 /**
  *@description 分享消息
  */
-- (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion
+- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     if (text.length > 140 || text.length == 0) {
         return NO;
@@ -107,7 +107,7 @@
     return YES;
 }
 
-- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion
+- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     return YES;
 }

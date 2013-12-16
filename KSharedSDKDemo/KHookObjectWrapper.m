@@ -56,18 +56,18 @@
     NSLog(@"hook_openURL:%@", [url absoluteString]);
     
     //4815
-    UIPasteboard *paste = [UIPasteboard generalPasteboard];
-    NSArray *array = [paste pasteboardTypes];
-    for (NSString *item in array) {
-        NSData *d = [paste dataForPasteboardType:item];
-        if (d) {
-            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:d];
-            id userData = [unarchiver decodeObjectForKey:@"root"];
-            [unarchiver finishDecoding];
-            //QQApiNewsObject *
-            NSLog(@"dddsfdsdf");
-        }
-    }
+//    UIPasteboard *paste = [UIPasteboard generalPasteboard];
+//    NSArray *array = [paste pasteboardTypes];
+//    for (NSString *item in array) {
+//        NSData *d = [paste dataForPasteboardType:item];
+//        if (d) {
+//            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:d];
+//            id userData = [unarchiver decodeObjectForKey:@"root"];
+//            [unarchiver finishDecoding];
+//            //QQApiNewsObject *
+//            NSLog(@"dddsfdsdf");
+//        }
+//    }
     
     BOOL b = [self fake_openURL:url];
     return b;

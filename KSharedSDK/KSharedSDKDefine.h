@@ -8,6 +8,7 @@
 
 #ifndef KSharedSDKDemo_KSharedSDKDefine_h
 #define KSharedSDKDemo_KSharedSDKDefine_h
+#import "UIImage+Compress.h"
 
 //-------------定义各种参数-------------------
 //当前应用URLScheme

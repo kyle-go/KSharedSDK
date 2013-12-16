@@ -47,6 +47,29 @@
     [self sendTextToWX:text scene:WXSceneTimeline];
 }
 
+- (void)sharedImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    _completionBlock = completion;
+    [self sendImageToWX:image scene:WXSceneSession];
+}
+
+- (void)sharedImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    _completionBlock = completion;
+    [self sendImageToWX:image scene:WXSceneTimeline];
+}
+
+- (void)sharedNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+{
+    _completionBlock = completion;
+    [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneSession];
+}
+
+- (void)sharedNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+{
+    _completionBlock = completion;
+    [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneTimeline];
+}
 /*
  enum WXScene {
     WXSceneSession  = 0,        //聊天界面
@@ -54,7 +77,7 @@
     WXSceneFavorite = 2,        //收藏
  };
 */
-- (void) sendTextToWX:(NSString*)content scene:(int)scene
+- (void) sendTextToWX:(NSString *)content scene:(int)scene
 {
     if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
         SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
@@ -69,14 +92,37 @@
     }
 }
 
-- (void) sendMsgToWX:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
+- (void) sendImageToWX:(UIImage *)image scene:(int)scene
+{
+    if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
+        
+        WXImageObject* imageObject = [[WXImageObject alloc] init];
+        imageObject.imageData = UIImageJPEGRepresentation([image compressImageToSize:200.f],1.f);
+        
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.mediaObject = imageObject;
+        [message setThumbImage:[image compressImageToSize:80.f]];
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        req.bText = NO;
+        req.message = message;
+        req.scene = scene;
+        [WXApi sendReq:req];
+        
+    } else {
+        NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:-1 userInfo:nil];
+        _completionBlock(e);
+    }
+}
+
+- (void) sendNewsToWX:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
 {
     if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
     {
         WXMediaMessage *message = [WXMediaMessage message];
         message.title = title;
         message.description = content;
-        [message setThumbImage:image];
+        [message setThumbImage:[image compressImageToSize:80.f]];
         
         WXWebpageObject *ext = [WXWebpageObject object];
         ext.webpageUrl = url;

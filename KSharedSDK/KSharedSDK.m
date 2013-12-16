@@ -67,6 +67,70 @@
     return NO;
 }
 
+- (BOOL)sharedImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion
+{
+    if (!image) {
+        return NO;
+    }
+    
+    switch (type) {
+        case SharedType_SinaWeibo:
+            [[KSinaWeiboShared Instance] sharedImage:image completion:completion];
+            break;
+        case SharedType_TencentWeibo:
+            [[KTencentWeiboShared Instance] sharedImage:image completion:completion];
+            break;
+        case SharedType_WeChatFriend:
+            [[KWeChatShared Instance] sharedImageToFriend:image completion:completion];
+            break;
+        case SharedType_WeChatCircel:
+            [[KWeChatShared Instance] sharedImageToCircel:image completion:completion];
+            break;
+//        case SharedType_QQFriend:
+//            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
+//            break;
+//        case SharedType_QQZone:
+//            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
+//            break;
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
+- (BOOL)sharedNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion
+{
+    if (content.length == 0 || type >= SharedType_Unknown) {
+        return NO;
+    }
+    
+    switch (type) {
+//        case SharedType_SinaWeibo:
+//            [[KSinaWeiboShared Instance] sharedImage:image completion:completion];
+//            break;
+//        case SharedType_TencentWeibo:
+//            [[KTencentWeiboShared Instance] sharedImage:image completion:completion];
+//            break;
+        case SharedType_WeChatFriend:
+            [[KWeChatShared Instance] sharedNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];
+            break;
+        case SharedType_WeChatCircel:
+            [[KWeChatShared Instance] sharedNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
+            break;
+            //        case SharedType_QQFriend:
+            //            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
+            //            break;
+            //        case SharedType_QQZone:
+            //            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
+            //            break;
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
 - (BOOL)sharedHandleURL:(NSURL *)url
 {
     NSString *paramString = [url absoluteString];

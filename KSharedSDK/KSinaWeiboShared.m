@@ -93,6 +93,33 @@
     return YES;
 }
 
+- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+//    //添加到队列
+//    KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
+//    messageInfo.contentText = @"[分享图片]";
+//    messageInfo.image = [image compressImageToSize:200.f];
+//    if (completion) {
+//        messageInfo.completionBlock = completion;
+//    } else {
+//        messageInfo.completionBlock = ^{};
+//    }
+//    [shareMessages addObject:messageInfo];
+//    
+//    if (access_token.length == 0 || uid.length == 0) {
+//        access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
+//        uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
+//    }
+//    
+//    if (access_token.length && uid.length) {
+//        [self checkSharedMessages];
+//        return YES;
+//    }
+//    
+//    [self getNewToken];
+    
+    return YES;
+}
 
 - (BOOL)sharedHandleURL:(NSString *)paramString
 {

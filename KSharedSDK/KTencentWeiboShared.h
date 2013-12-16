@@ -16,4 +16,6 @@
 
 - (BOOL)sharedMessage:(NSString *)text completion:(void(^)(NSError *))completion;
 
+- (BOOL)sharedImage:(UIImage *)image completion:(void(^)(NSError *))completion;
+
 @end

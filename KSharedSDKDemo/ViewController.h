@@ -17,4 +17,7 @@
 - (IBAction)sendQQFriend:(id)sender;
 - (IBAction)sendQQZone:(id)sender;
 
+- (IBAction)sendImageToWeixinFriend:(id)sender;
+- (IBAction)sendImageToSinaWeibo:(id)sender;
+
 @end

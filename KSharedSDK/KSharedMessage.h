@@ -11,6 +11,7 @@
 @interface KSharedMessage : NSObject
 
 @property (strong, nonatomic) NSString *contentText;
+@property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) id completionBlock;
 
 @end

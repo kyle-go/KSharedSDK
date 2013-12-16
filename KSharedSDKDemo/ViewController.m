@@ -49,13 +49,8 @@
     [self showActionSheet];
 }
 
-- (IBAction)sendQQFriend:(id)sender {
-    _sharedType = SharedType_QQFriend;
-    [self showActionSheet];
-}
-
-- (IBAction)sendQQZone:(id)sender {
-    _sharedType = SharedType_QQZone;
+- (IBAction)sendQQChat:(id)sender {
+    _sharedType = SharedType_QQChat;
     [self showActionSheet];
 }
 

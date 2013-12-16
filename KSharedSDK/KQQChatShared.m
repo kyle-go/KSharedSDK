@@ -33,16 +33,16 @@
     return self;
 }
 
-- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)shareText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
     [self sendTextToQQ:text];
 }
 
-- (void)shareTextToZone:(NSString *)text completion:(void(^)(NSError *))completion
+
+- (void)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
-    _completionBlock = completion;
-    [self sendTextToQQ:text];
+    //;
 }
 
 - (void) sendTextToQQ:(NSString*)content
@@ -56,16 +56,6 @@
 //            NSError *e = [NSError errorWithDomain:@"sendReq failed." code:resultCode userInfo:nil];
 //            _completionBlock(e);
 //        }
-//    } else {
-//        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:-1 userInfo:nil];
-//        _completionBlock(e);
-//    }
-}
-
-- (void) sendMsgToQQZone:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
-{
-//    if([QQApiInterface isQQInstalled] && [QQApiInterface isQQSupportApi]) {
-//        //
 //    } else {
 //        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:-1 userInfo:nil];
 //        _completionBlock(e);

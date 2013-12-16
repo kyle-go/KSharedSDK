@@ -12,9 +12,9 @@
 
 + (instancetype)Instance;
 
-- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareText:(NSString *)text completion:(void(^)(NSError *))completion;
 
-- (void)shareTextToZone:(NSString *)text completion:(void(^)(NSError *))completion;
+- (void)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
 
 - (void)handleURL:(NSURL *)url;
 

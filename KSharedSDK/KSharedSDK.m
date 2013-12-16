@@ -54,11 +54,8 @@
         case SharedType_WeChatCircel:
             [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
             break;
-        case SharedType_QQFriend:
-            [[KQQChatShared Instance] shareTextToFriend:text completion:completion];
-            break;
-        case SharedType_QQZone:
-            [[KQQChatShared Instance] shareTextToZone:text completion:completion];
+        case SharedType_QQChat:
+            [[KQQChatShared Instance] shareText:text completion:completion];
             break;
         default:
             break;
@@ -86,11 +83,8 @@
         case SharedType_WeChatCircel:
             [[KWeChatShared Instance] shareImageToCircel:image completion:completion];
             break;
-//        case SharedType_QQFriend:
+//        case SharedType_QQChat:
 //            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
-//            break;
-//        case SharedType_QQZone:
-//            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
 //            break;
         default:
             break;
@@ -118,12 +112,8 @@
         case SharedType_WeChatCircel:
             [[KWeChatShared Instance] shareNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
             break;
-            //        case SharedType_QQFriend:
-            //            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
-            //            break;
-            //        case SharedType_QQZone:
-            //            [[KQQChatShared Instance] sharedMessageToZone:text completion:completion];
-            //            break;
+        case SharedType_QQChat:
+            [[KQQChatShared Instance] shareNews:title Content:content Image:image Url:urlstring completion:completion];            break;
         default:
             break;
     }

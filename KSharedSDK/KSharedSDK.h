@@ -15,8 +15,7 @@ enum
     SharedType_TencentWeibo,
     SharedType_WeChatFriend,
     SharedType_WeChatCircel,
-    SharedType_QQFriend,
-    SharedType_QQZone,
+    SharedType_QQChat,
     SharedType_Unknown,
 };
 typedef NSUInteger SharedType;

@@ -14,7 +14,6 @@
 - (IBAction)sendTencentWeibo:(id)sender;
 - (IBAction)sendWeixinFriend:(id)sender;
 - (IBAction)sendWeixinCircel:(id)sender;
-- (IBAction)sendQQFriend:(id)sender;
-- (IBAction)sendQQZone:(id)sender;
+- (IBAction)sendQQChat:(id)sender;
 
 @end

@@ -113,7 +113,8 @@
             [[KWeChatShared Instance] shareNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
             break;
         case SharedType_QQChat:
-            [[KQQChatShared Instance] shareNews:title Content:content Image:image Url:urlstring completion:completion];            break;
+            return [[KQQChatShared Instance] shareNews:title Content:content Image:image Url:urlstring completion:completion];
+            break;
         default:
             break;
     }

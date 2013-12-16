@@ -39,10 +39,55 @@
     [self sendTextToQQ:text];
 }
 
-
-- (void)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+- (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
-    //;
+    if (completion) {
+        _completionBlock = completion;
+    }
+    
+    NSString *tempString;
+    
+    NSMutableString *param = [[NSMutableString alloc] init];
+    [param setString:@"mqqapi://share/to_fri?callback_type=scheme&version=1&src_type=app&"];
+    [param appendString:[NSString stringWithFormat:@"callback_name=%@&", kQQChatURLScheme]];
+    
+    tempString = [NSString stringWithFormat:@"title=%@&", [[title dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+    [param appendString:tempString];
+    
+    tempString = [NSString stringWithFormat:@"description=%@&", [[content dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+    [param appendString:tempString];
+    
+    tempString = [NSString stringWithFormat:@"thirdAppDisplayName=%@&", [[kAppName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+    [param appendString:tempString];
+    
+    [param appendString:@"objectlocation=pasteboard&"];
+    
+    tempString = [NSString stringWithFormat:@"url=%@&", [[urlString dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
+    [param appendString:tempString];
+    
+    [param appendString:@"file_type=news&generalpastboard=1&cflag=0&shareType=0"];
+    
+    NSURL *url = [[NSURL alloc] initWithString:param];
+    
+    NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
+    
+    NSMutableData *d = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:d];
+    NSMutableDictionary *sendParam = [[NSMutableDictionary alloc] init];
+    [sendParam setObject:dataImage forKey:@"previewimagedata"];
+    [archiver encodeObject:sendParam forKey:@"root"];
+    [archiver finishEncoding];
+    
+    UIPasteboard *paste = [UIPasteboard generalPasteboard];
+    [paste setPersistent:YES];
+    [paste setValue:d forPasteboardType:@"com.tencent.mqq.api.apiLargeData"];
+    
+    BOOL result = [[UIApplication sharedApplication] openURL:url];
+    if (!result) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:-1 userInfo:nil];
+        _completionBlock(e);
+    }
+    return result;
 }
 
 - (void) sendTextToQQ:(NSString*)content

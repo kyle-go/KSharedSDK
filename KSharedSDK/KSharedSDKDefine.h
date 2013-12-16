@@ -13,6 +13,7 @@
 //-------------定义各种参数-------------------
 //当前应用URLScheme
 #define kAppURLScheme               @"KSharedSDKDemo"
+#define kAppName                    @"KSharedSDKDemo"
 
 //新浪微博
 #define kSinaWeiboAppKey            @"1018973898"
@@ -30,6 +31,7 @@
 
 //QQ
 #define kQQChatAppKey               @"100576806"
+#define kQQChatURLScheme            @"QQ05FEAE26"
 #define kQQChatAppSecret            @"6f58be04898d40bddb56f85495fc2bdf"
 
 #endif

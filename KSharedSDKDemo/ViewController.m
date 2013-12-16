@@ -90,7 +90,7 @@
             break;
         //新闻
         case 2:
-            [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:SharedType_WeChatCircel completion:^(NSError *e){
+            [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareNews failed. Error = %@", e);
                 } else {

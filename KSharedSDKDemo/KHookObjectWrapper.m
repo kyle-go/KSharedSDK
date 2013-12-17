@@ -17,37 +17,22 @@
     //openURL
     {
         Method m = class_getInstanceMethod([UIApplication class], @selector(openURL:));
-        Method mMy = class_getInstanceMethod([self class], @selector(hook_openURL:));
-        
-        IMP mImp = method_getImplementation(m);
-        class_addMethod([UIApplication class], @selector(hook_openURL:), mImp, method_getTypeEncoding(m));
-        
-        IMP selfmImp = method_getImplementation(mMy);
-        class_replaceMethod([UIApplication class], @selector(openURL:), selfmImp, method_getTypeEncoding(m));
+        class_addMethod([UIApplication class], @selector(hook_openURL:), method_getImplementation(m), method_getTypeEncoding(m));
+        method_setImplementation(m, class_getMethodImplementation([self class], @selector(hook_openURL:)));
     }
     
     //CanOpenURL
     {
         Method m = class_getInstanceMethod([UIApplication class], @selector(canOpenURL:));
-        Method mMy = class_getInstanceMethod([self class], @selector(hook_canOpenURL:));
-        
-        IMP mImp = method_getImplementation(m);
-        class_addMethod([UIApplication class], @selector(hook_canOpenURL:), mImp, method_getTypeEncoding(m));
-        
-        IMP selfmImp = method_getImplementation(mMy);
-        class_replaceMethod([UIApplication class], @selector(canOpenURL:), selfmImp, method_getTypeEncoding(m));
+        class_addMethod([UIApplication class], @selector(hook_canOpenURL:), method_getImplementation(m), method_getTypeEncoding(m));
+        method_setImplementation(m, class_getMethodImplementation([self class], @selector(hook_canOpenURL:)));
     }
     
     //NSKeyedArchiver
     {
         Method m = class_getInstanceMethod([NSKeyedArchiver class], @selector(encodeObject:forKey:));
-        Method mMy = class_getInstanceMethod([self class], @selector(hook_encodeObject:forKey:));
-        
-        IMP mImp = method_getImplementation(m);
-        class_addMethod([NSKeyedArchiver class], @selector(hook_encodeObject:forKey:), mImp, method_getTypeEncoding(m));
-        
-        IMP selfmImp = method_getImplementation(mMy);
-        class_replaceMethod([NSKeyedArchiver class], @selector(encodeObject:forKey:), selfmImp, method_getTypeEncoding(m));
+        class_addMethod([NSKeyedArchiver class], @selector(hook_encodeObject:forKey:), method_getImplementation(m), method_getTypeEncoding(m));
+        method_setImplementation(m, class_getMethodImplementation([self class], @selector(hook_encodeObject:forKey:)));
     }
 }
 

@@ -89,8 +89,13 @@
     
     NSMutableString *param = [[NSMutableString alloc] init];
     [param setString:@"mqqapi://share/to_fri?"];
-    [param appendString:[NSString stringWithFormat:@"description=%@&", [[@"图片消息描述" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
-    [param appendString:[NSString stringWithFormat:@"generalpastboard=1&file_type=img&callback_name=%@&callback_type=scheme&src_type=app&version=1&objectlocation=pasteboard&title=%@", kQQChatURLScheme, [[@"图片消息标题" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
+    [param appendString:[NSString stringWithFormat:
+        @"description=%@&generalpastboard=1&file_type=img&"
+        "callback_name=%@&callback_type=scheme&src_type=app&version=1&objectlocation=pasteboard&"
+        "title=%@",
+        [[@"图片消息描述" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+        kQQChatURLScheme,
+        [[@"图片消息标题" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
 
     NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
     NSMutableData *d = [[NSMutableData alloc] init];
@@ -125,27 +130,20 @@
         return YES;
     }
     
-    NSString *tempString;
-    
     NSMutableString *param = [[NSMutableString alloc] init];
-    [param setString:@"mqqapi://share/to_fri?callback_type=scheme&version=1&src_type=app&"];
-    [param appendString:[NSString stringWithFormat:@"callback_name=%@&", kQQChatURLScheme]];
-    
-    tempString = [NSString stringWithFormat:@"title=%@&", [[title dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
-    [param appendString:tempString];
-    
-    tempString = [NSString stringWithFormat:@"description=%@&", [[content dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
-    [param appendString:tempString];
-    
-    tempString = [NSString stringWithFormat:@"thirdAppDisplayName=%@&", [[kAppName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
-    [param appendString:tempString];
-    
-    [param appendString:@"objectlocation=pasteboard&"];
-    
-    tempString = [NSString stringWithFormat:@"url=%@&", [[urlString dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]];
-    [param appendString:tempString];
-    
-    [param appendString:@"file_type=news&generalpastboard=1&cflag=0&shareType=0"];
+    [param setString:@"mqqapi://share/to_fri?"];
+    [param appendString:[NSString stringWithFormat:
+        @"callback_type=scheme&version=1&src_type=app&"
+        "callback_name=%@&"
+        "title=%@&"
+        "description=%@&"
+        "thirdAppDisplayName=%@&objectlocation=pasteboard&"
+        "url=%@&file_type=news&generalpastboard=1&cflag=0&shareType=0",
+        kQQChatURLScheme,
+        [[title dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+        [[content dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+        [[kAppName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+        [[urlString dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
     
     NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
     NSMutableData *d = [[NSMutableData alloc] init];

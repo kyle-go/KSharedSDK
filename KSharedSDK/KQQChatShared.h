@@ -12,7 +12,9 @@
 
 + (instancetype)Instance;
 
-- (void)shareText:(NSString *)text completion:(void(^)(NSError *))completion;
+- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion;
+
+- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion;
 
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion;
 

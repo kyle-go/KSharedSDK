@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 kyle. All rights reserved.
 //
 
+#import "KSharedSDK.h"
 #import "KQQChatShared.h"
 #import "KSharedSDKDefine.h"
 
@@ -33,16 +34,61 @@
     return self;
 }
 
-- (void)shareText:(NSString *)text completion:(void(^)(NSError *))completion
+- (BOOL)isQQAppClientSupport
 {
-    _completionBlock = completion;
-    [self sendTextToQQ:text];
+    NSURL *mqq = [[NSURL alloc] initWithString:@"mqq:"];
+    NSURL *mqqapi = [[NSURL alloc] initWithString:@"mqqapi:"];
+    NSURL *mqqsdkv2 = [[NSURL alloc] initWithString:@"mqqopensdkapiV2:"];
+    
+    if ([[UIApplication sharedApplication] canOpenURL:mqq] &&
+        [[UIApplication sharedApplication] canOpenURL:mqqapi] &&
+        [[UIApplication sharedApplication] canOpenURL:mqqsdkv2]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
+{
+    if (completion) {
+        _completionBlock = completion;
+    }
+    
+    if (![self isQQAppClientSupport]) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
+        _completionBlock(e);
+        return YES;
+    }
+    
+    NSMutableString *param = [[NSMutableString alloc] init];
+    [param setString:@"mqqapi://share/to_fri?file_type=text&"];
+    [param appendString:[NSString stringWithFormat:@"callback_name=%@&", kQQChatURLScheme]];
+    [param appendString:[NSString stringWithFormat:@"callback_type=scheme&src_type=app&file_data=%@&", [[text dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
+    [param appendString:@"version=1&generalpastboard=1"];
+    
+    NSURL *url = [[NSURL alloc] initWithString:param];
+    BOOL result = [[UIApplication sharedApplication] openURL:url];
+    if (!result) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
+        _completionBlock(e);
+    }
+    return result;
+}
+
+- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    return YES;
 }
 
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
     if (completion) {
         _completionBlock = completion;
+    }
+    if (![self isQQAppClientSupport]) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
+        _completionBlock(e);
+        return YES;
     }
     
     NSString *tempString;
@@ -84,7 +130,7 @@
     
     BOOL result = [[UIApplication sharedApplication] openURL:url];
     if (!result) {
-        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:-1 userInfo:nil];
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
     return result;

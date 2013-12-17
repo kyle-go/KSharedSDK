@@ -55,7 +55,7 @@
             [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
             break;
         case SharedType_QQChat:
-            [[KQQChatShared Instance] shareText:text completion:completion];
+            return [[KQQChatShared Instance] shareText:text completion:completion];
             break;
         default:
             break;

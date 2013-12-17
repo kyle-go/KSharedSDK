@@ -11,8 +11,5 @@
 @interface KHookObjectWrapper : NSObject
 
 + (void)initialize;
-- (BOOL)fake_openURL:(NSURL *)url;
-- (BOOL)fake_canOpenURL:(NSURL *)url;
-- (void)fake_encodeObject:(id)objv forKey:(NSString *)key;
 
 @end

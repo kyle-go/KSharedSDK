@@ -10,4 +10,12 @@
 
 @implementation KSharedMessage
 
+- (id)init
+{
+    if (self = [super init]) {
+        self.completion = ^(NSError *e){};
+    }
+    return self;
+}
+
 @end

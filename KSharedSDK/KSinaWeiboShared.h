@@ -15,9 +15,7 @@
 
 - (void)clearToken;
 
-- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion;
-
-- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion;
+- (BOOL)share:(NSString *)text images:(NSArray *)images completion:(void(^)(NSError *))completion;
 
 - (BOOL)handleURL:(NSString *)paramString;
 

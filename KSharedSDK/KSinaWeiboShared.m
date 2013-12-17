@@ -60,21 +60,21 @@
 /**
  *@description 分享消息
  */
-- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
+
+- (BOOL)share:(NSString *)text images:(NSArray *)images completion:(void(^)(NSError *))completion
 {
     if (text.length > 140 || text.length == 0) {
         return NO;
     }
     
     //添加到队列
-    KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-    messageInfo.contentText = text;
+    KSharedMessage *message = [[KSharedMessage alloc] init];
+    message.text = text;
+    message.images = images;
     if (completion) {
-        messageInfo.completionBlock = completion;
-    } else {
-        messageInfo.completionBlock = ^{};
+        message.completion = completion;
     }
-    [shareMessages addObject:messageInfo];
+    [shareMessages addObject:message];
     
     if (access_token.length == 0 || uid.length == 0) {
         access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
@@ -87,34 +87,6 @@
     }
     
     [self getNewToken];
-    
-    return YES;
-}
-
-- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
-{
-//    //添加到队列
-//    KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-//    messageInfo.contentText = @"[分享图片]";
-//    messageInfo.image = [image compressImageToSize:200.f];
-//    if (completion) {
-//        messageInfo.completionBlock = completion;
-//    } else {
-//        messageInfo.completionBlock = ^{};
-//    }
-//    [shareMessages addObject:messageInfo];
-//    
-//    if (access_token.length == 0 || uid.length == 0) {
-//        access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
-//        uid = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_uid];
-//    }
-//    
-//    if (access_token.length && uid.length) {
-//        [self checkSharedMessages];
-//        return YES;
-//    }
-//    
-//    [self getNewToken];
     
     return YES;
 }
@@ -153,9 +125,9 @@
         NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:ErrorType_UserCancel userInfo:nil];
         
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (KSharedMessage *msgInfo in shareMessages) {
-                ((void(^)(NSError *))msgInfo.completionBlock)(error);
-                [shareMessages removeObject:msgInfo];
+        for (KSharedMessage *m in shareMessages) {
+                m.completion(error);
+                [shareMessages removeObject:m];
         }
         return YES;
     }
@@ -189,9 +161,9 @@
         NSError *error = [[NSError alloc] initWithDomain:errorString code:ErrorType_Unknown userInfo:nil];
         
         //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (KSharedMessage *msgInfo in shareMessages) {
-            ((void(^)(NSError *))msgInfo.completionBlock)(error);
-            [shareMessages removeObject:msgInfo];
+        for (KSharedMessage *m in shareMessages) {
+            m.completion(error);
+            [shareMessages removeObject:m];
         }
         return;
     }
@@ -207,15 +179,19 @@
 
 - (void)checkSharedMessages
 {
-    //判断队列中是否有SinaWeibo待分享数据
-    for (KSharedMessage *msgInfo in shareMessages) {
-        [self sinaWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
-        [shareMessages removeObject:msgInfo];
+    for (KSharedMessage *m in shareMessages) {
+        if (m.images) {
+            [self sinaWeiboSendTextWithImages:m.text images:m.images completion:m.completion];
+        } else {
+            [self sinaWeiboSendText:m.text completion:m.completion];
+        }
+        
+        [shareMessages removeObject:m];
         break;
     }
 }
 
-- (void)sinaWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)sinaWeiboSendText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(access_token.length);
     assert(uid.length);
@@ -239,11 +215,9 @@
             
             //添加到队列
             KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-            messageInfo.contentText = text;
+            messageInfo.text = text;
             if (completion) {
-                messageInfo.completionBlock = completion;
-            } else {
-                messageInfo.completionBlock = ^{};
+                messageInfo.completion = completion;
             }
             [shareMessages addObject:messageInfo];
             
@@ -281,4 +255,9 @@
     [manager start];
 }
 
+
+- (void)sinaWeiboSendTextWithImages:(NSString *)text images:(NSArray *)images completion:(void(^)(NSError *))completion
+{
+    
+}
 @end

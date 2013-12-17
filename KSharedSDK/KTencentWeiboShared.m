@@ -83,11 +83,9 @@
     
     //添加到队列
     KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-    messageInfo.contentText = text;
+    messageInfo.text = text;
     if (completion) {
-        messageInfo.completionBlock = completion;
-    } else {
-        messageInfo.completionBlock = ^{};
+        messageInfo.completion = completion;
     }
     [shareMessages addObject:messageInfo];
     
@@ -126,11 +124,9 @@
     if (errorString.length) {
         NSError *error = [[NSError alloc] initWithDomain:errorString code:-1 userInfo:nil];
         //判断队列中是否有待分享消息,全部调用起回调，通知认证失败
-        for (KSharedMessage *msgInfo in shareMessages) {
-            
-            ((void(^)(NSError *))msgInfo.completionBlock)(error);
-            
-            [shareMessages removeObject:msgInfo];
+        for (KSharedMessage *m in shareMessages) {
+            m.completion(error);
+            [shareMessages removeObject:m];
         }
         return;
     }
@@ -149,12 +145,9 @@
 - (void)checkSharedMessages
 {
     //判断队列中是否有SinaWeibo待分享数据
-    for (KSharedMessage *msgInfo in shareMessages) {
-        
-        [self tencentWeiboSend:msgInfo.contentText completion:((void(^)(NSError *))msgInfo.completionBlock)];
-        
-        [shareMessages removeObject:msgInfo];
-        
+    for (KSharedMessage *m in shareMessages) {
+        [self tencentWeiboSend:m.text completion:m.completion];
+        [shareMessages removeObject:m];
         break;
     }
 }
@@ -191,14 +184,11 @@
             
             //添加到队列
             KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-            messageInfo.contentText = text;
+            messageInfo.text = text;
             if (completion) {
-                messageInfo.completionBlock = completion;
-            } else {
-                messageInfo.completionBlock = ^{};
+                messageInfo.completion = completion;
             }
             [shareMessages addObject:messageInfo];
-            
             
             //重新请求token
             [self getNewToken];

@@ -83,9 +83,9 @@
         case SharedType_WeChatCircel:
             [[KWeChatShared Instance] shareImageToCircel:image completion:completion];
             break;
-//        case SharedType_QQChat:
-//            [[KQQChatShared Instance] sharedMessageToFriend:text completion:completion];
-//            break;
+        case SharedType_QQChat:
+            return [[KQQChatShared Instance] shareImage:image completion:completion];
+            break;
         default:
             break;
     }

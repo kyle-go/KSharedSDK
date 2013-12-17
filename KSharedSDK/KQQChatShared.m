@@ -77,7 +77,41 @@
 
 - (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
 {
-    return YES;
+    if (completion) {
+        _completionBlock = completion;
+    }
+    
+    if (![self isQQAppClientSupport]) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
+        _completionBlock(e);
+        return YES;
+    }
+    
+    NSMutableString *param = [[NSMutableString alloc] init];
+    [param setString:@"mqqapi://share/to_fri?"];
+    [param appendString:[NSString stringWithFormat:@"description=%@&", [[@"图片消息描述" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
+    [param appendString:[NSString stringWithFormat:@"generalpastboard=1&file_type=img&callback_name=%@&callback_type=scheme&src_type=app&version=1&objectlocation=pasteboard&title=%@", kQQChatURLScheme, [[@"图片消息标题" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
+
+    NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
+    NSMutableData *d = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:d];
+    NSMutableDictionary *sendParam = [[NSMutableDictionary alloc] init];
+    [sendParam setObject:dataImage forKey:@"previewimagedata"];
+    [sendParam setObject:dataImage forKey:@"file_data"];
+    [archiver encodeObject:sendParam forKey:@"root"];
+    [archiver finishEncoding];
+    
+    UIPasteboard *paste = [UIPasteboard generalPasteboard];
+    [paste setPersistent:YES];
+    [paste setValue:d forPasteboardType:@"com.tencent.mqq.api.apiLargeData"];
+    
+    NSURL *url = [[NSURL alloc] initWithString:param];
+    BOOL result = [[UIApplication sharedApplication] openURL:url];
+    if (!result) {
+        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
+        _completionBlock(e);
+    }
+    return result;
 }
 
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
@@ -113,10 +147,7 @@
     
     [param appendString:@"file_type=news&generalpastboard=1&cflag=0&shareType=0"];
     
-    NSURL *url = [[NSURL alloc] initWithString:param];
-    
     NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
-    
     NSMutableData *d = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:d];
     NSMutableDictionary *sendParam = [[NSMutableDictionary alloc] init];
@@ -128,6 +159,7 @@
     [paste setPersistent:YES];
     [paste setValue:d forPasteboardType:@"com.tencent.mqq.api.apiLargeData"];
     
+    NSURL *url = [[NSURL alloc] initWithString:param];
     BOOL result = [[UIApplication sharedApplication] openURL:url];
     if (!result) {
         NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:ErrorType_NoAppClient userInfo:nil];
@@ -136,22 +168,6 @@
     return result;
 }
 
-- (void) sendTextToQQ:(NSString*)content
-{
-//    if([QQApiInterface isQQInstalled] && [QQApiInterface isQQSupportApi]) {
-//        QQApiNewsObject *object = [QQApiNewsObject objectWithURL:[[NSURL alloc]initWithString:@"http://baidu.com"] title:@"title" description:content previewImageData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]]];
-//        SendMessageToQQReq* req = [SendMessageToQQReq reqWithContent:object];
-//        req.type = ESENDMESSAGETOQQREQTYPE;
-//        QQApiSendResultCode resultCode = [QQApiInterface sendReq:req];
-//        if (resultCode != EQQAPISENDSUCESS) {
-//            NSError *e = [NSError errorWithDomain:@"sendReq failed." code:resultCode userInfo:nil];
-//            _completionBlock(e);
-//        }
-//    } else {
-//        NSError *e = [NSError errorWithDomain:@"未安装QQ客户端." code:-1 userInfo:nil];
-//        _completionBlock(e);
-//    }
-}
 
 - (BOOL)handleURL:(NSURL *)url
 {

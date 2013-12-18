@@ -43,10 +43,10 @@
 
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] share:text images:nil completion:completion];
+            [[KSinaWeiboShared Instance] share:text image:nil completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] shareText:text completion:completion];
+            [[KTencentWeiboShared Instance] share:text image:nil completion:completion];
             break;
         case SharedType_WeChatFriend:
             [[KWeChatShared Instance] shareTextToFriend:text completion:completion];
@@ -72,10 +72,10 @@
     
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] share:@"[分享图片]" images:[NSArray arrayWithObject:image] completion:completion];
+            [[KSinaWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] shareImage:image completion:completion];
+            [[KTencentWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
             break;
         case SharedType_WeChatFriend:
             [[KWeChatShared Instance] shareImageToFriend:image completion:completion];

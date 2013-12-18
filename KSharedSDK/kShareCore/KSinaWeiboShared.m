@@ -57,11 +57,8 @@
     return self;
 }
 
-/**
- *@description 分享消息
- */
 
-- (BOOL)share:(NSString *)text images:(NSArray *)images completion:(void(^)(NSError *))completion
+- (BOOL)share:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     if (text.length > 140 || text.length == 0) {
         return NO;
@@ -70,7 +67,7 @@
     //添加到队列
     KSharedMessage *message = [[KSharedMessage alloc] init];
     message.text = text;
-    message.images = images;
+    message.image = image;
     if (completion) {
         message.completion = completion;
     }
@@ -180,8 +177,8 @@
 - (void)checkSharedMessages
 {
     for (KSharedMessage *m in shareMessages) {
-        if (m.images) {
-            [self sinaWeiboSendTextWithImages:m.text images:m.images completion:m.completion];
+        if (m.image) {
+            [self sinaWeiboSendTextWithImages:m.text image:m.image completion:m.completion];
         } else {
             [self sinaWeiboSendText:m.text completion:m.completion];
         }
@@ -256,7 +253,7 @@
 }
 
 
-- (void)sinaWeiboSendTextWithImages:(NSString *)text images:(NSArray *)images completion:(void(^)(NSError *))completion
+- (void)sinaWeiboSendTextWithImages:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     
 }

@@ -53,7 +53,7 @@ typedef NSUInteger ErrorType;
 - (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion;
 
 /**
- *@description 分享新闻
+ *@description 分享新闻 (新浪微博，腾讯微博不支持此接口)
  */
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion;
 

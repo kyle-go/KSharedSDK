@@ -72,10 +72,8 @@
     return self;
 }
 
-/**
- *@description 分享消息
- */
-- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
+
+- (BOOL)share:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     if (text.length > 140 || text.length == 0) {
         return NO;
@@ -84,6 +82,7 @@
     //添加到队列
     KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
     messageInfo.text = text;
+    messageInfo.image = image;
     if (completion) {
         messageInfo.completion = completion;
     }
@@ -102,11 +101,6 @@
     
     [self getNewToken];
     
-    return YES;
-}
-
-- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
-{
     return YES;
 }
 
@@ -146,13 +140,18 @@
 {
     //判断队列中是否有SinaWeibo待分享数据
     for (KSharedMessage *m in shareMessages) {
-        [self tencentWeiboSend:m.text completion:m.completion];
+        if (m.image) {
+            [self tencentWeiboSendTextWithImage:m.text image:m.image completion:m.completion];
+        } else {
+            [self tencentWeiboSendText:m.text completion:m.completion];
+        }
+        
         [shareMessages removeObject:m];
         break;
     }
 }
 
-- (void)tencentWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)tencentWeiboSendText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(access_token.length);
     assert(openkey.length);
@@ -241,4 +240,8 @@
     [manager start];
 }
 
+- (void)tencentWeiboSendTextWithImage:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    
+}
 @end

@@ -307,24 +307,49 @@
     
     //发布图片微博
     KHttpManager *manager = [KHttpManager manager];
-    NSDictionary *bodyParam = @{@"oauth_consumer_key":kTencentWeiboAppKey,
-                                @"access_token":access_token,
-                                @"openid":openid,
-                                @"clientip":@"10.10.1.31",
-                                @"oauth_version":@"2.a",
-                                @"scope":@"all"};
-    
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
     [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
     
     NSString *boundary = @"--------------------5017d5f06ada3";
+    
+    NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n%@--\r\n", boundary];
     [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
-    boundary = [NSString stringWithFormat:@"%@\r\n", boundary];
-
-    //必须参数
-    NSMutableString *bodyString = [NSMutableString stringWithString:[[KUnits generateURL:nil params:bodyParam] absoluteString]];
+    boundary = [NSString stringWithFormat:@"--%@\r\n", boundary];
+    
+    
+    //公共参数 oauth_version
+    NSMutableString *bodyString = [NSMutableString stringWithString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_version\";\r\n\r\n2.a"];
+    
+    //公共参数 scope
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"scope\";\r\n\r\nall"];
+    
+    //公共参数 clientip
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"clientip\";\r\n\r\n10.10.1.31"];
+    
+    //公共参数 openid
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"openid\";\r\n\r\n"];
+    [bodyString appendString:openid];
+    
+    //公共参数 access_token
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"access_token\";\r\n\r\n"];
+    [bodyString appendString:access_token];
+    
+    //公共参数 oauth_consumer_key
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_consumer_key\";\r\n\r\n"];
+    [bodyString appendString:kTencentWeiboAppKey];
+    
+    //appfrom
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
+    [bodyString appendString:kAppName];
     
     //format=json
     [bodyString appendString:boundary];
@@ -335,22 +360,19 @@
     [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
     [bodyString appendString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8))];
     
-    //clientip=10.10.1.31
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"clientip\";\r\n\r\n10.10.1.31"];
-    
     //pic=...
     [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"images08.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"KSharedSDK\"\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
     
     NSMutableData *body = [NSMutableData dataWithData:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:UIImagePNGRepresentation(image)];
+    [body appendData:[boundaryEnd dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:body];
     
     NSLog(@"xxxx###=%@", [request allHTTPHeaderFields]);
-    
+    NSLog(@"DATA=%@",body);
     [manager start];
 }
 

@@ -11,7 +11,7 @@
 @interface KSharedMessage : NSObject
 
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSArray *images;
+@property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) void(^completion)(NSError *);
 
 @end

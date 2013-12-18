@@ -316,6 +316,9 @@
     
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];
+    [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
+    [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
+    
     NSString *boundary = @"--------------------5017d5f06ada3";
     [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
     boundary = [NSString stringWithFormat:@"%@\r\n", boundary];

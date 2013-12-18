@@ -73,7 +73,7 @@
             [[KSinaWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] share:@"[分析图片]" image:image completion:completion];
+            [[KTencentWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
             break;
         case SharedType_WeChatFriend:
             [[KWeChatShared Instance] shareImageToFriend:image completion:completion];

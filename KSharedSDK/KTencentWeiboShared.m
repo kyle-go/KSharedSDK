@@ -204,8 +204,8 @@
         }
         
         //更多错误码信息请参考：
-        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
         //http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%BE%AE%E5%8D%9A%E6%8E%A5%E5%8F%A3/%E5%8F%91%E8%A1%A8%E4%B8%80%E6%9D%A1%E5%BE%AE%E5%8D%9A%E4%BF%A1%E6%81%AF#.E8.AF.B7.E6.B1.82.E7.A4.BA.E4.BE.8B
+        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
         
         completion(error);
         [self checkSharedMessages];
@@ -217,7 +217,7 @@
         [self checkSharedMessages];
     };
     
-    //发一条新微博
+    //发布文本微博
     KHttpManager *manager = [KHttpManager manager];
     NSDictionary *bodyParam = @{@"oauth_consumer_key":kTencentWeiboAppKey,
                                 @"access_token":access_token,
@@ -225,7 +225,6 @@
                                 @"clientip":@"10.10.1.31",
                                 @"oauth_version":@"2.a",
                                 @"scope":@"all",
-                                @"clientip":@"10.10.1.31",
                                 @"format":@"json",
                                 @"content":text};
     
@@ -242,6 +241,114 @@
 
 - (void)tencentWeiboSendTextWithImage:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
+    assert(access_token.length);
+    assert(openkey.length);
+    assert(openid.length);
     
+    void (^success_callback) (id responseObject) =
+    ^(id responseObject) {
+        
+        NSError *error;
+        NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        //解析数据失败了
+        if (error) {
+            completion(error);
+            [self checkSharedMessages];
+            return ;
+        }
+        
+        error = nil;
+        NSString *errorString = [json objectForKey:@"msg"];
+        NSNumber *errorCode = [json objectForKey:@"errcode"];
+        if (![errorString isEqualToString:@"ok"] && [errorCode intValue] != 0) {
+            error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //token已过期
+        if ([errorCode intValue] == 37) {
+            
+            //添加到队列
+            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
+            messageInfo.text = text;
+            if (completion) {
+                messageInfo.completion = completion;
+            }
+            [shareMessages addObject:messageInfo];
+            
+            //重新请求token
+            [self getNewToken];
+            return ;
+        }
+        
+        //表示有过多脏话，请认真检查content内容
+        if ([errorCode intValue] == 4) {
+            error = [[NSError alloc] initWithDomain:@"表示有过多脏话，请认真检查content内容." code:[errorCode intValue] userInfo:nil];
+        }
+        //不能连续发送相同内容的微博
+        if([errorCode intValue] == 13) {
+            error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //更多错误码信息请参考：
+        //http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%BE%AE%E5%8D%9A%E6%8E%A5%E5%8F%A3/%E5%8F%91%E8%A1%A8%E4%B8%80%E6%9D%A1%E5%B8%A6%E5%9B%BE%E7%89%87%E7%9A%84%E5%BE%AE%E5%8D%9A
+        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
+        
+        completion(error);
+        [self checkSharedMessages];
+    };
+    
+    void (^failure_callback)(NSError *error) =
+    ^(NSError *error){
+        completion(error);
+        [self checkSharedMessages];
+    };
+    
+    //发布图片微博
+    KHttpManager *manager = [KHttpManager manager];
+    NSDictionary *bodyParam = @{@"oauth_consumer_key":kTencentWeiboAppKey,
+                                @"access_token":access_token,
+                                @"openid":openid,
+                                @"clientip":@"10.10.1.31",
+                                @"oauth_version":@"2.a",
+                                @"scope":@"all"};
+    
+    NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
+    [request setHTTPMethod:@"POST"];
+    NSString *boundary = @"--------------------5017d5f06ada3";
+    [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
+    boundary = [NSString stringWithFormat:@"%@\r\n", boundary];
+
+    //必须参数
+    NSMutableString *bodyString = [NSMutableString stringWithString:[[KUnits generateURL:nil params:bodyParam] absoluteString]];
+    
+    //format=json
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"format\";\r\n\r\njson"];
+    
+    //content＝...
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
+    [bodyString appendString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8))];
+    
+    //clientip=10.10.1.31
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"clientip\";\r\n\r\n10.10.1.31"];
+    
+    //pic=...
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"images08.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"];
+    
+    NSMutableData *body = [NSMutableData dataWithData:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImagePNGRepresentation(image)];
+    
+    [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:body];
+    
+    NSLog(@"xxxx###=%@", [request allHTTPHeaderFields]);
+    
+    [manager start];
 }
+
 @end

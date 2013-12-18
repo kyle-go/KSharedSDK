@@ -97,7 +97,7 @@
         kQQChatURLScheme,
         [[@"图片消息标题" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
 
-    NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
+    NSData *dataImage = UIImagePNGRepresentation(image);
     NSMutableData *d = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:d];
     NSMutableDictionary *sendParam = [[NSMutableDictionary alloc] init];
@@ -145,11 +145,10 @@
         [[kAppName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
         [[urlString dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0]]];
     
-    NSData *dataImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"share" ofType:@"png"]];
     NSMutableData *d = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:d];
     NSMutableDictionary *sendParam = [[NSMutableDictionary alloc] init];
-    [sendParam setObject:dataImage forKey:@"previewimagedata"];
+    [sendParam setObject:UIImagePNGRepresentation(image) forKey:@"previewimagedata"];
     [archiver encodeObject:sendParam forKey:@"root"];
     [archiver finishEncoding];
     

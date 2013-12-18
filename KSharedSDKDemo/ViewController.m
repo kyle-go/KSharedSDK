@@ -35,8 +35,15 @@
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {
-    _sharedType = SharedType_TencentWeibo;
-    [self showActionSheet];
+    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"share"] type:SharedType_TencentWeibo completion:^(NSError *e){
+        if (e) {
+            NSLog(@"shareImage failed. Error = %@", e);
+        } else {
+            NSLog(@"shareImage succeed.");
+        }
+    }];
+//    _sharedType = SharedType_TencentWeibo;
+//    [self showActionSheet];
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
@@ -67,8 +74,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [self performSelector:@selector(actionClick:) withObject:[NSNumber numberWithInt:buttonIndex] afterDelay:1.0];
+}
+
+- (void)actionClick:(NSNumber *)num
+{
+    NSInteger buttonIndex = [num longValue];
     switch (buttonIndex) {
-        //文本
+            //文本
         case 0:
             [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:_sharedType completion:^(NSError *e){
                 if (e) {
@@ -78,7 +91,7 @@
                 }
             }];
             break;
-        //图片
+            //图片
         case 1:
             [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:_sharedType completion:^(NSError *e){
                 if (e) {
@@ -88,7 +101,7 @@
                 }
             }];
             break;
-        //新闻
+            //新闻
         case 2:
             [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:_sharedType completion:^(NSError *e){
                 if (e) {
@@ -98,7 +111,7 @@
                 }
             }];
             break;
-        //取消
+            //取消
         case 3:
             break;
         default:

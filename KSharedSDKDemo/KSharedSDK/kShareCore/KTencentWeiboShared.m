@@ -318,51 +318,39 @@
     [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
     boundary = [NSString stringWithFormat:@"\r\n--%@\r\n", boundary];
     
+    NSString *(^boundaryString)(NSString*, NSString*, NSString*) = ^(NSString *boundary, NSString *item, NSString *value) {
+        return [NSString stringWithFormat:@"%@Content-Disposition: form-data; name=\"%@\";\r\n\r\n%@", boundary, item, value];
+    };
+    
     //公共参数 oauth_version
-    NSMutableString *bodyString = [NSMutableString stringWithString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_version\";\r\n\r\n2.a"];
-    //boundary = [NSString stringWithFormat:@"\r\n%@", boundary];
+    NSMutableString *bodyString = [NSMutableString stringWithString:boundaryString(boundary, @"oauth_version", @"2.a")];
     
     //公共参数 scope
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"scope\";\r\n\r\nall"];
+    [bodyString appendString:boundaryString(boundary, @"scope", @"all")];
     
     //公共参数 clientip
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"clientip\";\r\n\r\n10.10.1.31"];
+    [bodyString appendString:boundaryString(boundary, @"clientip", @"10.10.1.31")];
     
     //公共参数 openid
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"openid\";\r\n\r\n"];
-    [bodyString appendString:openid];
+    [bodyString appendString:boundaryString(boundary, @"openid", openid)];
     
     //公共参数 access_token
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"access_token\";\r\n\r\n"];
-    [bodyString appendString:access_token];
-    
+    [bodyString appendString:boundaryString(boundary, @"access_token", access_token)];
+
     //公共参数 oauth_consumer_key
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_consumer_key\";\r\n\r\n"];
-    [bodyString appendString:kTencentWeiboAppKey];
-    
+    [bodyString appendString:boundaryString(boundary, @"oauth_consumer_key", kTencentWeiboAppKey)];
+
     //compatibleflag=0x2|0x4|0x8|0x20
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"compatibleflag\";\r\n\r\n0x2|0x4|0x8|0x20"];
+    [bodyString appendString:boundaryString(boundary, @"compatibleflag", @"0x2|0x4|0x8|0x20")];
     
     //appfrom
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
-    [bodyString appendString:kAppName];
-    
+    [bodyString appendString:boundaryString(boundary, @"appfrom", kAppName)];
+
     //format=json
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"format\";\r\n\r\njson"];
+    [bodyString appendString:boundaryString(boundary, @"format", @"json")];
     
     //content＝...
-    [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
-    [bodyString appendString:text];
+    [bodyString appendString:boundaryString(boundary, @"content", text)];
     
     //pic=...
     [bodyString appendString:boundary];

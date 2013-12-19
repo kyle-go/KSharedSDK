@@ -20,7 +20,7 @@
  *
  *	@return	空
  */
-+ (void)showViewToShareText:(NSString *)text platform:(NSArray *)platform inView:(UIView *)view;
++ (void)showViewToShareText:(NSString *)text platform:(NSArray *)platform inViewController:(UIViewController *)viewController;
 
 /**
  *	@brief	分享静态文本到需要平台
@@ -31,7 +31,7 @@
  *
  *	@return	空
  */
-+ (void)showViewToShareImge:(UIImage *)image platform:(NSArray *)platform inView:(UIView *)view;
++ (void)showViewToShareImge:(UIImage *)image platform:(NSArray *)platform inViewController:(UIViewController *)viewController;
 
 /**
  *	@brief	分享静态文本到需要平台
@@ -45,7 +45,7 @@
  *
  *	@return	空
  */
-+ (void)showViewToShareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)url platform:(NSArray *)platform inView:(UIView *)view;
++ (void)showViewToShareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)url platform:(NSArray *)platform inViewController:(UIViewController *)viewController;
 
 /**
  *	@brief	获取分享列表

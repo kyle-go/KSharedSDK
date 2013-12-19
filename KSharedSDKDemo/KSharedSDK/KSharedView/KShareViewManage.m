@@ -12,9 +12,9 @@
 
 @implementation KShareViewManage
 
-+ (void)showViewToShareText:(NSString *)text platform:(NSArray *)platform inView:(UIView *)view
++ (void)showViewToShareText:(NSString *)text platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;
@@ -25,8 +25,9 @@
             case SharedType_SinaWeibo:
             {
                 bv = [[ButtonView alloc]initWithText:@"新浪微博" image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
-                    EditBlogViewController *editBlogViewController = [[EditBlogViewController alloc] init];
-                    [editBlogViewController showWithSendText:text type:SharedType_SinaWeibo];
+                    EditBlogViewController *editBlogViewController = [[EditBlogViewController alloc] initWithSendText:text type:SharedType_SinaWeibo];
+                    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editBlogViewController];
+                    [viewController presentViewController:nav animated:YES completion:nil];
                 }];
                 [activityView addButtonView:bv];
             }
@@ -101,9 +102,9 @@
 }
 
 
-+ (void)showViewToShareImge:(UIImage *)image platform:(NSArray *)platform inView:(UIView *)view
++ (void)showViewToShareImge:(UIImage *)image platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;
@@ -194,9 +195,9 @@
     [activityView show];
 }
 
-+ (void)showViewToShareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)url platform:(NSArray *)platform inView:(UIView *)view
++ (void)showViewToShareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)url platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;

@@ -30,11 +30,17 @@ typedef NSUInteger SendType;
     UITextView *textView;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithSendText:(NSString *)text type:(SharedType)type
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
     if (self) {
         // Custom initialization
+        sharedType = type;
+        if (type == SharedType_SinaWeibo) {
+            self.title = @"分享到新浪微博";
+        }
+        sendType = Send_Type_Text;
+        content = text;
     }
     return self;
 }
@@ -64,29 +70,6 @@ typedef NSUInteger SendType;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showWithSendText:(NSString *)text type:(SharedType)type
-{
-    sharedType = type;
-    if (type == SharedType_SinaWeibo) {
-        self.title = @"分享到新浪微博";
-    }
-    sendType = Send_Type_Text;
-    content = text;
-    [self show];
-}
-
-- (void)show
-{
-    keyWindow = [UIApplication sharedApplication].keyWindow;
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    if(windows.count > 0) {
-        keyWindow = [windows lastObject];
-    }
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
-    [keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
-}
-
 - (void)cancel
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -98,14 +81,12 @@ typedef NSUInteger SendType;
         [[KSharedSDK Instance] shareText:textView.text type:SharedType_SinaWeibo completion:^(NSError *e){
             if (e) {
                 NSLog(@"shareText failed. Error = %@", e);
-                [self cancel];
             } else {
-                NSLog(@"shareText sinaWeibo succeed.");
-                [self cancel];
+                 NSLog(@"shareText scucess");
             }
         }];
     }
-
+    [self cancel];
 }
 
 @end

@@ -127,7 +127,7 @@
     
     [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK."
                                  platform:platform
-                                   inView:self.view];
+                         inViewController:self];
 }
 
 - (IBAction)showShareImageView:(id)sender {
@@ -136,7 +136,7 @@
     
     [KShareViewManage showViewToShareImge:[UIImage imageNamed:@"kSharedSDK"]
                                  platform:platform
-                                   inView:self.view];
+                         inViewController:self];
 }
 
 - (IBAction)showShareNewsView:(id)sender {
@@ -148,6 +148,6 @@
                                     Image:[UIImage imageNamed:@"kSharedSDK"]
                                       Url:@"http://baidu.com"
                                  platform:platform
-                                   inView:self.view];
+                         inViewController:self];
 }
 @end

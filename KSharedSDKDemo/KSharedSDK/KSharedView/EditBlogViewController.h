@@ -11,6 +11,6 @@
 
 @interface EditBlogViewController : UIViewController
 
-- (void)showWithSendText:(NSString* )text type:(SharedType)type;
+- (id)initWithSendText:(NSString *)text type:(SharedType)type;
 
 @end

@@ -10,6 +10,11 @@
 #import "KSharedSDK.h"
 #import "KShareViewManage.h"
 
+#define KSharedSDK_MediaTitle   @"我是KSharedSDK标题"
+#define KSharedSDK_MediaText    @"我是一条测试数据，由KSharedSDK提供!"
+#define KSharedSDK_MediaURL     @"http://www.163.com"
+#define KSharedSDK_MediaImage   [UIImage imageNamed:@"kSharedSDK"]
+
 @interface ViewController () <UIActionSheetDelegate>
 
 @end
@@ -72,7 +77,7 @@
     switch (buttonIndex) {
             //文本
         case 0:
-            result = [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareText:KSharedSDK_MediaText type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareText failed. Error = %@", e);
                 } else {
@@ -82,7 +87,7 @@
             break;
             //图片
         case 1:
-            result = [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareImage:KSharedSDK_MediaImage type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareImage failed. Error = %@", e);
                 } else {
@@ -92,48 +97,62 @@
             break;
             //新闻
         case 2:
-            result = [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareNews:KSharedSDK_MediaTitle Content:KSharedSDK_MediaText Image:KSharedSDK_MediaImage url:KSharedSDK_MediaURL type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareNews failed. Error = %@", e);
                 } else {
                     NSLog(@"shareNews succeed.");
                 }
             }];
+            if (!result) {
+                if (_sharedType == SharedType_SinaWeibo || _sharedType == SharedType_TencentWeibo) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:@"微博不支持新闻接口！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                    return;
+                }
+            }
             break;
             //取消
         case 3:
+            result = YES;
             break;
         default:
             break;
+    }
+    
+    if (!result) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:@"参数错误！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
     }
 }
 
 - (IBAction)showShareMessageView:(id)sender
 {
-    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo, nil];
     
-    [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK."
+    [KShareViewManage showViewToShareText:KSharedSDK_MediaText
                                  platform:platform
                          inViewController:self];
 }
 
 - (IBAction)showShareImageView:(id)sender
 {
-    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo, nil];
     
-    [KShareViewManage showViewToShareImge:[UIImage imageNamed:@"kSharedSDK"]
+    [KShareViewManage showViewToShareImge:KSharedSDK_MediaImage
                                  platform:platform
                          inViewController:self];
 }
 
 - (IBAction)showShareNewsView:(id)sender
 {
-    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo, nil];
     
-    [KShareViewManage showViewToShareNews:@"发新闻拉"
-                                  Content:@"发布一条新微博！喵～by KSharedSDK."
-                                    Image:[UIImage imageNamed:@"kSharedSDK"]
-                                      Url:@"http://baidu.com"
+    [KShareViewManage showViewToShareNews:KSharedSDK_MediaTitle
+                                  Content:KSharedSDK_MediaText
+                                    Image:KSharedSDK_MediaImage
+                                      Url:KSharedSDK_MediaURL
                                  platform:platform
                          inViewController:self];
 }

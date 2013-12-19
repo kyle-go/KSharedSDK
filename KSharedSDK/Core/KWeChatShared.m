@@ -36,40 +36,40 @@
     return self;
 }
 
-- (void)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion
+- (BOOL)shareTextToFriend:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendTextToWX:text scene:WXSceneSession];
+    return [self sendTextToWX:text scene:WXSceneSession];
 }
 
-- (void)shareTextToCircel:(NSString *)text completion:(void(^)(NSError *))completion
+- (BOOL)shareTextToCircel:(NSString *)text completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendTextToWX:text scene:WXSceneTimeline];
+    return [self sendTextToWX:text scene:WXSceneTimeline];
 }
 
-- (void)shareImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion
+- (BOOL)shareImageToFriend:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendImageToWX:image scene:WXSceneSession];
+    return [self sendImageToWX:image scene:WXSceneSession];
 }
 
-- (void)shareImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion
+- (BOOL)shareImageToCircel:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendImageToWX:image scene:WXSceneTimeline];
+    return [self sendImageToWX:image scene:WXSceneTimeline];
 }
 
-- (void)shareNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+- (BOOL)shareNewsToFriend:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneSession];
+    return [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneSession];
 }
 
-- (void)shareNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
+- (BOOL)shareNewsToCircel:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)urlString completion:(void(^)(NSError *))completion
 {
     _completionBlock = completion;
-    [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneTimeline];
+    return [self sendNewsToWX:content title:title image:image weburl:urlString scene:WXSceneTimeline];
 }
 /*
  enum WXScene {
@@ -78,22 +78,23 @@
     WXSceneFavorite = 2,        //收藏
  };
 */
-- (void) sendTextToWX:(NSString *)content scene:(int)scene
+- (BOOL) sendTextToWX:(NSString *)content scene:(int)scene
 {
     if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
         SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
         req.text = content;
         req.bText = YES;
         req.scene = scene;
-        [WXApi sendReq:req];
+        return [WXApi sendReq:req];
         
     } else {
         NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
+    return YES;
 }
 
-- (void) sendImageToWX:(UIImage *)image scene:(int)scene
+- (BOOL) sendImageToWX:(UIImage *)image scene:(int)scene
 {
     if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
         
@@ -108,15 +109,16 @@
         req.bText = NO;
         req.message = message;
         req.scene = scene;
-        [WXApi sendReq:req];
+        return [WXApi sendReq:req];
         
     } else {
         NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
+    return YES;
 }
 
-- (void) sendNewsToWX:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
+- (BOOL) sendNewsToWX:(NSString*)content title:(NSString*)title image:(UIImage*)image weburl:(NSString*)url scene:(int)scene
 {
     if([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
     {
@@ -134,12 +136,13 @@
         req.message = message;
         req.scene = scene;
         
-        [WXApi sendReq:req];
+        return [WXApi sendReq:req];
         
     } else {
         NSError *e = [NSError errorWithDomain:@"未安装微信客户端." code:ErrorType_NoAppClient userInfo:nil];
         _completionBlock(e);
     }
+    return YES;
 }
 
 - (BOOL)handleURL:(NSURL *)url

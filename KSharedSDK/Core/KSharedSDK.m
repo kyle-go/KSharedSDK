@@ -100,17 +100,15 @@
     }
     
     switch (type) {
-//        case SharedType_SinaWeibo:
-//            [[KSinaWeiboShared Instance] sharedImage:image completion:completion];
-//            break;
-//        case SharedType_TencentWeibo:
-//            [[KTencentWeiboShared Instance] sharedImage:image completion:completion];
-//            break;
+        case SharedType_SinaWeibo:
+        case SharedType_TencentWeibo:
+            return NO;
+            break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] shareNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];
+            return [[KWeChatShared Instance] shareNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] shareNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
+            return [[KWeChatShared Instance] shareNewsToCircel:title Content:content Image:image Url:urlstring completion:completion];
             break;
         case SharedType_QQChat:
             return [[KQQChatShared Instance] shareNews:title Content:content Image:image Url:urlstring completion:completion];

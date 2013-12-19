@@ -31,15 +31,8 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_SinaWeibo completion:^(NSError *e){
-        if (e) {
-            NSLog(@"shareImage failed. Error = %@", e);
-        } else {
-            NSLog(@"shareImage succeed.");
-        }
-    }];
-//    _sharedType = SharedType_SinaWeibo;
-//    [self showActionSheet];
+    _sharedType = SharedType_SinaWeibo;
+    [self showActionSheet];
 }
 
 - (IBAction)sendTencentWeibo:(id)sender {
@@ -75,16 +68,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self performSelector:@selector(actionClick:) withObject:[NSNumber numberWithInt:buttonIndex] afterDelay:1.0];
-}
-
-- (void)actionClick:(NSNumber *)num
-{
-    NSInteger buttonIndex = [num longValue];
+    BOOL result = NO;
     switch (buttonIndex) {
             //文本
         case 0:
-            [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareText:@"发布一条新微博！喵～by KSharedSDK." type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareText failed. Error = %@", e);
                 } else {
@@ -94,7 +82,7 @@
             break;
             //图片
         case 1:
-            [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareImage failed. Error = %@", e);
                 } else {
@@ -104,7 +92,7 @@
             break;
             //新闻
         case 2:
-            [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:_sharedType completion:^(NSError *e){
+            result = [[KSharedSDK Instance] shareNews:@"发新闻拉" Content:@"发布一条新微博！喵～by KSharedSDK." Image:[UIImage imageNamed:@"kSharedSDK"] url:@"http://baidu.com" type:_sharedType completion:^(NSError *e){
                 if (e) {
                     NSLog(@"shareNews failed. Error = %@", e);
                 } else {

@@ -181,7 +181,7 @@
 {
     for (KSharedMessage *m in shareMessages) {
         if (m.image) {
-            [self sinaWeiboSendTextWithImages:m.text image:m.image completion:m.completion];
+            [self sinaWeiboSendTextWithImage:m.text image:m.image completion:m.completion];
         } else {
             [self sinaWeiboSendText:m.text completion:m.completion];
         }
@@ -255,8 +255,7 @@
     [manager start];
 }
 
-
-- (void)sinaWeiboSendTextWithImages:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
+- (void)sinaWeiboSendTextWithImage:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     void (^success_callback) (id responseObject) =
     ^(id responseObject) {
@@ -344,4 +343,5 @@
     
     [manager start];
 }
+
 @end

@@ -55,4 +55,5 @@
  *	@return	分享列表
  */
 + (NSArray *)getShareListWithType:(SharedType)sharedType, ... NS_REQUIRES_NIL_TERMINATION;
+
 @end

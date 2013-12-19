@@ -36,10 +36,9 @@
 {
     weiboType = type;
     
-    keyWindow = [UIApplication sharedApplication].keyWindow;
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    if(windows.count > 0) {
-        keyWindow = [windows lastObject];
+    keyWindow = [[UIApplication sharedApplication].windows firstObject];
+    if (!keyWindow) {
+        keyWindow = [UIApplication sharedApplication].keyWindow;
     }
     
     CGRect screenBounds = [KUnits XYScreenBounds];

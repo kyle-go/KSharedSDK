@@ -11,7 +11,7 @@
 //定义分享类型
 enum
 {
-    SharedType_SinaWeibo = 0,
+    SharedType_SinaWeibo = 1,
     SharedType_TencentWeibo,
     SharedType_WeChatFriend,
     SharedType_WeChatCircel,

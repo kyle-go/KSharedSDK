@@ -211,7 +211,7 @@
         }
         
         //token已过期
-        if ([errorCode intValue] == 21315) {
+        if ([errorCode intValue] == 21315 || [errorCode intValue] == 21327) {
             
             //添加到队列
             KSharedMessage *messageInfo = [[KSharedMessage alloc] init];

@@ -76,7 +76,11 @@
     //发起请求
     [self webViewLoadRequest];
     
-    [keyWindow.rootViewController presentViewController:nav animated:YES completion:nil];
+    UIViewController *lastController;
+    for (UIViewController *controller = keyWindow.rootViewController; controller; controller = controller.presentedViewController) {
+        lastController = controller;
+    }
+    [lastController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)dismiss

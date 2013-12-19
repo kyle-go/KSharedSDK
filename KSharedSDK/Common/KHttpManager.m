@@ -65,7 +65,8 @@
 #pragma mark ---- NSURLConnectionDataDelegate -----
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"%@",[(NSHTTPURLResponse *)response allHeaderFields]);
+    //NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+    //NSLog(@"%@",[res allHeaderFields]);
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data

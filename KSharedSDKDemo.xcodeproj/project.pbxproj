@@ -11,6 +11,7 @@
 		DC2832DF186286E600E7A2D3 /* KShareViewManage.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2832DE186286E600E7A2D3 /* KShareViewManage.m */; };
 		DC2832E71862958000E7A2D3 /* share_platform_TencentWeibo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2832E61862958000E7A2D3 /* share_platform_TencentWeibo@2x.png */; };
 		DC2832E9186295DE00E7A2D3 /* share_platform_wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC2832E8186295DE00E7A2D3 /* share_platform_wechat@2x.png */; };
+		DC2832EC1862A0A300E7A2D3 /* EditBlogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2832EB1862A0A300E7A2D3 /* EditBlogViewController.m */; };
 		DCF12EB21861B04A006387AB /* KHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF12E981861B04A006387AB /* KHttpManager.m */; };
 		DCF12EB31861B04A006387AB /* KUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF12E9A1861B04A006387AB /* KUnits.m */; };
 		DCF12EB41861B04A006387AB /* UIImage+Compress.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF12E9C1861B04A006387AB /* UIImage+Compress.m */; };
@@ -57,6 +58,8 @@
 		DC2832DE186286E600E7A2D3 /* KShareViewManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KShareViewManage.m; sourceTree = "<group>"; };
 		DC2832E61862958000E7A2D3 /* share_platform_TencentWeibo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_platform_TencentWeibo@2x.png"; sourceTree = "<group>"; };
 		DC2832E8186295DE00E7A2D3 /* share_platform_wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_platform_wechat@2x.png"; sourceTree = "<group>"; };
+		DC2832EA1862A0A300E7A2D3 /* EditBlogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBlogViewController.h; sourceTree = "<group>"; };
+		DC2832EB1862A0A300E7A2D3 /* EditBlogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditBlogViewController.m; sourceTree = "<group>"; };
 		DCF12E971861B04A006387AB /* KHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHttpManager.h; sourceTree = "<group>"; };
 		DCF12E981861B04A006387AB /* KHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHttpManager.m; sourceTree = "<group>"; };
 		DCF12E991861B04A006387AB /* KUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KUnits.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				DCF12ECE1861B253006387AB /* HYActivityView.h */,
 				DCF12ECF1861B253006387AB /* HYActivityView.m */,
 				DC2832DE186286E600E7A2D3 /* KShareViewManage.m */,
+				DC2832EA1862A0A300E7A2D3 /* EditBlogViewController.h */,
+				DC2832EB1862A0A300E7A2D3 /* EditBlogViewController.m */,
 			);
 			path = KSharedView;
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 			files = (
 				FB61C5D918560D8B0041FF5A /* ViewController.m in Sources */,
 				DCF12EB91861B04A006387AB /* KTencentWeiboShared.m in Sources */,
+				DC2832EC1862A0A300E7A2D3 /* EditBlogViewController.m in Sources */,
 				FB61C5D318560D8B0041FF5A /* AppDelegate.m in Sources */,
 				DCF12EBB1861B04A006387AB /* KWeiboOauthView.m in Sources */,
 				DCF12EB61861B04A006387AB /* KSharedMessage.m in Sources */,

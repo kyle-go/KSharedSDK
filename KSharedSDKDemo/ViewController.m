@@ -125,12 +125,29 @@
 
     NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
     
-    [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK." platform:platform inView:self.view];
+    [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK."
+                                 platform:platform
+                                   inView:self.view];
 }
 
 - (IBAction)showShareImageView:(id)sender {
+    
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    
+    [KShareViewManage showViewToShareImge:[UIImage imageNamed:@"kSharedSDK"]
+                                 platform:platform
+                                   inView:self.view];
 }
 
 - (IBAction)showShareNewsView:(id)sender {
+    
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    
+    [KShareViewManage showViewToShareNews:@"发新闻拉"
+                                  Content:@"发布一条新微博！喵～by KSharedSDK."
+                                    Image:[UIImage imageNamed:@"kSharedSDK"]
+                                      Url:@"http://baidu.com"
+                                 platform:platform
+                                   inView:self.view];
 }
 @end

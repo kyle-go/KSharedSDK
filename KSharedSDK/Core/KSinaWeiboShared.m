@@ -258,6 +258,90 @@
 
 - (void)sinaWeiboSendTextWithImages:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
+    void (^success_callback) (id responseObject) =
+    ^(id responseObject) {
+        
+        NSError *error;
+        NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        error = nil;
+        NSString *errorString = [json objectForKey:@"error"];
+        NSNumber *errorCode = [json objectForKey:@"error_code"];
+        if (errorString && errorCode) {
+            error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //token已过期
+        if ([errorCode intValue] == 21315 || [errorCode intValue] == 21327) {
+            
+            //添加到队列
+            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
+            messageInfo.text = text;
+            if (completion) {
+                messageInfo.completion = completion;
+            }
+            [shareMessages addObject:messageInfo];
+            
+            
+            //重新请求token
+            [self getNewToken];
+            return ;
+        }
+        
+        //未通过审核的应用且未加入到测试帐号中
+        if ([errorCode intValue] == 21321) {
+            error = [[NSError alloc] initWithDomain:@"此帐号未加入到应用测试帐号列表." code:[errorCode intValue] userInfo:nil];
+        }
+        //不能连续发送相同内容的微博
+        if([errorCode intValue] == 20019) {
+            error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
+        }
+        
+        completion(error);
+        [self checkSharedMessages];
+    };
     
+    void (^failure_callback)(NSError *error) =
+    ^(NSError *error){
+        completion(error);
+        [self checkSharedMessages];
+    };
+    
+    //发布图片微博
+    KHttpManager *manager = [KHttpManager manager];
+    NSMutableURLRequest *request = [manager getRequest:@"https://upload.api.weibo.com/2/statuses/upload.json" parameters:nil success:success_callback failure:failure_callback];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"Keep-Alive" forHTTPHeaderField:@"Connection"];
+    [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
+    
+    NSString *boundary = @"--------------------5017d5f06ada3";
+    NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n--%@--\r\n", boundary];
+    [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
+    boundary = [NSString stringWithFormat:@"\r\n--%@\r\n", boundary];
+    
+    NSString *(^boundaryString)(NSString*, NSString*, NSString*) = ^(NSString *boundary, NSString *item, NSString *value) {
+        return [NSString stringWithFormat:@"%@Content-Disposition: form-data; name=\"%@\";\r\n\r\n%@", boundary, item, value];
+    };
+    
+    //access_token
+    NSMutableString *bodyString = [NSMutableString stringWithString:boundaryString(boundary, @"access_token", access_token)];
+    
+    //status
+    NSString *status = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8));
+    [bodyString appendString:boundaryString(boundary, @"status", status)];
+    
+    //pic=...
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"file\"\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    
+    NSMutableData *body = [NSMutableData dataWithData:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImagePNGRepresentation(image)];
+    [body appendData:[boundaryEnd dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:body];
+    
+    [manager start];
 }
 @end

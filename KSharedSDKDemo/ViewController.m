@@ -31,20 +31,20 @@
 }
 
 - (IBAction)sendSinaWeibo:(id)sender {
-    _sharedType = SharedType_SinaWeibo;
-    [self showActionSheet];
-}
-
-- (IBAction)sendTencentWeibo:(id)sender {
-    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"share"] type:SharedType_TencentWeibo completion:^(NSError *e){
+    [[KSharedSDK Instance] shareImage:[UIImage imageNamed:@"kSharedSDK"] type:SharedType_SinaWeibo completion:^(NSError *e){
         if (e) {
             NSLog(@"shareImage failed. Error = %@", e);
         } else {
             NSLog(@"shareImage succeed.");
         }
     }];
-//    _sharedType = SharedType_TencentWeibo;
+//    _sharedType = SharedType_SinaWeibo;
 //    [self showActionSheet];
+}
+
+- (IBAction)sendTencentWeibo:(id)sender {
+    _sharedType = SharedType_TencentWeibo;
+    [self showActionSheet];
 }
 
 - (IBAction)sendWeixinFriend:(id)sender {
@@ -120,9 +120,8 @@
     }
 }
 
-
-- (IBAction)showShareMessageView:(id)sender {
-
+- (IBAction)showShareMessageView:(id)sender
+{
     NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
     
     [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK."
@@ -130,8 +129,8 @@
                          inViewController:self];
 }
 
-- (IBAction)showShareImageView:(id)sender {
-    
+- (IBAction)showShareImageView:(id)sender
+{
     NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
     
     [KShareViewManage showViewToShareImge:[UIImage imageNamed:@"kSharedSDK"]
@@ -139,8 +138,8 @@
                          inViewController:self];
 }
 
-- (IBAction)showShareNewsView:(id)sender {
-    
+- (IBAction)showShareNewsView:(id)sender
+{
     NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
     
     [KShareViewManage showViewToShareNews:@"发新闻拉"
@@ -150,4 +149,5 @@
                                  platform:platform
                          inViewController:self];
 }
+
 @end

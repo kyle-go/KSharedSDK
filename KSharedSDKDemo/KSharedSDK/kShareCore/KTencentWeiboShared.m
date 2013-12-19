@@ -309,19 +309,19 @@
     KHttpManager *manager = [KHttpManager manager];
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];
-    [request setValue:@"Keep-alive" forHTTPHeaderField:@"Connection"];
+    [request setValue:@"open.t.qq.com" forHTTPHeaderField:@"Host"];
+    [request setValue:@"Keep-Alive" forHTTPHeaderField:@"Connection"];
     [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
     
     NSString *boundary = @"--------------------5017d5f06ada3";
-    NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n%@--\r\n", boundary];
+    NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n--%@--\r\n", boundary];
     [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
-    boundary = [NSString stringWithFormat:@"--%@\r\n", boundary];
-    
+    boundary = [NSString stringWithFormat:@"\r\n--%@\r\n", boundary];
     
     //公共参数 oauth_version
     NSMutableString *bodyString = [NSMutableString stringWithString:boundary];
     [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_version\";\r\n\r\n2.a"];
-    boundary = [NSString stringWithFormat:@"\r\n%@", boundary];
+    //boundary = [NSString stringWithFormat:@"\r\n%@", boundary];
     
     //公共参数 scope
     [bodyString appendString:boundary];
@@ -351,9 +351,9 @@
     [bodyString appendString:@"Content-Disposition: form-data; name=\"compatibleflag\";\r\n\r\n0x2|0x4|0x8|0x20"];
     
     //appfrom
-    //[bodyString appendString:boundary];
-    //[bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
-    //[bodyString appendString:kAppName];
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
+    [bodyString appendString:kAppName];
     
     //format=json
     [bodyString appendString:boundary];
@@ -362,8 +362,7 @@
     //content＝...
     [bodyString appendString:boundary];
     [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
-    [bodyString appendString:@"测试测试测试～～～"];
-    //[bodyString appendString:text];
+    [bodyString appendString:text];
     
     //pic=...
     [bodyString appendString:boundary];

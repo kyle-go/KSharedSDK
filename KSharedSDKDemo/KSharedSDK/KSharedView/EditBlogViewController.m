@@ -67,6 +67,9 @@ typedef NSUInteger SendType;
 - (void)showWithSendText:(NSString *)text type:(SharedType)type
 {
     sharedType = type;
+    if (type == SharedType_SinaWeibo) {
+        self.title = @"分享到新浪微博";
+    }
     sendType = Send_Type_Text;
     content = text;
     [self show];

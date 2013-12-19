@@ -72,10 +72,8 @@
     return self;
 }
 
-/**
- *@description 分享消息
- */
-- (BOOL)shareText:(NSString *)text completion:(void(^)(NSError *))completion
+
+- (BOOL)share:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
 {
     if (text.length > 140 || text.length == 0) {
         return NO;
@@ -84,6 +82,7 @@
     //添加到队列
     KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
     messageInfo.text = text;
+    messageInfo.image = image;
     if (completion) {
         messageInfo.completion = completion;
     }
@@ -102,11 +101,6 @@
     
     [self getNewToken];
     
-    return YES;
-}
-
-- (BOOL)shareImage:(UIImage *)image completion:(void(^)(NSError *))completion
-{
     return YES;
 }
 
@@ -146,13 +140,18 @@
 {
     //判断队列中是否有SinaWeibo待分享数据
     for (KSharedMessage *m in shareMessages) {
-        [self tencentWeiboSend:m.text completion:m.completion];
+        if (m.image) {
+            [self tencentWeiboSendTextWithImage:m.text image:m.image completion:m.completion];
+        } else {
+            [self tencentWeiboSendText:m.text completion:m.completion];
+        }
+        
         [shareMessages removeObject:m];
         break;
     }
 }
 
-- (void)tencentWeiboSend:(NSString *)text completion:(void(^)(NSError *))completion
+- (void)tencentWeiboSendText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(access_token.length);
     assert(openkey.length);
@@ -205,8 +204,8 @@
         }
         
         //更多错误码信息请参考：
-        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
         //http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%BE%AE%E5%8D%9A%E6%8E%A5%E5%8F%A3/%E5%8F%91%E8%A1%A8%E4%B8%80%E6%9D%A1%E5%BE%AE%E5%8D%9A%E4%BF%A1%E6%81%AF#.E8.AF.B7.E6.B1.82.E7.A4.BA.E4.BE.8B
+        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
         
         completion(error);
         [self checkSharedMessages];
@@ -218,7 +217,7 @@
         [self checkSharedMessages];
     };
     
-    //发一条新微博
+    //发布文本微博
     KHttpManager *manager = [KHttpManager manager];
     NSDictionary *bodyParam = @{@"oauth_consumer_key":kTencentWeiboAppKey,
                                 @"access_token":access_token,
@@ -226,7 +225,6 @@
                                 @"clientip":@"10.10.1.31",
                                 @"oauth_version":@"2.a",
                                 @"scope":@"all",
-                                @"clientip":@"10.10.1.31",
                                 @"format":@"json",
                                 @"content":text};
     
@@ -238,6 +236,143 @@
     [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
     
+    [manager start];
+}
+
+- (void)tencentWeiboSendTextWithImage:(NSString *)text image:(UIImage *)image completion:(void(^)(NSError *))completion
+{
+    assert(access_token.length);
+    assert(openkey.length);
+    assert(openid.length);
+    
+    void (^success_callback) (id responseObject) =
+    ^(id responseObject) {
+        
+        NSError *error;
+        NSData *data = [responseObject dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        //解析数据失败了
+        if (error) {
+            completion(error);
+            [self checkSharedMessages];
+            return ;
+        }
+        
+        error = nil;
+        NSString *errorString = [json objectForKey:@"msg"];
+        NSNumber *errorCode = [json objectForKey:@"errcode"];
+        if (![errorString isEqualToString:@"ok"] && [errorCode intValue] != 0) {
+            error = [[NSError alloc] initWithDomain:errorString code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //token已过期
+        if ([errorCode intValue] == 37) {
+            
+            //添加到队列
+            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
+            messageInfo.text = text;
+            if (completion) {
+                messageInfo.completion = completion;
+            }
+            [shareMessages addObject:messageInfo];
+            
+            //重新请求token
+            [self getNewToken];
+            return ;
+        }
+        
+        //表示有过多脏话，请认真检查content内容
+        if ([errorCode intValue] == 4) {
+            error = [[NSError alloc] initWithDomain:@"表示有过多脏话，请认真检查content内容." code:[errorCode intValue] userInfo:nil];
+        }
+        //不能连续发送相同内容的微博
+        if([errorCode intValue] == 13) {
+            error = [[NSError alloc] initWithDomain:@"不能连续发送相同内容的微博." code:[errorCode intValue] userInfo:nil];
+        }
+        
+        //更多错误码信息请参考：
+        //http://wiki.open.t.qq.com/index.php/API%E6%96%87%E6%A1%A3/%E5%BE%AE%E5%8D%9A%E6%8E%A5%E5%8F%A3/%E5%8F%91%E8%A1%A8%E4%B8%80%E6%9D%A1%E5%B8%A6%E5%9B%BE%E7%89%87%E7%9A%84%E5%BE%AE%E5%8D%9A
+        //http://wiki.open.t.qq.com/index.php/OAuth2.0%E9%89%B4%E6%9D%83/%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E
+        
+        completion(error);
+        [self checkSharedMessages];
+    };
+    
+    void (^failure_callback)(NSError *error) =
+    ^(NSError *error){
+        completion(error);
+        [self checkSharedMessages];
+    };
+    
+    //发布图片微博
+    KHttpManager *manager = [KHttpManager manager];
+    NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
+    [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
+    
+    NSString *boundary = @"--------------------5017d5f06ada3";
+    
+    NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n%@--\r\n", boundary];
+    [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
+    boundary = [NSString stringWithFormat:@"--%@\r\n", boundary];
+    
+    
+    //公共参数 oauth_version
+    NSMutableString *bodyString = [NSMutableString stringWithString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_version\";\r\n\r\n2.a"];
+    
+    //公共参数 scope
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"scope\";\r\n\r\nall"];
+    
+    //公共参数 clientip
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"clientip\";\r\n\r\n10.10.1.31"];
+    
+    //公共参数 openid
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"openid\";\r\n\r\n"];
+    [bodyString appendString:openid];
+    
+    //公共参数 access_token
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"access_token\";\r\n\r\n"];
+    [bodyString appendString:access_token];
+    
+    //公共参数 oauth_consumer_key
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_consumer_key\";\r\n\r\n"];
+    [bodyString appendString:kTencentWeiboAppKey];
+    
+    //appfrom
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
+    [bodyString appendString:kAppName];
+    
+    //format=json
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"format\";\r\n\r\njson"];
+    
+    //content＝...
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
+    [bodyString appendString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8))];
+    
+    //pic=...
+    [bodyString appendString:boundary];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"KSharedSDK\"\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    
+    NSMutableData *body = [NSMutableData dataWithData:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:UIImagePNGRepresentation(image)];
+    [body appendData:[boundaryEnd dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:body];
+    
+    NSLog(@"xxxx###=%@", [request allHTTPHeaderFields]);
+    NSLog(@"DATA=%@",body);
     [manager start];
 }
 

@@ -309,11 +309,10 @@
     KHttpManager *manager = [KHttpManager manager];
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add_pic" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];
-    [request setValue:@"Close" forHTTPHeaderField:@"Connection"];
+    [request setValue:@"Keep-alive" forHTTPHeaderField:@"Connection"];
     [request setValue:@"KSharedSDK" forHTTPHeaderField:@"User-Agent"];
     
     NSString *boundary = @"--------------------5017d5f06ada3";
-    
     NSString *boundaryEnd = [NSString stringWithFormat:@"\r\n%@--\r\n", boundary];
     [request setValue: [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
     boundary = [NSString stringWithFormat:@"--%@\r\n", boundary];
@@ -322,6 +321,7 @@
     //公共参数 oauth_version
     NSMutableString *bodyString = [NSMutableString stringWithString:boundary];
     [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_version\";\r\n\r\n2.a"];
+    boundary = [NSString stringWithFormat:@"\r\n%@", boundary];
     
     //公共参数 scope
     [bodyString appendString:boundary];
@@ -346,10 +346,14 @@
     [bodyString appendString:@"Content-Disposition: form-data; name=\"oauth_consumer_key\";\r\n\r\n"];
     [bodyString appendString:kTencentWeiboAppKey];
     
-    //appfrom
+    //compatibleflag=0x2|0x4|0x8|0x20
     [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
-    [bodyString appendString:kAppName];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"compatibleflag\";\r\n\r\n0x2|0x4|0x8|0x20"];
+    
+    //appfrom
+    //[bodyString appendString:boundary];
+    //[bodyString appendString:@"Content-Disposition: form-data; name=\"appfrom\";\r\n\r\n"];
+    //[bodyString appendString:kAppName];
     
     //format=json
     [bodyString appendString:boundary];
@@ -358,11 +362,12 @@
     //content＝...
     [bodyString appendString:boundary];
     [bodyString appendString:@"Content-Disposition: form-data; name=\"content\";\r\n\r\n"];
-    [bodyString appendString:(NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)text,NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",kCFStringEncodingUTF8))];
+    [bodyString appendString:@"测试测试测试～～～"];
+    //[bodyString appendString:text];
     
     //pic=...
     [bodyString appendString:boundary];
-    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"KSharedSDK\"\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
+    [bodyString appendString:@"Content-Disposition: form-data; name=\"pic\"; filename=\"file\"\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: binary\r\n\r\n"];
     
     NSMutableData *body = [NSMutableData dataWithData:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:UIImagePNGRepresentation(image)];
@@ -371,8 +376,6 @@
     [request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:body];
     
-    NSLog(@"xxxx###=%@", [request allHTTPHeaderFields]);
-    NSLog(@"DATA=%@",body);
     [manager start];
 }
 

@@ -12,9 +12,17 @@
 
 @implementation KShareViewManage
 
+#define shareToTitle        @"分享到"
+
+#define sinaWeiboTitle      @"新浪微博"
+#define QQTitle             @"QQ"
+#define tencentWeiboTitle   @"腾讯微博"
+#define weChatFriendTitle   @"微信好友"
+#define weChatTimelineTitle @"微信朋友圈"
+
 + (void)showViewToShareText:(NSString *)text platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:shareToTitle referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;
@@ -24,7 +32,7 @@
         switch ([type unsignedIntValue]) {
             case SharedType_SinaWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"新浪微博" image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:sinaWeiboTitle image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
                     EditBlogViewController *editBlogViewController = [[EditBlogViewController alloc] initWithSendText:text type:SharedType_SinaWeibo];
                     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editBlogViewController];
                     [viewController presentViewController:nav animated:YES completion:nil];
@@ -35,7 +43,7 @@
                 
             case SharedType_QQChat:
             {
-                bv = [[ButtonView alloc]initWithText:@"QQ" image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:QQTitle image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareText:text type:SharedType_QQChat completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -50,7 +58,7 @@
                 
             case SharedType_TencentWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"腾讯微博" image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:tencentWeiboTitle image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareText:text type:SharedType_TencentWeibo completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -65,7 +73,7 @@
                 
             case SharedType_WeChatFriend:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信" image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatFriendTitle image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareText:text type:SharedType_WeChatFriend completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -80,7 +88,7 @@
                 
             case SharedType_WeChatCircel:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信朋友圈" image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatTimelineTitle image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareText:text type:SharedType_WeChatCircel completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -104,7 +112,7 @@
 
 + (void)showViewToShareImge:(UIImage *)image platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:shareToTitle referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;
@@ -114,7 +122,7 @@
         switch ([type unsignedIntValue]) {
             case SharedType_SinaWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"新浪微博" image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:sinaWeiboTitle image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareImage:image type:SharedType_SinaWeibo completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -129,7 +137,7 @@
                 
             case SharedType_QQChat:
             {
-                bv = [[ButtonView alloc]initWithText:@"QQ" image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:QQTitle image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareImage:image type:SharedType_QQChat completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -144,7 +152,7 @@
                 
             case SharedType_TencentWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"腾讯微博" image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:tencentWeiboTitle image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareImage:image type:SharedType_TencentWeibo completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -159,7 +167,7 @@
                 
             case SharedType_WeChatFriend:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信" image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatFriendTitle image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareImage:image type:SharedType_WeChatFriend completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -174,7 +182,7 @@
                 
             case SharedType_WeChatCircel:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信朋友圈" image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatTimelineTitle image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareImage:image type:SharedType_WeChatCircel completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -197,7 +205,7 @@
 
 + (void)showViewToShareNews:(NSString *)title Content:(NSString *)content Image:(UIImage *)image Url:(NSString *)url platform:(NSArray *)platform inViewController:(UIViewController *)viewController
 {
-    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:@"分享到" referView:viewController.view];
+    HYActivityView *activityView = [[HYActivityView alloc]initWithTitle:shareToTitle referView:viewController.view];
     
     //横屏会变成一行6个, 竖屏无法一行同时显示6个, 会自动使用默认一行4个的设置.
     activityView.numberOfButtonPerLine = 4;
@@ -207,7 +215,7 @@
         switch ([type unsignedIntValue]) {
             case SharedType_SinaWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"新浪微博" image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:sinaWeiboTitle image:[UIImage imageNamed:@"share_platform_sina"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareNews:title Content:content Image:image url:url type:SharedType_SinaWeibo completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -222,7 +230,7 @@
                 
             case SharedType_QQChat:
             {
-                bv = [[ButtonView alloc]initWithText:@"QQ" image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:QQTitle image:[UIImage imageNamed:@"share_platform_qqfriends"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareNews:title Content:content Image:image url:url type:SharedType_QQChat completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -237,7 +245,7 @@
                 
             case SharedType_TencentWeibo:
             {
-                bv = [[ButtonView alloc]initWithText:@"腾讯微博" image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:tencentWeiboTitle image:[UIImage imageNamed:@"share_platform_TencentWeibo"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareNews:title Content:content Image:image url:url type:SharedType_TencentWeibo completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -252,7 +260,7 @@
                 
             case SharedType_WeChatFriend:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信" image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatFriendTitle image:[UIImage imageNamed:@"share_platform_wechat"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareNews:title Content:content Image:image url:url type:SharedType_WeChatFriend completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);
@@ -267,7 +275,7 @@
                 
             case SharedType_WeChatCircel:
             {
-                bv = [[ButtonView alloc]initWithText:@"微信朋友圈" image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
+                bv = [[ButtonView alloc]initWithText:weChatTimelineTitle image:[UIImage imageNamed:@"share_platform_wechattimeline"] handler:^(ButtonView *buttonView){
                     [[KSharedSDK Instance] shareNews:title Content:content Image:image url:url type:SharedType_WeChatCircel completion:^(NSError *e){
                         if (e) {
                             NSLog(@"shareText failed. Error = %@", e);

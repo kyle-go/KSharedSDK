@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "KSharedSDK.h"
+#import "KShareViewManage.h"
 
 @interface ViewController () <UIActionSheetDelegate>
 
@@ -106,4 +107,17 @@
     }
 }
 
+
+- (IBAction)showShareMessageView:(id)sender {
+
+    NSArray *platform = [KShareViewManage getShareListWithType:SharedType_SinaWeibo, SharedType_WeChatFriend, SharedType_WeChatCircel, SharedType_QQChat, SharedType_TencentWeibo,nil];
+    
+    [KShareViewManage showViewToShareText:@"发布一条新微博！喵～by KSharedSDK." platform:platform inView:self.view];
+}
+
+- (IBAction)showShareImageView:(id)sender {
+}
+
+- (IBAction)showShareNewsView:(id)sender {
+}
 @end

@@ -37,6 +37,11 @@ typedef NSUInteger ErrorType;
  */
 + (instancetype)Instance;
 
+/*! @brief 日志系统
+ *  @param YES开启日志输出，NO关闭日志输出，默认开启
+ */
+- (void)enableDebugLog:(BOOL)enableDebugLog;
+
 /*! @brief 清除内存中保存的token等信息
  *
  */
@@ -46,7 +51,7 @@ typedef NSUInteger ErrorType;
  *  @param text 文本信息
  *  @param type 分享类型
  *  @param completion 回调函数，如果回调函数参数为nil则说明分享成功，否则为错误类型
- *  @return 成功返回YES，参数错误等返回FALSE
+ *  @return 成功返回YES，失败返回NO，错误信息请查看输出日志
  */
 - (BOOL)shareText:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion;
 
@@ -54,7 +59,7 @@ typedef NSUInteger ErrorType;
  *  @param image 待分享的图片，不能为空
  *  @Param type 分享类型
  *  @param completion 回调函数，如果回调函数参数为nil则说明分享成功，否则为错误类型
- *  @return 成功返回YES，参数错误等返回FALSE
+ *  @return @return 成功返回YES，失败返回NO，错误信息请查看输出日志
  */
 - (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion;
 
@@ -64,7 +69,8 @@ typedef NSUInteger ErrorType;
  *  @param image 新闻图片
  *  @Param type 分享类型，不支持新浪微博，腾讯微博
  *  @param completion 回调函数，如果回调函数参数为nil则说明分享成功，否则为错误类型
- *  @return 成功返回YES，参数错误等返回FALSE
+ *  @return @return 成功返回YES，失败返回NO，错误信息请查看输出日志
+ *
  *  @attention 分享类型不支持新浪微博，腾讯微博
  */
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion;
@@ -72,6 +78,7 @@ typedef NSUInteger ErrorType;
 /*! @brief 处理系统回调
  *  @param url 从其他应用返回的url
  *  @return 成功返回YES，失败返回FALSE
+ *
  *  @attention 在AppDelegate实现：-(BOOL)application:openURL:sourceApplication:annotation:并调用此函数
  */
 - (BOOL)handleURL:(NSURL *)url;

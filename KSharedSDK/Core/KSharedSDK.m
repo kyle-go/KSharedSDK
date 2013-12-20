@@ -17,7 +17,9 @@
 
 @end
 
-@implementation KSharedSDK
+@implementation KSharedSDK {
+    BOOL _enableDebugLog;
+}
 
 + (instancetype)Instance
 {
@@ -25,6 +27,19 @@
     static id instance;
     dispatch_once(&once, ^{instance = self.new;});
     return instance;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        _enableDebugLog = YES;
+    }
+    return self;
+}
+
+- (void)enableDebugLog:(BOOL)enableDebugLog
+{
+    _enableDebugLog = enableDebugLog;
 }
 
 - (void)clearTokens

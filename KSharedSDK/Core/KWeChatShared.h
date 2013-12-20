@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+/*! @brief 微信接口函数类
+ *
+ * 该类封装了微信相关所有接口
+ * 该类功能实现依赖微信客户端。
+ *
+ * 该类依赖官方微信SDK库
+ */
 @interface KWeChatShared : NSObject
 
 + (instancetype)Instance;

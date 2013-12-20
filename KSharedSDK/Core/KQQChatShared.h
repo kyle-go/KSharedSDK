@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+/*! @brief QQ接口函数类
+ *
+ * 该类封装了QQ相关所有接口
+ * 该类功能实现依赖QQ客户端
+ *
+ * 该类不依赖任何第三方库
+ */
 @interface KQQChatShared : NSObject
 
 + (instancetype)Instance;

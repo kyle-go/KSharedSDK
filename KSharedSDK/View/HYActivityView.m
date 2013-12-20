@@ -207,27 +207,29 @@
     [self.closeButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.closeButton];
     
-    self.titleLabel = [[UILabel alloc]init];
-    self.titleLabel.backgroundColor = [UIColor clearColor];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.font = [UIFont systemFontOfSize:17.f];
-    self.titleLabel.text = self.title;
-    [self.contentView addSubview:self.titleLabel];
+//    self.titleLabel = [[UILabel alloc]init];
+//    self.titleLabel.backgroundColor = [UIColor clearColor];
+//    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.titleLabel.font = [UIFont systemFontOfSize:17.f];
+//    self.titleLabel.text = self.title;
+//    [self.titleLabel setHidden:YES];
+//    [self.contentView addSubview:self.titleLabel];
     
-    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.cancelButton setTitle:@"取 消" forState:UIControlStateNormal];
-    [self.cancelButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [self.cancelButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:self.cancelButton];
-    
+//    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.cancelButton setTitle:@"取 消" forState:UIControlStateNormal];
+//    [self.cancelButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//    [self.cancelButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.cancelButton setHidden:YES];
+//    [self.contentView addSubview:self.cancelButton];
+
     self.iconView = [[UIView alloc]init];
     [self.contentView addSubview:self.iconView];
     
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self setNeedsUpdateConstraints];
@@ -237,6 +239,10 @@
     swipe.direction = UISwipeGestureRecognizerDirectionDown;
     [self addGestureRecognizer:swipe];
     
+    //添加下滑关闭手势
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(panHandler:)];
+    [self.contentView addGestureRecognizer:tap];
+    
 }
 
 - (void)updateConstraints
@@ -245,7 +251,7 @@
     
     NSArray *constraints = nil;
     NSLayoutConstraint *constraint = nil;
-    NSDictionary *views = @{@"contentView": self.contentView, @"closeButton": self.closeButton, @"titleLabel": self.titleLabel, @"cancelButton": self.cancelButton, @"iconView": self.iconView, @"view": self, @"referView": self.referView};
+    NSDictionary *views = @{@"contentView": self.contentView, @"closeButton": self.closeButton, @"iconView": self.iconView, @"view": self, @"referView": self.referView};
     
     //view跟referView的宽高相等
     constraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.referView attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
@@ -273,12 +279,12 @@
     [self addConstraints:constraints];
     
     //titleLabel跟contentView左右挨着
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[titleLabel]|" options:0 metrics:nil views:views];
-    [self.contentView addConstraints:constraints];
+//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[titleLabel]|" options:0 metrics:nil views:views];
+//    [self.contentView addConstraints:constraints];
     
     //cancelButton跟contentView左右挨着
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[cancelButton]|" options:0 metrics:nil views:views];
-    [self.contentView addConstraints:constraints];
+//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[cancelButton]|" options:0 metrics:nil views:views];
+//    [self.contentView addConstraints:constraints];
     
     //iconView跟contentView左右挨着
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[iconView]|" options:0 metrics:nil views:views];
@@ -293,10 +299,8 @@
     [self.iconView addConstraint:self.iconViewHeightConstraint];
     
     //垂直方向titleLabel挨着iconView挨着cancelButton
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[titleLabel(==30)]-[iconView]-[cancelButton(==30)]-8-|" options:0 metrics:nil views:views];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[iconView]-8-|" options:0 metrics:nil views:views];
     [self.contentView addConstraints:constraints];
-    
-    
     
 }
 
@@ -427,6 +431,14 @@
         
     }
     
+}
+
+- (void)panHandler:(UITapGestureRecognizer *)pan
+{
+    if (self.useGesturer) {
+        [self hide];
+        
+    }
 }
 
 @end

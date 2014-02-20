@@ -58,16 +58,16 @@
 
     switch (type) {
         case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] share:text image:nil completion:completion];
+            return [[KSinaWeiboShared Instance] share:text image:nil completion:completion];
             break;
         case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] share:text image:nil completion:completion];
+            return [[KTencentWeiboShared Instance] share:text image:nil completion:completion];
             break;
         case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] shareTextToFriend:text completion:completion];
+            return[[KWeChatShared Instance] shareTextToFriend:text completion:completion];
             break;
         case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
+            return [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
             break;
         case SharedType_QQChat:
             return [[KQQChatShared Instance] shareText:text completion:completion];

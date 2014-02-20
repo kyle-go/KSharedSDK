@@ -21,7 +21,7 @@
 		FB44C2841862E39C00BD8078 /* KWeiboOauthView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB44C2671862E39C00BD8078 /* KWeiboOauthView.m */; };
 		FB44C2851862E39C00BD8078 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB44C2691862E39C00BD8078 /* libWeChatSDK.a */; };
 		FB44C2861862E39C00BD8078 /* EditBlogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB44C2701862E39C00BD8078 /* EditBlogViewController.m */; };
-		FB44C2871862E39C00BD8078 /* HYActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB44C2721862E39C00BD8078 /* HYActivityView.m */; };
+		FB44C2871862E39C00BD8078 /* ActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB44C2721862E39C00BD8078 /* ActivityView.m */; };
 		FB44C28D1862E39C00BD8078 /* KShareViewManage.m in Sources */ = {isa = PBXBuildFile; fileRef = FB44C27A1862E39C00BD8078 /* KShareViewManage.m */; };
 		FB44C2931862E4DA00BD8078 /* share_platform_qqfriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44C28E1862E4DA00BD8078 /* share_platform_qqfriends@2x.png */; };
 		FB44C2941862E4DA00BD8078 /* share_platform_sina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FB44C28F1862E4DA00BD8078 /* share_platform_sina@2x.png */; };
@@ -80,8 +80,8 @@
 		FB44C26D1862E39C00BD8078 /* KSharedSDKDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSharedSDKDefine.h; sourceTree = "<group>"; };
 		FB44C26F1862E39C00BD8078 /* EditBlogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditBlogViewController.h; sourceTree = "<group>"; };
 		FB44C2701862E39C00BD8078 /* EditBlogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditBlogViewController.m; sourceTree = "<group>"; };
-		FB44C2711862E39C00BD8078 /* HYActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYActivityView.h; sourceTree = "<group>"; };
-		FB44C2721862E39C00BD8078 /* HYActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYActivityView.m; sourceTree = "<group>"; };
+		FB44C2711862E39C00BD8078 /* ActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityView.h; sourceTree = "<group>"; };
+		FB44C2721862E39C00BD8078 /* ActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityView.m; sourceTree = "<group>"; };
 		FB44C2791862E39C00BD8078 /* KShareViewManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KShareViewManage.h; path = View/KShareViewManage.h; sourceTree = "<group>"; };
 		FB44C27A1862E39C00BD8078 /* KShareViewManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KShareViewManage.m; sourceTree = "<group>"; };
 		FB44C28E1862E4DA00BD8078 /* share_platform_qqfriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_platform_qqfriends@2x.png"; path = "KSharedSDK/View/Icon/share_platform_qqfriends@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -194,8 +194,8 @@
 				FB44C2731862E39C00BD8078 /* Icon */,
 				FB44C26F1862E39C00BD8078 /* EditBlogViewController.h */,
 				FB44C2701862E39C00BD8078 /* EditBlogViewController.m */,
-				FB44C2711862E39C00BD8078 /* HYActivityView.h */,
-				FB44C2721862E39C00BD8078 /* HYActivityView.m */,
+				FB44C2711862E39C00BD8078 /* ActivityView.h */,
+				FB44C2721862E39C00BD8078 /* ActivityView.m */,
 				FB44C27A1862E39C00BD8078 /* KShareViewManage.m */,
 			);
 			path = View;
@@ -381,7 +381,7 @@
 				FB44C2821862E39C00BD8078 /* KTencentWeiboShared.m in Sources */,
 				FB61C5D318560D8B0041FF5A /* AppDelegate.m in Sources */,
 				FB44C2861862E39C00BD8078 /* EditBlogViewController.m in Sources */,
-				FB44C2871862E39C00BD8078 /* HYActivityView.m in Sources */,
+				FB44C2871862E39C00BD8078 /* ActivityView.m in Sources */,
 				FB44C2841862E39C00BD8078 /* KWeiboOauthView.m in Sources */,
 				FB44C27F1862E39C00BD8078 /* KSharedMessage.m in Sources */,
 				FB44C2831862E39C00BD8078 /* KWeChatShared.m in Sources */,

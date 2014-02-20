@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 crte. All rights reserved.
 //
 
-#import "HYActivityView.h"
+#import "ActivityView.h"
 
 #define BUTTON_VIEW_SIDE 70.f
 #define BUTTON_VIEW_FONT_SIZE 13.f

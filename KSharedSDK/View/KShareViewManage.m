@@ -7,7 +7,7 @@
 //
 
 #import "KShareViewManage.h"
-#import "HYActivityView.h"
+#import "ActivityView.h"
 #import "EditBlogViewController.h"
 
 @implementation KShareViewManage

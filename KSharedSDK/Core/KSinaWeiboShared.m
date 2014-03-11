@@ -24,11 +24,12 @@
 @end
 
 @implementation KSinaWeiboShared {
-    //发送队列，都是主线程不需要锁
-    NSMutableArray *shareMessages;
     //sinaWeibo
     NSString *access_token;
     NSString *uid;
+    
+    //
+    KSharedMessage *message;
 }
 
 + (instancetype)Instance
@@ -42,7 +43,6 @@
 
 - (void)clearToken
 {
-    [shareMessages removeAllObjects];
     access_token = nil;
     uid = nil;
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:KSharedSDK_sinaWeibo_accessToken];
@@ -53,7 +53,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        shareMessages = [[NSMutableArray alloc] init];
+        //
     }
     return self;
 }
@@ -69,13 +69,12 @@
     }
     
     //添加到队列
-    KSharedMessage *message = [[KSharedMessage alloc] init];
+    message = [[KSharedMessage alloc] init];
     message.text = text;
     message.image = image;
     if (completion) {
         message.completion = completion;
     }
-    [shareMessages addObject:message];
     
     if (access_token.length == 0 || uid.length == 0) {
         access_token = [[NSUserDefaults standardUserDefaults] objectForKey:KSharedSDK_sinaWeibo_accessToken];
@@ -83,7 +82,7 @@
     }
     
     if (access_token.length && uid.length) {
-        [self checkSharedMessages];
+        [self showSendMessageView];
     } else {
         [self getNewToken];
     }
@@ -116,18 +115,15 @@
         [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self checkSharedMessages];
+        [self showSendMessageView];
         return YES;
     
     //用户取消了
     } else {
         NSError *error = [[NSError alloc] initWithDomain:@"用户取消授权!" code:ErrorType_UserCancel userInfo:nil];
         
-        //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (KSharedMessage *m in shareMessages) {
-                m.completion(error);
-                [shareMessages removeObject:m];
-        }
+        //通知认证失败
+        message.completion(error);
         return YES;
     }
     
@@ -159,11 +155,8 @@
     if (errorString.length) {
         NSError *error = [[NSError alloc] initWithDomain:errorString code:ErrorType_Unknown userInfo:nil];
         
-        //判断队列中是否有SinaWeibo待分享数据,全部调用起回调，通知认证失败
-        for (KSharedMessage *m in shareMessages) {
-            m.completion(error);
-            [shareMessages removeObject:m];
-        }
+        //通知认证失败
+        message.completion(error);
         return;
     }
     
@@ -173,20 +166,14 @@
     [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self checkSharedMessages];
+    [self showSendMessageView];
 }
 
-- (void)checkSharedMessages
+- (void)showSendMessageView
 {
-    for (KSharedMessage *m in shareMessages) {
-        
-        KSendMessageView *sendView = [KSendMessageView Instance];
-        sendView.delegate = self;
-        [sendView show];
-        
-        [shareMessages removeObject:m];
-        break;
-    }
+    KSendMessageView *sendView = [KSendMessageView Instance];
+    sendView.delegate = self;
+    [sendView show];
 }
 
 - (void)sendWeiboMessage:(KSharedMessage *)m
@@ -220,14 +207,6 @@
         //token已过期
         if ([errorCode intValue] == 21315 || [errorCode intValue] == 21327) {
             
-            //添加到队列
-            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-            messageInfo.text = text;
-            if (completion) {
-                messageInfo.completion = completion;
-            }
-            [shareMessages addObject:messageInfo];
-            
             //重新请求token
             [self getNewToken];
             return ;
@@ -243,13 +222,11 @@
         }
         
         completion(error);
-        [self checkSharedMessages];
     };
     
     void (^failure_callback)(NSError *error) =
     ^(NSError *error){
         completion(error);
-        [self checkSharedMessages];
     };
     
     //发一条新微博
@@ -280,15 +257,6 @@
         //token已过期
         if ([errorCode intValue] == 21315 || [errorCode intValue] == 21327) {
             
-            //添加到队列
-            KSharedMessage *messageInfo = [[KSharedMessage alloc] init];
-            messageInfo.text = text;
-            if (completion) {
-                messageInfo.completion = completion;
-            }
-            [shareMessages addObject:messageInfo];
-            
-            
             //重新请求token
             [self getNewToken];
             return ;
@@ -304,13 +272,11 @@
         }
         
         completion(error);
-        [self checkSharedMessages];
     };
     
     void (^failure_callback)(NSError *error) =
     ^(NSError *error){
         completion(error);
-        [self checkSharedMessages];
     };
     
     //发布图片微博

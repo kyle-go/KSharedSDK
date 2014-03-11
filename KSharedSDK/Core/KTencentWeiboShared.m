@@ -111,7 +111,7 @@
     [oathView show:SharedType_TencentWeibo];
 }
 
-#pragma  ---- KSinaWeiboOauthDelegate----
+#pragma  ---- KTencentWeiboOauthDelegate----
 - (void)weiboOauthCallback:(NSDictionary *)userInfo
 {
     NSString *errorString = [userInfo objectForKey:@"error"];

@@ -166,7 +166,14 @@
     [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self showSendMessageView];
+//    [self showSendMessageView];
+    
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        //do sth in this block.
+        [self showSendMessageView];
+    });
 }
 
 - (void)showSendMessageView

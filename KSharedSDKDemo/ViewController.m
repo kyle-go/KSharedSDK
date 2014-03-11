@@ -10,7 +10,7 @@
 #import "KSharedSDK.h"
 #import "KShareViewManage.h"
 
-#define KSharedSDK_MediaTitle   @"我是KSharedSDK标题"
+#define KSharedSDK_MediaTitle   @"标题"
 #define KSharedSDK_MediaText    @"我是一条测试数据，由KSharedSDK提供!"
 #define KSharedSDK_MediaURL     @"http://www.163.com"
 #define KSharedSDK_MediaImage   [UIImage imageNamed:@"kSharedSDK"]

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "KSharedSDK.h"
 
-@protocol KWeiboOauthDelegate <NSObject>
+@protocol KWeiboOauthViewDelegate <NSObject>
 
 - (void)weiboOauthCallback:(NSDictionary *)userInfo;
 
@@ -17,7 +17,7 @@
 
 @interface KWeiboOauthView : NSObject
 
-@property (weak, nonatomic) id<KWeiboOauthDelegate> delegate;
+@property (weak, nonatomic) id<KWeiboOauthViewDelegate> delegate;
 
 + (instancetype)Instance;
 - (void)show:(SharedType)type;

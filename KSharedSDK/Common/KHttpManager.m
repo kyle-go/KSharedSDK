@@ -7,7 +7,7 @@
 //
 
 #import "KHttpManager.h"
-#import "KUnits.h"
+#import "KHelper.h"
 
 @interface KHttpManager() <NSURLConnectionDataDelegate, NSURLConnectionDelegate>
 
@@ -41,7 +41,7 @@
 {
     _success = success;
     _failure = failure;
-    NSURL *url = [KUnits generateURL:URLString params:parameters];
+    NSURL *url = [KHelper generateURL:URLString params:parameters];
     _request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     
     //content-length

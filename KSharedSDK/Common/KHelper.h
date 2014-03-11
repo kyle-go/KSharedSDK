@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KUnits : NSObject
+@interface KHelper : NSObject
 
 //获取一个uuid字符串
 + (NSString *)generateUuidString;

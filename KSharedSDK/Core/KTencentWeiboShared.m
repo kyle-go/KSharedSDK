@@ -7,7 +7,7 @@
 //
 
 #import "KTencentWeiboShared.h"
-#import "KUnits.h"
+#import "KHelper.h"
 #import "KHttpManager.h"
 #import "KSharedSDKDefine.h"
 #import "KSharedMessage.h"
@@ -17,7 +17,7 @@
 #define KSharedSDK_tencentWeibo_openid         @"KSharedSDK_tencentWeibo_openid"
 #define KSharedSDK_tencentWeibo_openkey        @"KSharedSDK_tencentWeibo_openkey"
 
-@interface KTencentWeiboShared() <KWeiboOauthDelegate>
+@interface KTencentWeiboShared() <KWeiboOauthViewDelegate>
 {
     
 }
@@ -228,7 +228,7 @@
                                 @"format":@"json",
                                 @"content":text};
     
-    NSString *body = [[KUnits generateURL:nil params:bodyParam] absoluteString];
+    NSString *body = [[KHelper generateURL:nil params:bodyParam] absoluteString];
     
     NSMutableURLRequest *request = [manager getRequest:@"https://open.t.qq.com/api/t/add" parameters:nil success:success_callback failure:failure_callback];
     [request setHTTPMethod:@"POST"];

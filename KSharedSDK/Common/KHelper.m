@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 kyle. All rights reserved.
 //
 
-#import "KUnits.h"
+#import "KHelper.h"
 
-@implementation KUnits
+@implementation KHelper
 
 + (NSString *)generateUuidString {
     CFStringRef uuid = CFUUIDCreateString(kCFAllocatorDefault, CFUUIDCreate(kCFAllocatorDefault));

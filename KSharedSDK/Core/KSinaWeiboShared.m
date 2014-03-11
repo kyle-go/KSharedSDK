@@ -7,16 +7,17 @@
 //
 
 #import "KSinaWeiboShared.h"
-#import "KUnits.h"
+#import "KHelper.h"
 #import "KHttpManager.h"
 #import "KWeiboOauthView.h"
 #import "KSharedSDKDefine.h"
 #import "KSharedMessage.h"
+#import "KSendMessageView.h"
 
 #define KSharedSDK_sinaWeibo_accessToken    @"KSharedSDK_sinaWeibo_accessToken"
 #define KSharedSDK_sinaWeibo_uid            @"KSharedSDK_sinaWeibo_uid"
 
-@interface KSinaWeiboShared() <KWeiboOauthDelegate>
+@interface KSinaWeiboShared() <KWeiboOauthViewDelegate, KSendMessageViewDelegate>
 {
 
 }
@@ -83,11 +84,9 @@
     
     if (access_token.length && uid.length) {
         [self checkSharedMessages];
-        return YES;
+    } else {
+        [self getNewToken];
     }
-    
-    [self getNewToken];
-    
     return YES;
 }
 
@@ -140,7 +139,7 @@
     NSDictionary *param = @{@"redirect_uri": kSinaWeiboRedirectURI,
                             @"callback_uri": kAppURLScheme,
                             @"client_id":kSinaWeiboAppKey};
-    NSURL *appAuthURL = [KUnits generateURL:@"sinaweibosso://login" params:param];
+    NSURL *appAuthURL = [KHelper generateURL:@"sinaweibosso://login" params:param];
     BOOL ssoLoggingIn = [[UIApplication sharedApplication] openURL:appAuthURL];
     
     //未安装客户端，发请求验证
@@ -180,14 +179,22 @@
 - (void)checkSharedMessages
 {
     for (KSharedMessage *m in shareMessages) {
-        if (m.image) {
-            [self sinaWeiboSendTextWithImage:m.text image:m.image completion:m.completion];
-        } else {
-            [self sinaWeiboSendText:m.text completion:m.completion];
-        }
+        
+        KSendMessageView *sendView = [KSendMessageView Instance];
+        sendView.delegate = self;
+        [sendView show];
         
         [shareMessages removeObject:m];
         break;
+    }
+}
+
+- (void)sendWeiboMessage:(KSharedMessage *)m
+{
+    if (m.image) {
+        [self sinaWeiboSendTextWithImage:m.text image:m.image completion:m.completion];
+    } else {
+        [self sinaWeiboSendText:m.text completion:m.completion];
     }
 }
 
@@ -220,7 +227,6 @@
                 messageInfo.completion = completion;
             }
             [shareMessages addObject:messageInfo];
-            
             
             //重新请求token
             [self getNewToken];

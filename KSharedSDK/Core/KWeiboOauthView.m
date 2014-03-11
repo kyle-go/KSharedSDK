@@ -8,7 +8,7 @@
 
 #import "KWeiboOauthView.h"
 #import "KSharedSDKDefine.h"
-#import "KUnits.h"
+#import "KHelper.h"
 #import "KHttpManager.h"
 
 #define webViewTag                  9527
@@ -41,7 +41,7 @@
         keyWindow = [UIApplication sharedApplication].keyWindow;
     }
     
-    CGRect screenBounds = [KUnits XYScreenBounds];
+    CGRect screenBounds = [KHelper XYScreenBounds];
     view = [[UIView alloc] initWithFrame:screenBounds];
     view.backgroundColor = [UIColor lightGrayColor];
     
@@ -99,14 +99,14 @@
                                 @"all",                          @"scope",
                                 @"true",                         @"forcelogin",
                                 nil];
-        url = [KUnits generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
+        url = [KHelper generateURL:@"https://open.weibo.cn/oauth2/authorize" params:params];
     } else if (weiboType == SharedType_TencentWeibo) {
         NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 kTencentWeiboAppKey,                @"client_id",       //申请的appkey
                                 kTencentWeiboRedirectURI,           @"redirect_uri",    //申请时的重定向地址
                                 @"token",                           @"response_type",   //返回方式
                                 nil];
-        url = [KUnits generateURL:@"https://open.t.qq.com/cgi-bin/oauth2/authorize" params:params];
+        url = [KHelper generateURL:@"https://open.t.qq.com/cgi-bin/oauth2/authorize" params:params];
     }
     
     assert(url);

@@ -47,22 +47,6 @@ typedef NSUInteger ErrorType;
  */
 - (void)clearTokens;
 
-/*! @brief 分享文本
- *  @param text 文本信息
- *  @param type 分享类型
- *  @param completion 回调函数，如果回调函数参数为nil则说明分享成功，否则为错误类型
- *  @return 成功返回YES，失败返回NO，错误信息请查看输出日志
- */
-- (BOOL)shareText:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion;
-
-/*! @brief 分享图片
- *  @param image 待分享的图片，不能为空
- *  @Param type 分享类型
- *  @param completion 回调函数，如果回调函数参数为nil则说明分享成功，否则为错误类型
- *  @return @return 成功返回YES，失败返回NO，错误信息请查看输出日志
- */
-- (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion;
-
 /*! @brief 分享新闻
  *  @param title 新闻标题
  *  @param content 新闻内容

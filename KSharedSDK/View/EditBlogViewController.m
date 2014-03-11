@@ -9,13 +9,6 @@
 #import "EditBlogViewController.h"
 
 //定义分享类型
-enum
-{
-    Send_Type_Text = 1,
-    Send_Type_Image,
-    Send_Type_News,
-};
-typedef NSUInteger SendType;
 
 @interface EditBlogViewController ()
 
@@ -24,7 +17,6 @@ typedef NSUInteger SendType;
 @implementation EditBlogViewController
 {
     SharedType sharedType;
-    SendType sendType;
     NSString *content;
     UIWindow *keyWindow;
     UITextView *textView;
@@ -39,7 +31,6 @@ typedef NSUInteger SendType;
         if (type == SharedType_SinaWeibo) {
             self.title = @"分享到新浪微博";
         }
-        sendType = Send_Type_Text;
         content = text;
     }
     return self;
@@ -77,15 +68,15 @@ typedef NSUInteger SendType;
 
 - (void)send
 {
-    if (sendType == Send_Type_Text) {
-        [[KSharedSDK Instance] shareText:textView.text type:SharedType_SinaWeibo completion:^(NSError *e){
-            if (e) {
-                NSLog(@"shareText failed. Error = %@", e);
-            } else {
-                 NSLog(@"shareText scucess");
-            }
-        }];
-    }
+//    if (sendType == Send_Type_Text) {
+//        [[KSharedSDK Instance] shareText:textView.text type:SharedType_SinaWeibo completion:^(NSError *e){
+//            if (e) {
+//                NSLog(@"shareText failed. Error = %@", e);
+//            } else {
+//                 NSLog(@"shareText scucess");
+//            }
+//        }];
+//    }
     [self cancel];
 }
 

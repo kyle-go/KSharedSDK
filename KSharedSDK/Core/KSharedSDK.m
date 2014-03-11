@@ -47,67 +47,6 @@
     [[KSinaWeiboShared Instance] clearToken];
 }
 
-/**
- *@description 分享消息
- */
-- (BOOL)shareText:(NSString *)text type:(SharedType)type completion:(void(^)(NSError *))completion
-{
-    if (text.length == 0 || type >= SharedType_Unknown) {
-        return NO;
-    }
-
-    switch (type) {
-        case SharedType_SinaWeibo:
-            return [[KSinaWeiboShared Instance] share:text image:nil completion:completion];
-            break;
-        case SharedType_TencentWeibo:
-            return [[KTencentWeiboShared Instance] share:text image:nil completion:completion];
-            break;
-        case SharedType_WeChatFriend:
-            return[[KWeChatShared Instance] shareTextToFriend:text completion:completion];
-            break;
-        case SharedType_WeChatCircel:
-            return [[KWeChatShared Instance] shareTextToCircel:text completion:completion];
-            break;
-        case SharedType_QQChat:
-            return [[KQQChatShared Instance] shareText:text completion:completion];
-            break;
-        default:
-            break;
-    }
-    
-    return NO;
-}
-
-- (BOOL)shareImage:(UIImage *)image type:(SharedType)type completion:(void(^)(NSError *))completion
-{
-    if (!image) {
-        return NO;
-    }
-    
-    switch (type) {
-        case SharedType_SinaWeibo:
-            [[KSinaWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
-            break;
-        case SharedType_TencentWeibo:
-            [[KTencentWeiboShared Instance] share:@"[分享图片]" image:image completion:completion];
-            break;
-        case SharedType_WeChatFriend:
-            [[KWeChatShared Instance] shareImageToFriend:image completion:completion];
-            break;
-        case SharedType_WeChatCircel:
-            [[KWeChatShared Instance] shareImageToCircel:image completion:completion];
-            break;
-        case SharedType_QQChat:
-            return [[KQQChatShared Instance] shareImage:image completion:completion];
-            break;
-        default:
-            break;
-    }
-    
-    return NO;
-}
-
 - (BOOL)shareNews:(NSString *)title Content:(NSString *)content Image:(UIImage*)image url:(NSString*)urlstring type:(SharedType)type completion:(void(^)(NSError *))completion
 {
     if (content.length == 0 || type >= SharedType_Unknown) {
@@ -115,9 +54,26 @@
     }
     
     switch (type) {
-        case SharedType_SinaWeibo:
+        case SharedType_SinaWeibo: {
+            NSString *text;
+            if (title.length) {
+                text = [NSString stringWithFormat:@"#%@#%@", title, content];
+            } else {
+                text = content;
+            }
+            return [[KSinaWeiboShared Instance] share:text image:image completion:completion];
+        }
+            break;
         case SharedType_TencentWeibo:
-            return NO;
+        {
+            NSString *text;
+            if (title.length) {
+                text = [NSString stringWithFormat:@"#%@#%@", title, content];
+            } else {
+                text = content;
+            }
+            return [[KTencentWeiboShared Instance] share:text image:image completion:completion];
+        }
             break;
         case SharedType_WeChatFriend:
             return [[KWeChatShared Instance] shareNewsToFriend:title Content:content Image:image Url:urlstring completion:completion];

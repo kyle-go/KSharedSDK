@@ -16,8 +16,11 @@ enum
     SharedType_WeChatFriend,
     SharedType_WeChatCircel,
     SharedType_QQChat,
+    SharedType_Twitter,
+    SharedType_Facebook,
     SharedType_Unknown,
 };
+
 typedef NSUInteger SharedType;
 
 //定义错误类型

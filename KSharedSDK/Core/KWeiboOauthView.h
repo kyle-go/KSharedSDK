@@ -20,6 +20,9 @@
 @property (weak, nonatomic) id<KWeiboOauthViewDelegate> delegate;
 
 + (instancetype)Instance;
+
 - (void)show:(SharedType)type;
+
+- (void)showInNewWindow:(SharedType)type;
 
 @end

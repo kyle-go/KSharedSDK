@@ -23,4 +23,6 @@
 
 - (void)show;
 
+- (void)showInNewWindow;
+
 @end

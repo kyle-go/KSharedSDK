@@ -28,7 +28,7 @@
     NSString *access_token;
     NSString *uid;
     
-    //
+    //message
     KSharedMessage *message;
 }
 
@@ -39,7 +39,6 @@
     dispatch_once(&once, ^{instance = self.new;});
     return instance;
 }
-
 
 - (void)clearToken
 {
@@ -68,7 +67,6 @@
         return NO;
     }
     
-    //添加到队列
     message = [[KSharedMessage alloc] init];
     message.text = text;
     message.image = image;
@@ -166,23 +164,17 @@
     [[NSUserDefaults standardUserDefaults] setObject:uid forKey:KSharedSDK_sinaWeibo_uid];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-//    [self showSendMessageView];
-    
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        //do sth in this block.
-        [self showSendMessageView];
-    });
+    [self showSendMessageView];
 }
 
 - (void)showSendMessageView
 {
     KSendMessageView *sendView = [KSendMessageView Instance];
     sendView.delegate = self;
-    [sendView show];
+    [sendView showInNewWindow];
 }
 
+#pragma mark -- KSendMessageViewDelegate
 - (void)sendWeiboMessage:(KSharedMessage *)m
 {
     if (m.image) {
@@ -192,6 +184,7 @@
     }
 }
 
+#pragma mark -- send message
 - (void)sinaWeiboSendText:(NSString *)text completion:(void(^)(NSError *))completion
 {
     assert(access_token.length);

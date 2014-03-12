@@ -26,9 +26,11 @@
 
 - (void)show
 {
-    keyWindow = [[UIApplication sharedApplication].windows firstObject];
     if (!keyWindow) {
-        keyWindow = [UIApplication sharedApplication].keyWindow;
+        keyWindow = [[UIApplication sharedApplication].windows firstObject];
+        if (!keyWindow) {
+            keyWindow = [UIApplication sharedApplication].keyWindow;
+        }
     }
     
     CGRect screenBounds = [KHelper XYScreenBounds];
@@ -66,6 +68,13 @@
         lastController = controller;
     }
     [lastController presentViewController:nav animated:YES completion:nil];
+}
+
+
+- (void)showInNewWindow
+{
+    keyWindow = [UIApplication sharedApplication].keyWindow;
+    [self show];
 }
 
 

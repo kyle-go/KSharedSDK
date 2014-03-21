@@ -10,6 +10,11 @@
 #import "KHelper.h"
 
 @implementation KSendMessageView {
+    
+    NSString *title;
+    NSString *content;
+    UIImage *image;
+    
     UIWindow *keyWindow;
     UIView *mainView;
     UIView *barView;
@@ -26,6 +31,22 @@
     return instance;
 }
 
+- (void)setTitle:(NSString *)t
+{
+    title = t;
+}
+
+- (void)setContent:(NSString *)c
+{
+    content = c;
+}
+
+- (void)setImage:(UIImage *)i
+{
+    image = i;
+}
+
+
 - (void)show
 {
     if (!keyWindow) {
@@ -41,8 +62,9 @@
     
     //textView
     textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, [KHelper XYScreenBounds].size.height)];
-    textView.font = [UIFont systemFontOfSize:17.0];
+    textView.font = [UIFont systemFontOfSize:16.0];
     textView.delegate = self;
+    textView.text = content;
     [textView becomeFirstResponder];
     [mainView addSubview:textView];
     
@@ -72,13 +94,16 @@
     //send image
     UIImageView *imageAdd = [[UIImageView alloc] initWithFrame:CGRectMake(160 + 40*2, 4, 32, 32)];
     imageAdd.image = [UIImage imageNamed:@"add"];
+    if (image) {
+        imageAdd.image = image;
+    }
     [barView addSubview:imageAdd];
     
     [mainView addSubview:barView];
     
     //加载视图
     UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.title = @"分享到xxx";
+    viewController.title = title;
 
     viewController.view = mainView;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];

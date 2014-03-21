@@ -21,6 +21,12 @@
 
 + (instancetype)Instance;
 
+- (void)setTitle:(NSString *)title;
+
+- (void)setContent:(NSString *)content;
+
+- (void)setImage:(UIImage *)image;
+
 - (void)show;
 
 - (void)showInNewWindow;

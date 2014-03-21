@@ -170,6 +170,11 @@
 - (void)showSendMessageView
 {
     KSendMessageView *sendView = [KSendMessageView Instance];
+    
+    [sendView setTitle:@"分享到新浪微博"];
+    [sendView setContent:message.text];
+    [sendView setImage:message.image];
+    
     sendView.delegate = self;
     [sendView showInNewWindow];
 }

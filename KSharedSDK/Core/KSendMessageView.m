@@ -14,6 +14,8 @@
     UIView *mainView;
     UIView *barView;
     UITextView *textView;
+    
+    UILabel *bar_textLimit;
 }
 
 + (instancetype)Instance
@@ -39,6 +41,8 @@
     
     //textView
     textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 320, [KHelper XYScreenBounds].size.height)];
+    textView.font = [UIFont systemFontOfSize:17.0];
+    textView.delegate = self;
     [textView becomeFirstResponder];
     [mainView addSubview:textView];
     
@@ -48,6 +52,28 @@
     bgImgView.image = [UIImage imageNamed:@"bar"];
     [barView addSubview:bgImgView];
     [barView sendSubviewToBack:bgImgView];
+    
+    //text limit
+    bar_textLimit = [[UILabel alloc] initWithFrame:CGRectMake(280, 4, 32, 32)];
+    bar_textLimit.textAlignment = NSTextAlignmentCenter;
+    bar_textLimit.text = @"140";
+    [barView addSubview:bar_textLimit];
+    
+    //logout image
+    UIImageView *imageLogout = [[UIImageView alloc] initWithFrame:CGRectMake(160, 4, 32, 32)];
+    imageLogout.image = [UIImage imageNamed:@"logout"];
+    [barView addSubview:imageLogout];
+    
+    //@ image
+    UIImageView *imageAt = [[UIImageView alloc] initWithFrame:CGRectMake(160 + 40, 4, 32, 32)];
+    imageAt.image = [UIImage imageNamed:@"at"];
+    [barView addSubview:imageAt];
+    
+    //send image
+    UIImageView *imageAdd = [[UIImageView alloc] initWithFrame:CGRectMake(160 + 40*2, 4, 32, 32)];
+    imageAdd.image = [UIImage imageNamed:@"add"];
+    [barView addSubview:imageAdd];
+    
     [mainView addSubview:barView];
     
     //加载视图
@@ -139,6 +165,19 @@
 - (void)dismiss
 {
     [keyWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -- UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)tv
+{
+    long leftWords = 140 - [tv.text length];
+    NSString *leftString = [[NSString alloc] initWithFormat:@"%ld", leftWords];
+    if (leftWords >= 0) {
+        bar_textLimit.textColor = [UIColor blackColor];
+    } else {
+        bar_textLimit.textColor = [UIColor redColor];
+    }
+    bar_textLimit.text = leftString;
 }
 
 - (void)send

@@ -15,7 +15,7 @@
 
 @end
 
-@interface KSendMessageView : NSObject
+@interface KSendMessageView : NSObject <UITextViewDelegate>
 
 @property (weak, nonatomic) id<KSendMessageViewDelegate> delegate;
 

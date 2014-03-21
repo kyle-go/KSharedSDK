@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27A26E2218DC867C0051DAD1 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A26E2118DC867C0051DAD1 /* logout.png */; };
+		27A26E2418DC882B0051DAD1 /* at.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A26E2318DC882B0051DAD1 /* at.png */; };
+		27A26E2618DC89DB0051DAD1 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A26E2518DC89DB0051DAD1 /* add.png */; };
 		27BF52BC185B557500BA16F7 /* KHookObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */; };
 		FB057BC8185EEC2000E0DA0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB61C5D418560D8B0041FF5A /* Main.storyboard */; };
 		FB11801D18CF0846008D55E3 /* KHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FB117FF418CF0846008D55E3 /* KHelper.m */; };
@@ -54,6 +57,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27A26E2118DC867C0051DAD1 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		27A26E2318DC882B0051DAD1 /* at.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = at.png; sourceTree = "<group>"; };
+		27A26E2518DC89DB0051DAD1 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		27BF52BA185B557500BA16F7 /* KHookObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHookObjectWrapper.h; sourceTree = "<group>"; };
 		27BF52BB185B557500BA16F7 /* KHookObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHookObjectWrapper.m; sourceTree = "<group>"; };
 		FB117FF318CF0846008D55E3 /* KHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHelper.h; sourceTree = "<group>"; };
@@ -198,6 +204,9 @@
 		FB11800F18CF0846008D55E3 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				27A26E2518DC89DB0051DAD1 /* add.png */,
+				27A26E2118DC867C0051DAD1 /* logout.png */,
+				27A26E2318DC882B0051DAD1 /* at.png */,
 				FB11801018CF0846008D55E3 /* bar.png */,
 				FB11801118CF0846008D55E3 /* share_platform_qqfriends@2x.png */,
 				FB11801218CF0846008D55E3 /* share_platform_sina@2x.png */,
@@ -363,10 +372,13 @@
 				FB61C5DB18560D8B0041FF5A /* Images.xcassets in Resources */,
 				FB11802E18CF0846008D55E3 /* share_platform_wechattimeline@2x.png in Resources */,
 				FB11802C18CF0846008D55E3 /* share_platform_TencentWeibo@2x.png in Resources */,
+				27A26E2418DC882B0051DAD1 /* at.png in Resources */,
 				FB11802B18CF0846008D55E3 /* share_platform_sina@2x.png in Resources */,
+				27A26E2218DC867C0051DAD1 /* logout.png in Resources */,
 				FB61C5CD18560D8B0041FF5A /* InfoPlist.strings in Resources */,
 				FB11802D18CF0846008D55E3 /* share_platform_wechat@2x.png in Resources */,
 				FBC9DE99185EE6AA004B0382 /* share.png in Resources */,
+				27A26E2618DC89DB0051DAD1 /* add.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
